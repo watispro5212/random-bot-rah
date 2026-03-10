@@ -2,20 +2,22 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+Only the latest major version is supported with security updates. Please update to the newest release for continued support and patches.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version    | Supported          |
+|----------- | ------------------ |
+| 1.x        | :white_check_mark: |
+| < 1.0      | :x:                |
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you discover a security vulnerability, we ask you to help keep the community safe by following these steps:
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+1. **Do not** open public GitHub issues for security matters. 
+2. Report vulnerabilities directly by emailing **watispro1@gmail.com** with:
+   - A clear description of the vulnerability
+   - Steps to reproduce (if possible)
+   - Relevant files, versions, or logs
+3. We aim to acknowledge your report within 48 hours, and will keep you updated on progress until the issue is resolved.
+
+**Thank you for supporting open source security!**
