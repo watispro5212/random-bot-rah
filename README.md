@@ -1,4 +1,4 @@
-# Shiny Giggles Discord Bot
+# NexusBot
 
 A clean, simple, and unique Discord bot with comprehensive features including economy, casino, leveling, moderation, and fun commands.
 
@@ -98,7 +98,7 @@ node deploy-commands.js
 
 ## Author
 
-watispro1
+watispro5212, watispro1
 
 ## License
 
