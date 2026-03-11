@@ -37,6 +37,9 @@ const CATEGORIES = {
     ],
     fun: [
         { name: '8ball', desc: 'Ask the Magic 8-Ball a yes/no question' },
+        { name: 'joke', desc: 'Get a random funny joke to cheer up your day' },
+        { name: 'fact', desc: 'Get a random interesting fact from our database' },
+        { name: 'quote', desc: 'Get an inspirational random quote' },
         { name: 'coinflip', desc: 'Flips a coin returning Heads or Tails' },
         { name: 'roll', desc: 'Rolls a die (default 6 sides)' },
         { name: 'rps', desc: 'Play Rock, Paper, Scissors against the bot' },
@@ -54,6 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const commandList = document.getElementById('command-list');
     const searchInput = document.getElementById('command-search');
     const inviteBtn = document.getElementById('invite-btn');
+    const surpriseBtn = document.getElementById('surprise-btn');
+    const dailyJokeEl = document.getElementById('daily-joke');
 
     // invite link
     const CLIENT_ID = '1480725340753101031';
@@ -144,6 +149,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    // Surprise Me Logic
+    if (surpriseBtn) {
+        surpriseBtn.onclick = () => {
+            const allCats = Object.keys(CATEGORIES);
+            const randomCat = allCats[Math.floor(Math.random() * allCats.length)];
+            const commands = CATEGORIES[randomCat];
+            const randomCmd = commands[Math.floor(Math.random() * commands.length)];
+
+            // Switch to that category
+            activeCategory = randomCat;
+            document.querySelectorAll('.category-tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.category === randomCat);
+            });
+            renderCommands();
+
+            // Find the element, scroll, and highlight
+            setTimeout(() => {
+                const items = document.querySelectorAll('.command-item');
+                const target = Array.from(items).find(el => el.innerText.includes(`/${randomCmd.name}`));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    target.classList.add('highlight');
+                    setTimeout(() => target.classList.remove('highlight'), 3000);
+                }
+            }, 100);
+        };
+    }
+
+    // Joke of the Day
+    const DAILY_JOKES = [
+        "Why did the developer go broke? Because he used up all his cache!",
+        "There are 10 types of people: those who understand binary, and those who don't.",
+        "Why do programmers prefer dark mode? Because light attracts bugs!",
+        "Real programmers count from 0.",
+        "Hardware is the part of a computer you can kick; software is the part you can only curse at."
+    ];
+    if (dailyJokeEl) {
+        dailyJokeEl.innerText = DAILY_JOKES[Math.floor(Math.random() * DAILY_JOKES.length)];
+    }
 
     // Initial render
     renderCommands();
