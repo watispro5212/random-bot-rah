@@ -57,25 +57,29 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// Discord Webhook Verification Endpoint
-app.post('/webhook', (req, res) => {
-    console.log('[WEBHOOK] Received payload:', JSON.stringify(req.body, null, 2));
+const { verifyKeyMiddleware, InteractionType, InteractionResponseType } = require('discord-interactions');
+
+/**
+ * Discord requires cryptographic signature verification for Webhook URLs.
+ * The verifyKeyMiddleware automatically checks the X-Signature-Ed25519 and X-Signature-Timestamp headers.
+ */
+app.post('/webhook', verifyKeyMiddleware(process.env.PUBLIC_KEY), (req, res) => {
+    const { type, data } = req.body;
+
+    console.log('[WEBHOOK] Verified request received. Type:', type);
 
     // Discord Event Webhook verification (PING)
-    // Discord sends type: 0 for Event Webhooks and expects a 204 No Content
-    if (req.body && (req.body.type === 0 || req.body.type === '0')) {
-        console.log('[WEBHOOK] Responding to PING (type 0) with 204');
-        return res.status(204).send();
+    if (type === InteractionType.PING) {
+        console.log('[WEBHOOK] Responding to PING with type 1');
+        return res.send({
+            type: InteractionResponseType.PONG,
+        });
     }
 
-    // Interactions Endpoint verification (PING) 
-    // Discord sends type: 1 for Interactions and expects { type: 1 }
-    if (req.body && req.body.type === 1) {
-        console.log('[WEBHOOK] Responding to PING (type 1) with type 1');
-        return res.send({ type: 1 });
-    }
+    // Handle other event types if needed
+    // ...
 
-    res.status(200).send('OK');
+    return res.send({ type: InteractionResponseType.PONG });
 });
 
 app.get('/', (req, res) => {
