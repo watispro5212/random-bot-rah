@@ -8,47 +8,68 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="bg-canvas"></div>
+    
+    <nav>
+        <div class="container nav-content">
+            <a href="index.html" class="logo">
+                <span>NexusBot</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#commands">Commands</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
-        <header>
-            <h1 class="hero-title">NexusBot</h1>
-            <p class="hero-subtitle">The most interactive, clean, and unique Discord bot for your server. From economy to casino games, we've got it all.</p>
+        <header class="reveal">
+            <h1 class="hero-title">Elevate Your Discord.</h1>
+            <p class="hero-subtitle">NexusBot brings professional economy, casino games, and robust moderation to your community with a simple, modern interface.</p>
             <div class="hero-btns">
-                <a href="#" class="btn btn-primary" id="invite-btn">Add to Discord</a>
+                <a href="#" class="btn btn-primary" id="invite-btn">Invite to Server</a>
             </div>
         </header>
 
-        <section class="section" id="features">
-            <h2 class="section-title">Everything you need.</h2>
+        <section class="section reveal" id="features">
+            <h2 class="section-title">Premium Features</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <span class="feature-icon">💰</span>
-                    <h3>Economy System</h3>
-                    <p>Earn credits, work shifts, steal from others, and build your fortune.</p>
+                    <h3>Economy 2.0</h3>
+                    <p>Experience a fully balanced credit system with work, robbery, and daily rewards.</p>
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon">🎰</span>
-                    <h3>Casino Games</h3>
-                    <p>Feeling lucky? Play Blackjack, Slots, and more to multiply your wealth.</p>
+                    <h3>The Casino</h3>
+                    <p>High-stakes Blackjack and Slots with glassmorphism UI for a real-time experience.</p>
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon">🛡️</span>
-                    <h3>Moderation</h3>
-                    <p>Powerful tools to keep your community safe, including logs and verification.</p>
+                    <h3>Elite Moderation</h3>
+                    <p>Keep your server clean with bulk purge, verification, and role-based commands.</p>
                 </div>
                 <div class="feature-card">
-                    <span class="feature-icon">🎯</span>
-                    <h3>Leveling</h3>
-                    <p>Active members get rewarded with XP and level-up notifications.</p>
+                    <span class="feature-icon">📈</span>
+                    <h3>XP & Ranking</h3>
+                    <p>Reward your most active members with a beautiful ranking and XP progression system.</p>
                 </div>
             </div>
         </section>
 
-        <section class="section" id="commands">
-            <h2 class="section-title">Commands List</h2>
-            <div class="commands-container">
+        <section class="section reveal" id="commands">
+            <h2 class="section-title">Explore Commands</h2>
+            <div class="commands-wrapper">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" id="command-search" placeholder="Search for a command (e.g. blackjack)...">
+                </div>
+                
                 <div class="category-tabs" id="category-tabs">
                     <div class="category-tab active" data-category="utility">🔧 Utility</div>
                     <div class="category-tab" data-category="economy">💰 Economy</div>
@@ -58,6 +79,7 @@
                     <div class="category-tab" data-category="fun">🎲 Fun</div>
                     <div class="category-tab" data-category="media">📸 Media</div>
                 </div>
+
                 <div class="command-list" id="command-list">
                     <!-- Commands will be injected here by script.js -->
                 </div>
@@ -72,6 +94,7 @@
             </div>
         </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

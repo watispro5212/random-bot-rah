@@ -52,40 +52,99 @@ const CATEGORIES = {
 document.addEventListener('DOMContentLoaded', () => {
     const tabContainer = document.getElementById('category-tabs');
     const commandList = document.getElementById('command-list');
+    const searchInput = document.getElementById('command-search');
     const inviteBtn = document.getElementById('invite-btn');
 
-    // Replace with your real client ID or invite link
+    // Invite Link
     const CLIENT_ID = '1480725340753101031';
     inviteBtn.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&permissions=8&scope=bot%20applications.commands`;
 
-    function renderCommands(category) {
+    let activeCategory = 'utility';
+
+    function renderCommands(filter = '') {
         commandList.innerHTML = '';
-        const commands = CATEGORIES[category] || [];
         
-        commands.forEach(cmd => {
+        // Decide what to show (all matching commands or active category)
+        let commandsToDisplay = [];
+        
+        if (filter.trim()) {
+            // Flatten all categories and filter
+            Object.values(CATEGORIES).forEach(list => {
+                const matches = list.filter(cmd => 
+                    cmd.name.toLowerCase().includes(filter.toLowerCase()) || 
+                    cmd.desc.toLowerCase().includes(filter.toLowerCase())
+                );
+                commandsToDisplay.push(...matches);
+            });
+            // Hide tabs when searching
+            tabContainer.style.display = 'none';
+        } else {
+            commandsToDisplay = CATEGORIES[activeCategory] || [];
+            tabContainer.style.display = 'flex';
+        }
+
+        if (commandsToDisplay.length === 0) {
+            commandList.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-muted);">No commands found matching your search.</div>';
+            return;
+        }
+
+        commandsToDisplay.forEach((cmd, index) => {
             const div = document.createElement('div');
             div.className = 'command-item';
+            div.style.animationDelay = `${index * 0.05}s`;
+            
             div.innerHTML = `
-                <div class="command-name">/${cmd.name}</div>
+                <div class="command-name">
+                    /${cmd.name}
+                    <span class="copy-indicator">Click to copy</span>
+                </div>
                 <p class="command-desc">${cmd.desc}</p>
             `;
+
+            div.onclick = () => {
+                navigator.clipboard.writeText(`/${cmd.name}`).then(() => {
+                    const indicator = div.querySelector('.copy-indicator');
+                    const originalText = indicator.innerText;
+                    indicator.innerText = 'Copied!';
+                    indicator.style.color = 'var(--accent)';
+                    setTimeout(() => {
+                        indicator.innerText = originalText;
+                        indicator.style.color = 'var(--text-muted)';
+                    }, 2000);
+                });
+            };
+
             commandList.appendChild(div);
         });
     }
 
-    // Initial render
-    renderCommands('utility');
+    // Search functionality
+    searchInput.addEventListener('input', (e) => {
+        renderCommands(e.target.value);
+    });
 
     // Tab switching
     tabContainer.addEventListener('click', (e) => {
         const tab = e.target.closest('.category-tab');
         if (!tab) return;
 
-        // Update active class
+        activeCategory = tab.dataset.category;
         document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
-        // Render new category
-        renderCommands(tab.dataset.category);
+        renderCommands();
     });
+
+    // Scroll Reveal functionality
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    // Initial render
+    renderCommands();
 });
