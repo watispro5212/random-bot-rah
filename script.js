@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('command-search');
     const inviteBtn = document.getElementById('invite-btn');
 
-    // Invite Link
+    // invite link
     const CLIENT_ID = '1480725340753101031';
     inviteBtn.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&permissions=8&scope=bot%20applications.commands`;
 
@@ -64,11 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderCommands(filter = '') {
         commandList.innerHTML = '';
         
-        // Decide what to show (all matching commands or active category)
+        // decide what to show (all matching commands or active category)
         let commandsToDisplay = [];
         
         if (filter.trim()) {
-            // Flatten all categories and filter
+            // flatten all categories and filter
             Object.values(CATEGORIES).forEach(list => {
                 const matches = list.filter(cmd => 
                     cmd.name.toLowerCase().includes(filter.toLowerCase()) || 
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
                 commandsToDisplay.push(...matches);
             });
-            // Hide tabs when searching
+            // hide tabs when searching
             tabContainer.style.display = 'none';
         } else {
             commandsToDisplay = CATEGORIES[activeCategory] || [];
