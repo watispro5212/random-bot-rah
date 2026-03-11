@@ -134,6 +134,39 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCommands();
     });
 
+    // Count-up animation for stats
+    const stats = document.querySelectorAll('.stat-value');
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const value = target.innerText;
+                const match = value.match(/(\d+)([kM+]*)/);
+                if (match) {
+                    const num = parseInt(match[1]);
+                    const suffix = match[2];
+                    animateValue(target, 0, num, 2000, suffix);
+                }
+                statsObserver.unobserve(target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    function animateValue(obj, start, end, duration, suffix) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * (end - start) + start) + suffix;
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    stats.forEach(s => statsObserver.observe(s));
+
     // Scroll Reveal functionality
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {

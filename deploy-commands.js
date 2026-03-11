@@ -26,18 +26,11 @@ const rest = new REST().setToken(process.env.TOKEN);
         // The put method is used to fully refresh all commands with the current set
         // If GUILD_ID is provided, it registers them guild-specific (faster dev). 
         // Otherwise, it registers globally.
-        let data;
-        if (process.env.GUILD_ID) {
-            data = await rest.put(
-                Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
-                { body: commands },
-            );
-        } else {
-             data = await rest.put(
-                Routes.applicationCommands(process.env.CLIENT_ID),
-                { body: commands },
-            );
-        }
+        // Register commands globally
+        const data = await rest.put(
+            Routes.applicationCommands(process.env.CLIENT_ID),
+            { body: commands },
+        );
 
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
     } catch (error) {
