@@ -269,6 +269,7 @@ header {
     overflow-x: auto;
     padding-bottom: 1rem;
     scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .category-tabs::-webkit-scrollbar { display: none; }
