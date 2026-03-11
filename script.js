@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             div.className = 'command-item';
             div.style.animationDelay = `${index * 0.05}s`;
             
-            div.innerHTML = `
+            div.innerHTM = `
                 <div class="command-name">
                     /${cmd.name}
                     <span class="copy-indicator">Click to copy</span>
