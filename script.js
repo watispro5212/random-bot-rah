@@ -1,54 +1,61 @@
 const CATEGORIES = {
     utility: [
-        { name: 'ping', desc: 'Checks the bot\'s network status and latency metrics' },
-        { name: 'info', desc: 'Displays information about the bot and the current server' },
-        { name: 'serverinfo', desc: 'Displays detailed information about the current server' },
-        { name: 'userinfo', desc: 'Displays detailed information about a user' },
-        { name: 'avatar', desc: 'Displays a user\'s avatar in high resolution' },
-        { name: 'math', desc: 'Evaluates a mathematical expression' },
-        { name: 'timer', desc: 'Sets a countdown timer' }
+        { name: 'ping', desc: 'Checks the module connection and data latency' },
+        { name: 'info', desc: 'Access global terminal and bot classification data' },
+        { name: 'serverinfo', desc: 'Scan parameters and data regarding the current node' },
+        { name: 'userinfo', desc: 'Pull system file and data on a specific user' },
+        { name: 'avatar', desc: 'Extract a high-resolution user image file' },
+        { name: 'servericon', desc: 'Extract the high-resolution icon of the current Nexus node' },
+        { name: 'math', desc: 'Process a central intelligence operation' },
+        { name: 'timer', desc: 'Initiate a synchronized countdown pulse' },
+        { name: 'poll', desc: 'Fire up a quick community consensus vote' },
+        { name: 'remind', desc: 'Have the system keep tabs on something for you' }
     ],
     economy: [
-        { name: 'balance', desc: 'Check your current account balance and net worth' },
-        { name: 'daily', desc: 'Claim your 24-hour reward and build streaks' },
-        { name: 'work', desc: 'Work a random shift to earn some credits' },
-        { name: 'rob', desc: 'Risk it all and attempt to steal from a user' },
-        { name: 'transfer', desc: 'Safely transfer credits to another user' },
-        { name: 'leaderboard', desc: 'Displays the top 10 richest users based on net worth' },
-        { name: 'shop', desc: 'View the item shop catalog' },
-        { name: 'buy', desc: 'Buy an item from the shop' },
-        { name: 'inventory', desc: 'View your purchased items' }
+        { name: 'balance', desc: 'Scan current credit reserves and net worth' },
+        { name: 'daily', desc: 'Receive your daily Nexus Credit allocation' },
+        { name: 'work', desc: 'Execute a gig to earn Nexus Credits' },
+        { name: 'rob', desc: 'Execute a cyber-heist on another user\'s local wallet' },
+        { name: 'transfer', desc: 'Initiate an encrypted credit transfer' },
+        { name: 'leaderboard', desc: 'Displays the top operatives by net worth' },
+        { name: 'shop', desc: 'Access the underground hardware catalog' },
+        { name: 'buy', desc: 'Acquire hardware from the shop' },
+        { name: 'inventory', desc: 'View your locally stored items' }
     ],
     casino: [
-        { name: 'blackjack', desc: 'Play a game of Blackjack against the dealer' },
-        { name: 'slots', desc: 'Bet your credits on the slot machine' }
+        { name: 'blackjack', desc: 'Engage in a high-stakes protocol against the dealer' },
+        { name: 'slots', desc: 'Wager credits on the random number generator' }
     ],
     leveling: [
-        { name: 'rank', desc: 'Displays your current Level and XP progress' }
+        { name: 'rank', desc: 'Analyze your current security clearance and XP progress' }
     ],
     moderation: [
-        { name: 'ban', desc: 'Ban a user from the server' },
-        { name: 'kick', desc: 'Kick a user from the server' },
-        { name: 'purge', desc: 'Bulk delete messages in the current channel' },
-        { name: 'lock', desc: 'Locks the current channel (@everyone cannot send messages)' },
-        { name: 'unlock', desc: 'Unlocks the current channel' },
-        { name: 'slowmode', desc: 'Sets the channel slowmode duration' },
-        { name: 'verify-setup', desc: 'Drops a verification panel (Admin Only)' }
+        { name: 'ban', desc: 'Permanently sever a user from the node' },
+        { name: 'kick', desc: 'Temporarily sever a user from the node' },
+        { name: 'purge', desc: 'Initiate a mass data deletion in the current channel' },
+        { name: 'lock', desc: 'Engage firewall on the current channel' },
+        { name: 'unlock', desc: 'Disengage firewall on the current channel' },
+        { name: 'slowmode', desc: 'Throttle output bandwidth in the current channel' },
+        { name: 'verify-setup', desc: 'Drop a secure verification portal (Admin Only)' },
+        { name: 'say', desc: 'Transmit a cleartext message through the Nexus' }
     ],
     fun: [
-        { name: '8ball', desc: 'Ask the Magic 8-Ball a yes/no question' },
-        { name: 'joke', desc: 'Get a random funny joke to cheer up your day' },
-        { name: 'fact', desc: 'Get a random interesting fact from our database' },
-        { name: 'quote', desc: 'Get an inspirational random quote' },
-        { name: 'coinflip', desc: 'Flips a coin returning Heads or Tails' },
-        { name: 'roll', desc: 'Rolls a die (default 6 sides)' },
-        { name: 'rps', desc: 'Play Rock, Paper, Scissors against the bot' },
-        { name: 'trivia', desc: 'Answer a random trivia question' }
+        { name: '8ball', desc: 'Query the Oracle array for a yes/no outcome' },
+        { name: 'joke', desc: 'Process a humorous data packet' },
+        { name: 'fact', desc: 'Extract an interesting file from the database' },
+        { name: 'quote', desc: 'Extract an inspirational transmission' },
+        { name: 'coinflip', desc: 'Execute a boolean 50/50 algorithm' },
+        { name: 'roll', desc: 'Execute a randomized integer sequence' },
+        { name: 'rps', desc: 'Simulate Rock, Paper, Scissors against the CPU' },
+        { name: 'trivia', desc: 'Process a trivia data packet' },
+        { name: 'hack', desc: 'Initiate a harmless penetration test on a target' },
+        { name: 'emojify', desc: 'Convert text data into an encrypted emoji string' },
+        { name: 'giveaway', desc: 'Airdrop resources to the community' }
     ],
     media: [
-        { name: 'cat', desc: 'Fetches a random picture of a cute cat' },
-        { name: 'dog', desc: 'Fetches a random picture of a cute dog' },
-        { name: 'meme', desc: 'Fetches a random top meme' }
+        { name: 'cat', desc: 'Fetches biological data on Felines' },
+        { name: 'dog', desc: 'Fetches biological data on Canines' },
+        { name: 'meme', desc: 'Intercepts top-tier humorous media' }
     ]
 };
 

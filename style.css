@@ -1,14 +1,14 @@
 :root {
-    --primary: #5865F2;
-    --primary-dark: #4752c4;
-    --background: #0b0e14;
-    --card-bg: rgba(22, 27, 34, 0.4);
-    --nav-bg: rgba(11, 14, 20, 0.8);
+    --primary: #00FFCC; /* Nexus Cyan */
+    --primary-dark: #00B399; /* Deep Nexus Cyan */
+    --background: #05050A; /* Deep Tech Black */
+    --card-bg: rgba(10, 15, 20, 0.6);
+    --nav-bg: rgba(5, 5, 10, 0.85);
     --text: #ffffff;
-    --text-muted: #b5bac1;
-    --accent: #10b981;
-    --border: rgba(255, 255, 255, 0.08);
-    --glass: rgba(255, 255, 255, 0.03);
+    --text-muted: #8E9BB0;
+    --accent: #FFCC00; /* Nexus Amber */
+    --border: rgba(0, 255, 204, 0.15); /* Cyan Tinted Border */
+    --glass: rgba(0, 255, 204, 0.03);
 }
 
 * {
@@ -29,7 +29,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Animated Mesh Background */
+/* Animated Mesh Background - Enhanced for Nexus */
 .bg-canvas {
     position: fixed;
     top: 0;
@@ -37,15 +37,15 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: radial-gradient(circle at 0% 0%, rgba(88, 101, 242, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(88, 101, 242, 0.05) 0%, transparent 100%);
-    animation: bgPulse 20s infinite alternate ease-in-out;
+    background: radial-gradient(circle at 10% 20%, rgba(0, 255, 204, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 90% 80%, rgba(255, 204, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 179, 153, 0.05) 0%, transparent 100%);
+    animation: bgPulse 15s infinite alternate ease-in-out;
 }
 
 @keyframes bgPulse {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.1); }
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.05) translate(-1%, -1%); }
 }
 
 /* Particle Overlay */
@@ -56,16 +56,19 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: particlesMove 60s linear infinite;
-    opacity: 0.5;
+    background-image: 
+        linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    animation: gridScroll 100s linear infinite;
+    opacity: 0.6;
 }
 
-@keyframes particlesMove {
+@keyframes gridScroll {
     from { background-position: 0 0; }
-    to { background-position: 500px 1000px; }
+    to { background-position: -500px -500px; }
 }
+
 
 .container {
     max-width: 1100px;
@@ -151,7 +154,7 @@ header {
 }
 
 .hero-glow {
-    text-shadow: 0 0 30px rgba(88, 101, 242, 0.4);
+    text-shadow: 0 0 30px rgba(0, 255, 204, 0.4);
 }
 
 .hero-subtitle {
@@ -171,32 +174,35 @@ header {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     border: none;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .btn-primary {
     background: var(--primary);
-    color: white;
-    box-shadow: 0 8px 24px rgba(88, 101, 242, 0.3);
+    color: #000; /* Dark text for contrast against bright cyan */
+    box-shadow: 0 8px 24px rgba(0, 255, 204, 0.3);
 }
 
 .btn-primary:hover {
-    background: var(--primary-dark);
+    background: #00E6B8;
     transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(88, 101, 242, 0.4);
+    box-shadow: 0 12px 32px rgba(0, 255, 204, 0.5);
 }
 
 .btn-glass {
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
+    background: rgba(0, 255, 204, 0.05);
+    color: var(--primary);
     border: 1px solid var(--border);
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
 }
 
 .btn-glass:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 255, 204, 0.1);
+    border-color: rgba(0, 255, 204, 0.4);
     transform: translateY(-2px);
+    color: #fff;
 }
 
 .btn-pulse {
@@ -211,7 +217,7 @@ header {
     left: 50%;
     width: 5px;
     height: 5px;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(0, 255, 204, 0.5);
     opacity: 0;
     border-radius: 100%;
     transform: scale(1, 1) translate(-50%);
@@ -219,9 +225,9 @@ header {
 }
 
 @keyframes pulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3); }
-    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.3); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 255, 204, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
 }
 
 .btn-pulse:hover {
@@ -238,6 +244,8 @@ header {
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 4rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 /* Feature Cards */
@@ -255,12 +263,14 @@ header {
     border-radius: 20px;
     border: 1px solid var(--border);
     transition: all 0.4s ease;
+    border-top: 2px solid transparent;
 }
 
 .feature-card:hover {
     transform: translateY(-10px);
-    border-color: rgba(88, 101, 242, 0.4);
-    background: rgba(88, 101, 242, 0.05);
+    border-color: rgba(0, 255, 204, 0.4);
+    border-top: 2px solid var(--primary);
+    background: rgba(0, 255, 204, 0.05);
 }
 
 .feature-icon {
@@ -348,13 +358,13 @@ header {
 .command-item.highlight {
     animation: highlightPulse 2s ease;
     border-color: var(--accent);
-    background: rgba(16, 185, 129, 0.1);
+    background: rgba(255, 204, 0, 0.1);
 }
 
 @keyframes highlightPulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-    50% { transform: scale(1.05); box-shadow: 0 0 20px 10px rgba(16, 185, 129, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px 10px rgba(255, 204, 0, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 204, 0, 0); }
 }
 
 .command-item {
