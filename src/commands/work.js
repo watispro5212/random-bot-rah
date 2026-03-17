@@ -2,25 +2,25 @@ const { SlashCommandBuilder } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
 const economy = require('../utils/EconomyManager');
 
-const COOLDOWN_MS = 60 * 60 * 1000; // 1 hour
+const COOLDOWN_MS = 60 * 60 * 1000; 
 const MIN_PAY = 150;
-const MAX_PAY = 400;
+const MAX_PAY = 450;
 
 const JOBS = [
     'sliced into a corporate mainframe',
-    'delivered encrypted data drives',
-    'mined rare Nexus cryptocurrency',
-    'patched a faulty AI core',
-    'sold custom terminal scripts',
-    'recalibrated the orbital sensors',
-    'invested in black market hardware',
-    'intercepted an enemy transmission'
+    'delivered encrypted data drives to Sector 7',
+    'mined rare Nexus cryptocurrency kernels',
+    'patched a corrupted AI neural core',
+    'sold custom terminal scripts on the black market',
+    'recalibrated high-density orbital sensors',
+    'intercepted a rogue enemy transmission',
+    'debugged a planetary defense sub-grid'
 ];
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('work')
-        .setDescription('Execute a gig to earn Nexus Credits (1 hour cooldown).'),
+        .setDescription('Accepts a freelance gig in the Nexus for credits.'),
     async execute(interaction) {
         const userId = interaction.user.id;
         const data = await economy.getUser(userId, interaction.guild.id);
@@ -30,16 +30,24 @@ module.exports = {
         const diff = now - last;
 
         if (diff < COOLDOWN_MS) {
-            const minutes = Math.ceil((COOLDOWN_MS - diff) / 60000);
+            const nextGig = new Date(last + COOLDOWN_MS);
             return interaction.reply({ 
                 embeds: [createEmbed({
-                    title: '⏳ System Overload',
-                    description: `Your neural link needs to cool down. Rest for **${minutes} more minutes** before accepting a new gig.`,
+                    title: '⏳ Neural Cooldown Critical',
+                    description: `\`[SYSTEM]\` Overheat detected. Rest until <t:${Math.floor(nextGig.getTime() / 1000)}:R> before your next gig.`,
                     color: '#FF4B2B'
                 })],
                 flags: 64 
             });
         }
+
+        await interaction.reply({
+            embeds: [createEmbed({
+                title: '💼 Initializing Freelance Gig...',
+                description: '`[LOADING]` mission parameters... Connecting to the underworld signal.',
+                color: '#FFCC00'
+            })]
+        });
 
         const payout = Math.floor(Math.random() * (MAX_PAY - MIN_PAY + 1)) + MIN_PAY;
         const jobDesc = JOBS[Math.floor(Math.random() * JOBS.length)];
@@ -49,11 +57,14 @@ module.exports = {
         await data.save();
 
         const embed = createEmbed({
-            title: '💼 Gig Complete',
-            description: `You ${jobDesc} and were compensated **${payout} Credits**.\nCurrent Local Wallet: **${data.wallet.toLocaleString()} Credits**.`,
-            color: '#00FFCC'
+            title: '💰 Gig Execution: SUCCESS',
+            description: `You **${jobDesc}** and were compensated \`${payout}\` **CR**.\nCurrent Liquid Balance: \`${data.wallet.toLocaleString()}\` **CR**.`,
+            color: '#00FFCC',
+            footer: 'Nexus Freelance Bureau | Payment Processed'
         });
 
-        await interaction.reply({ embeds: [embed] });
+        setTimeout(async () => {
+            await interaction.editReply({ embeds: [embed] });
+        }, 1800);
     },
 };
