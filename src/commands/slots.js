@@ -32,28 +32,43 @@ module.exports = {
             });
         }
 
-        await interaction.deferReply();
+        await interaction.reply({
+            embeds: [createEmbed({
+                title: '🎰 Spinning Reels...',
+                description: '`[ SPINNING ]` \n\n🎰 | 🎰 | 🎰',
+                color: '#FFCC00'
+            })]
+        });
 
-        // Check for Lucky Charm bonus in inventory
-        const hasCharm = data.inventory && data.inventory.includes('lucky_charm');
+        // Small delay to build suspense with "animation" frames
+        const frames = [
+            `[ 🍒 | 💎 | 🎰 ]`,
+            `[ 🔔 | 🍋 | 🍉 ]`,
+            `[ 💎 | 🎰 | 🍒 ]`
+        ];
 
-        // Deduct bet and save to prevent backing out
-        data.wallet -= bet;
-        economy.saveUser(userId, data);
+        for (const frame of frames) {
+            await new Promise(resolve => setTimeout(resolve, 600));
+            await interaction.editReply({
+                embeds: [createEmbed({
+                    title: '🎰 Spinning Reels...',
+                    description: `\`[ SPINNING ]\` \n\n${frame}`,
+                    color: '#FFCC00'
+                })]
+            });
+        }
 
-        // Define slot icons and weights
         const icons = ['🍒', '🍋', '🍉', '🍇', '🔔', '💎', '🎰'];
         const results = [];
         
         for (let i = 0; i < 3; i++) {
-            // Apply a slight weight buffer if they have a lucky charm, to push towards lower index (more common pairs)
             let pick = Math.floor(Math.random() * icons.length);
             if (hasCharm && Math.random() < 0.20 && pick > 0) pick -= 1;
             results.push(icons[pick]);
         }
 
         let multiplier = 0;
-        let winMessage = 'Better luck next time!';
+        let winMessage = 'BET LOST. THE HOUSE WINS.';
         let color = '#FF4B2B';
 
         const isThreeOfAKind = results[0] === results[1] && results[1] === results[2];
@@ -61,48 +76,42 @@ module.exports = {
 
         if (isThreeOfAKind) {
             if (results[0] === '🎰') {
-                multiplier = 50; // JACKPOT
-                winMessage = '🚨 **JACKPOT!!!** 🚨\n*You matched 3 🎰!*';
+                multiplier = 50; 
+                winMessage = '🚨 **SYSTEM JACKPOT!!!** 🚨\n*Direct Hit on 3 🎰 Core!*';
                 color = '#F1C40F';
             } else if (results[0] === '💎') {
                 multiplier = 10;
-                winMessage = '💎 **DIAMOND WIN!** 💎\n*You matched 3 💎!*';
+                winMessage = '💎 **ELITE YIELD!** 💎\n*3 💎 extracted!*';
                 color = '#00FFCC';
             } else {
-                multiplier = 3;
-                winMessage = '**Winner!**\n*You matched 3 of a kind!*';
+                multiplier = 5;
+                winMessage = '✨ **DATA MATCH!** ✨\n*Triple sequence detected!*';
                 color = '#00FFCC';
             }
         } else if (isTwoOfAKind) {
-            multiplier = 1.5;
-            winMessage = '**Small Win!**\n*You matched 2 of a kind!*';
+            multiplier = 2;
+            winMessage = '📈 **MINOR GAIN.** \n*Partial match detected.*';
             color = '#FFCC00';
         }
 
         const winnings = Math.floor(bet * multiplier);
-
-        // Payout
         if (winnings > 0) {
             data.wallet += winnings;
             economy.saveUser(userId, data);
         }
 
-        const slotMachineStr = `[ ${results.join(' | ')} ]`;
-
         const embed = createEmbed({
-            title: '🎰 Slot Machine',
-            description: `${slotMachineStr}\n\n${winMessage}`,
+            title: '🎰 Nexus Slot Terminal',
+            description: `\`[ ${results.join(' | ')} ]\`\n\n${winMessage}`,
             fields: [
-                { name: 'Your Bet', value: `${bet.toLocaleString()}`, inline: true },
-                { name: 'Your Payout', value: `**${winnings.toLocaleString()}**`, inline: true },
-                { name: 'New Wallet', value: `${data.wallet.toLocaleString()}`, inline: true }
+                { name: '📥 Wager', value: `\`${bet.toLocaleString()}\` **CR**`, inline: true },
+                { name: '📤 Payout', value: `**${winnings.toLocaleString()}** **CR**`, inline: true },
+                { name: '💳 New Balance', value: `\`${data.wallet.toLocaleString()}\` **CR**`, inline: true }
             ],
-            color: color
+            color: color,
+            footer: 'Nexus Casino v4.2 | Odds: Algorithmic'
         });
 
-        // Small delay to build suspense
-        setTimeout(async () => {
-            await interaction.editReply({ embeds: [embed] });
-        }, 1500);
+        await interaction.editReply({ embeds: [embed] });
     },
 };

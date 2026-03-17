@@ -6,10 +6,10 @@ const shop = require('../utils/ShopManager');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('buy')
-        .setDescription('Buy an item from the shop')
+        .setDescription('Initiates a Credit Transaction Protocol to acquire a specified asset.')
         .addStringOption(opt => 
             opt.setName('item_id')
-                .setDescription('The ID of the item (seen in /shop)')
+                .setDescription('The unique identifier of the asset (see /shop).')
                 .setRequired(true)
         ),
     async execute(interaction) {
@@ -18,7 +18,7 @@ module.exports = {
 
         if (!item) {
             return interaction.reply({ 
-                content: `Could not find an item with the ID \`${itemId}\`. Please check \`/shop\`.`, 
+                content: `\`[ERROR]\` Asset identifier \`${itemId}\` not found in database. Check \`/shop\`.`, 
                 flags: 64 
             });
         }
@@ -29,9 +29,10 @@ module.exports = {
         if (data.wallet < item.price) {
             return interaction.reply({
                 embeds: [createEmbed({
-                    title: '❌ Insufficient Funds',
-                    description: `You need **${item.price.toLocaleString()} Credits** to buy **${item.name}**, but you only have **${data.wallet.toLocaleString()} Credits** in your wallet.`,
-                    color: 0xED4245
+                    title: '❌ Transaction Terminated',
+                    description: `\`[INSUFFICIENT CREDITS]\` \nRequired: \`💰 ${item.price.toLocaleString()}\` \nAvailable: \`💰 ${data.wallet.toLocaleString()}\` \n\nAcquire more credits via work or daily allotments.`,
+                    color: 0xED4245,
+                    footer: 'Nexus Economy | SEC-TRANS-FAIL'
                 })],
                 flags: 64
             });
@@ -45,28 +46,27 @@ module.exports = {
             if (item.id === 'bank_upgrade') {
                 data.bankCapacity += 5000;
             }
-            // Add more instant effects here in the future
         } else {
-            // Check if they already maxed it out
             const ownedAmount = data.inventory.filter(i => i === item.id).length;
             
-            // For now, let's limit flex/passive badges to 1 per person
             if ((item.type === 'passive' || item.type === 'flex') && ownedAmount >= 1) {
-                // Refund
-                data.wallet += item.price;
-                return interaction.reply({ content: `You already own **${item.name}** and cannot buy duplicates.`, flags: 64 });
+                data.wallet += item.price; // Refund
+                return interaction.reply({ 
+                    content: `\`[TRANS-REJECTED]\` Subject already possesses unique asset: **${item.name}**.`, 
+                    flags: 64 
+                });
             }
 
-            // Consumables can be stacked
             data.inventory.push(item.id);
         }
 
         economy.saveUser(userId, data);
 
         const embed = createEmbed({
-            title: '🛍️ Purchase Successful!',
-            description: `You have successfully purchased **${item.name}** for **${item.price.toLocaleString()} Credits**!\n\nYour new wallet balance is **${data.wallet.toLocaleString()} Credits**.`,
-            color: '#00FFCC'
+            title: '🛍️ Transaction Authorized',
+            description: `\`[PURCHASE COMPLETED]\` Asset **${item.name}** has been successfully acquired for **${item.price.toLocaleString()} Credits**.\n\nUpdated Wallet: \`💰 ${data.wallet.toLocaleString()}\``,
+            color: '#00FFCC',
+            footer: 'Nexus Economy | SEC-TRANS-SUCCESS'
         });
 
         await interaction.reply({ embeds: [embed] });

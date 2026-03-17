@@ -4,15 +4,16 @@ const { createEmbed } = require('../utils/embed');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('coinflip')
-        .setDescription('Flips a coin returning Heads or Tails.'),
+        .setDescription('Executes a binary probability sequence (Heads or Tails).'),
     async execute(interaction) {
         const result = Math.random() < 0.5 ? 'Heads' : 'Tails';
         const emoji = result === 'Heads' ? '🪙' : '⚪';
 
         const embed = createEmbed({
-            title: 'Coin Flip',
-            description: `The coin landed on...\n\n# ${emoji} **${result}**`,
-            color: result === 'Heads' ? '#F1C40F' : '#A3B1C6'
+            title: '🎲 Probability Analysis',
+            description: `\`[GENERATING RANDOM SEED...]\` \n\nThe probability sequence has settled on...\n\n# ${emoji} **${result.toUpperCase()}**`,
+            color: result === 'Heads' ? '#F1C40F' : '#A3B1C6',
+            footer: 'Nexus Prob-Sys | BIN-SEQ-SET'
         });
 
         await interaction.reply({ embeds: [embed] });

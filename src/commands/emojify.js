@@ -11,24 +11,24 @@ const CHAR_TO_EMOJI = {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('emojify')
-        .setDescription('Convert text data into an encrypted emoji string.')
+        .setDescription('Converts cleartext into a neural iconographic data stream.')
         .addStringOption(option => 
             option.setName('text')
-                .setDescription('The text to encrypt.')
+                .setDescription('The cleartext payload to translate.')
                 .setRequired(true)),
     async execute(interaction) {
         const text = interaction.options.getString('text').toLowerCase();
         
         if (text.length > 50) {
-            return interaction.reply({ content: 'Payload too large. Keep it under 50 characters.', flags: 64 });
+            return interaction.reply({ content: '\`[ERROR]\` Neural payload too large for iconographic conversion (Max: 50).', flags: 64 });
         }
 
         let emojified = '';
         for (const char of text) {
-            emojified += CHAR_TO_EMOJI[char] || char; // fallback to original char if not found
-            emojified += ' '; // add a small gap
+            emojified += CHAR_TO_EMOJI[char] || char;
+            emojified += ' ';
         }
 
-        await interaction.reply(emojified);
+        await interaction.reply(`\`[TRANSLATION SUCCESS]\` \n\n${emojified}`);
     },
 };

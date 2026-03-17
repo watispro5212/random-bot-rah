@@ -4,10 +4,10 @@ const { createEmbed } = require('../utils/embed');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('urban')
-        .setDescription('Look up a term on Urban Dictionary.')
+        .setDescription('Decrypts street-level dialect from the Urban Intelligence Database.')
         .addStringOption(option => 
             option.setName('term')
-                .setDescription('The term to look up.')
+                .setDescription('The slang term to decrypt.')
                 .setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply();
@@ -19,27 +19,28 @@ module.exports = {
             const { list } = await res.json();
 
             if (!list.length) {
-                return interaction.editReply(`No results found for **${term}**.`);
+                return interaction.editReply(`\`[ERROR]\` No intelligence found for term: **${term}**.`);
             }
 
             const [answer] = list;
             
             const embed = createEmbed({
-                title: answer.word,
+                title: `📓 Nex-Urban Intel: ${answer.word}`,
                 url: answer.permalink,
-                color: '#EFFF00'
+                color: '#EFFF00',
+                description: `\`[DECRYPTING DATA PACKETS...SUCCESS]\``,
+                footer: `Intel Rating: 👍 ${answer.thumbs_up} | 👎 ${answer.thumbs_down}`
             })
             .addFields(
-                { name: 'Definition', value: answer.definition.substring(0, 1024) || 'No definition' },
-                { name: 'Example', value: answer.example.substring(0, 1024) || 'No example' }
-            )
-            .setFooter({ text: `👍 ${answer.thumbs_up} | 👎 ${answer.thumbs_down}` });
+                { name: '📖 Primary Definition', value: `>>> ${answer.definition.substring(0, 1024) || 'No data.'}` },
+                { name: '🎬 Contextual Usage', value: `>>> *${answer.example.substring(0, 1024) || 'No data.'}*` }
+            );
 
             await interaction.editReply({ embeds: [embed] });
 
         } catch (error) {
             console.error(error);
-            await interaction.editReply('Something went wrong while fetching the definition.');
+            await interaction.editReply('`[FATAL ERROR]` Intelligence link severed mid-transfer.');
         }
     },
 };

@@ -4,10 +4,10 @@ const { createEmbed } = require('../utils/embed');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('roll')
-        .setDescription('Rolls a die.')
+        .setDescription('Executes a multi-sided randomization pulse (Dice Roll).')
         .addIntegerOption(option => 
             option.setName('sides')
-                .setDescription('Number of sides on the die (defaults to 6).')
+                .setDescription('Number of faces on the randomization module (default: 6).')
                 .setRequired(false)
                 .setMinValue(2)
                 .setMaxValue(100)),
@@ -16,9 +16,10 @@ module.exports = {
         const result = Math.floor(Math.random() * sides) + 1;
 
         const embed = createEmbed({
-            title: `🎲 Rolled a d${sides}`,
-            description: `You rolled a **${result}**!`,
-            color: '#00FFCC'
+            title: `🎲 Randomization Pulse: d${sides}`,
+            description: `\`[GENERATING ENTROPY...]\` \n\nThe module has settled on: \n# **${result}**`,
+            color: '#00FFCC',
+            footer: 'Nexus Prob-Sys | RAND-PULSE-SET'
         });
 
         await interaction.reply({ embeds: [embed] });

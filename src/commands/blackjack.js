@@ -91,24 +91,25 @@ module.exports = {
 
         const buildEmbed = (status, color) => {
             const embed = createEmbed({
-                title: '🃏 Blackjack',
-                description: `**Bet:** ${bet.toLocaleString()} Credits\n\n${status}`,
+                title: '🃏 Nexus Casino: Blackjack',
+                description: `**Bet:** ${bet.toLocaleString()} CR\n\n\`[SYSTEM]\` ${status}`,
                 color: color
             });
             
-            // If game is still ongoing, hide dealer's second card
             const dHandStr = (status.includes('Game in progress')) 
-                ? formatHand([dealerHand[0]]) + ' `? ` '
+                ? formatHand([dealerHand[0]]) + ' `[??]` '
                 : formatHand(dealerHand);
                 
             const dValStr = (status.includes('Game in progress')) 
-                ? '?'
+                ? '??'
                 : dealerValue;
 
             embed.addFields(
-                { name: `Your Hand [${playerValue}]`, value: formatHand(playerHand), inline: true },
-                { name: `Dealer's Hand [${dValStr}]`, value: dHandStr, inline: true }
+                { name: `👤 Your Hand [${playerValue}]`, value: `>>> ${formatHand(playerHand)}`, inline: true },
+                { name: `🤖 Dealer's Hand [${dValStr}]`, value: `>>> ${dHandStr}`, inline: true }
             );
+            
+            embed.setFooter({ text: 'House Rules: Dealer stands on 17 | Nexus Casino v4.0' });
             return embed;
         };
 

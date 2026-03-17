@@ -4,43 +4,40 @@ const { createEmbed } = require('../utils/embed');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('math')
-        .setDescription('Evaluates a basic mathematical expression.')
+        .setDescription('Executes high-speed neural computation on numerical expressions.')
         .addStringOption(option => 
             option.setName('expression')
-                .setDescription('The math expression to solve (e.g. 5 + 5 * 2)')
+                .setDescription('The numerical algorithm to solve.')
                 .setRequired(true)),
     async execute(interaction) {
         const expression = interaction.options.getString('expression');
 
         try {
-            // Strictly clean the input to allow only numbers and basic math operators
             const sanitized = expression.replace(/[^0-9+\-*/(). ]/g, '');
-            
-            if (!sanitized) throw new Error('Invalid math expression syntax.');
+            if (!sanitized) throw new Error('Algorithm Rejected: Illegal syntax characters.');
 
-            // Safe use of Function constructor to evaluate purely mathematical strings
             // eslint-disable-next-line no-new-func
             const result = new Function(`return ${sanitized}`)();
 
-            if (isNaN(result) || !isFinite(result)) {
-                throw new Error('Result is not a finite number.');
-            }
+            if (isNaN(result) || !isFinite(result)) throw new Error('Algorithm Rejected: Result out of bounds.');
 
             const embed = createEmbed({
-                title: '🧮 Math Evaluation',
+                title: '🧮 Nexus Neural Computation',
+                description: `\`[PROCESSING ALGORITHM...SUCCESS]\``,
                 fields: [
-                    { name: 'Expression', value: `\`${sanitized}\``, inline: false },
-                    { name: 'Result', value: `**${result}**`, inline: false }
+                    { name: '📥 Input Algorithm', value: `\`${sanitized}\``, inline: false },
+                    { name: '📤 Computation Output', value: `\`[ RESULT ]\` **${result}**`, inline: false }
                 ],
-                color: '#00FFCC'
+                color: '#00FFCC',
+                footer: 'Core Processor: Nexus-X1 | Computation Time: <1ms'
             });
 
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             await interaction.reply({
                 embeds: [createEmbed({
-                    title: '❌ Math Error',
-                    description: 'Could not evaluate the expression. Ensure you are only using numbers and `+ - * / ( )`.',
+                    title: '❌ Computation Error',
+                    description: `\`[FATAL]\` Protocol failed to evaluate the algorithm. Use only valid operators: \`+ - * / ( )\`.`,
                     color: 0xED4245
                 })],
                 flags: 64

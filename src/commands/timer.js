@@ -5,26 +5,28 @@ const logger = require('../utils/logger');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('timer')
-        .setDescription('Sets a temporary countdown timer that will ping you when finished.')
+        .setDescription('Sets a temporary temporal countdown that will ping your neural link when finished.')
         .addIntegerOption(option => 
             option.setName('minutes')
-                .setDescription('Number of minutes')
+                .setDescription('Temporal duration in minutes.')
                 .setRequired(true)
                 .setMinValue(1)
-                .setMaxValue(1440)) // Max 24 hours
+                .setMaxValue(1440))
         .addStringOption(option => 
             option.setName('reminder')
-                .setDescription('What should I remind you about?')
+                .setDescription('The neural prompt to trigger upon completion.')
                 .setRequired(false)),
     async execute(interaction) {
         const minutes = interaction.options.getInteger('minutes');
-        const reminder = interaction.options.getString('reminder') || 'Timer is up!';
+        const reminder = interaction.options.getString('reminder') || 'Temporal countdown completed.';
         const ms = minutes * 60 * 1000;
+        const endTime = new Date(Date.now() + ms);
 
         const embed = createEmbed({
-            title: '⏱️ Timer Set',
-            description: `I will remind you in **${minutes} minute(s)** about:\n> *${reminder}*`,
-            color: '#00FFCC'
+            title: '⏱️ Temporal Countdown Initiated',
+            description: `\`[SYNCING]\` Neural link scheduled for: <t:${Math.floor(endTime.getTime() / 1000)}:R>\n\n**Prompt:** \`${reminder}\``,
+            color: '#00FFCC',
+            footer: 'Nexus Timekeeper | SEQ-TIMER-START'
         });
 
         await interaction.reply({ embeds: [embed] });
@@ -32,19 +34,18 @@ module.exports = {
 
         setTimeout(async () => {
             const upEmbed = createEmbed({
-                title: '⏰ Timer Finished!',
-                description: `> *${reminder}*`,
-                color: '#FFCC00' // Yellow alert
+                title: '⏰ Temporal Link Triggered!',
+                description: `\`[ALERT]\` Countdown sequence finished.\n\n**Prompt:** \`${reminder}\``,
+                color: '#FFCC00',
+                footer: 'Nexus Timekeeper | SEQ-TIMER-END'
             });
 
             try {
-                // Ping the user in the channel where they set it
                 await interaction.followUp({ 
                     content: `<@${interaction.user.id}>`, 
                     embeds: [upEmbed] 
                 });
             } catch (error) {
-                // If they deleted the channel, try to DM them
                 await interaction.user.send({ embeds: [upEmbed] }).catch(() => null);
             }
         }, ms);

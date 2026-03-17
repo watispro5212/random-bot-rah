@@ -6,14 +6,14 @@ const logger = require('../utils/logger');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('warn')
-        .setDescription('Issues a formal warning to a user.')
+        .setDescription('Issues a formal Protocol Strike to an entity.')
         .addUserOption(opt => 
             opt.setName('target')
-                .setDescription('The user to warn')
+                .setDescription('The entity to be formally warned.')
                 .setRequired(true))
         .addStringOption(opt => 
             opt.setName('reason')
-                .setDescription('Reason for the warning')
+                .setDescription('Authorization reason for the strike.')
                 .setRequired(true))
         ,
     async execute(interaction) {
@@ -21,10 +21,10 @@ module.exports = {
         const reason = interaction.options.getString('reason');
 
         if (target.bot) {
-            return interaction.reply({ content: 'You cannot warn bots!', flags: 64 });
+            return interaction.reply({ content: '`[ERROR]` Artificial lifeforms are exempt from protocol strikes.', flags: 64 });
         }
         if (target.id === interaction.user.id) {
-            return interaction.reply({ content: 'You cannot warn yourself!', flags: 64 });
+            return interaction.reply({ content: '`[ERROR]` Protocol self-striking is prohibited.', flags: 64 });
         }
 
         warns.addWarning(interaction.guild.id, target.id, interaction.user.id, reason);
@@ -32,26 +32,31 @@ module.exports = {
 
         logger.info(`${interaction.user.tag} warned ${target.tag} in ${interaction.guild.name} (Strike ${count})`);
 
-        // Try to DM the user
         try {
             await target.send({
                 embeds: [createEmbed({
-                    title: `⚠️ You received a warning in ${interaction.guild.name}`,
-                    description: `**Reason:** ${reason}\n\n*This is warning #${count} on your record.*`,
-                    color: '#FFCC00'
+                    title: `⚠️ PROTOCOL STRIKE DETECTED: ${interaction.guild.name}`,
+                    description: `\`[SYSTEM]\` You have incurred a formal disciplinary strike.`,
+                    fields: [
+                        { name: 'Protocol Violation', value: `\`${reason}\`` },
+                        { name: 'Strike Index', value: `\`${count}\` accumulated strike(s)` }
+                    ],
+                    color: '#FFCC00',
+                    footer: 'Nexus Security | Repeated violations will lead to ejection.'
                 })]
             });
-        } catch (err) {
-            // Couldn't DM
-        }
+        } catch (err) {}
 
         const embed = createEmbed({
-            title: '⚠️ User Warned',
-            description: `Successfully warned <@${target.id}>.\nThey now have **${count}** warning(s).`,
+            title: '⚠️ Protocol Strike Issued',
+            thumbnail: target.displayAvatarURL({ dynamic: true }),
+            description: `Successfully logged a strike against <@${target.id}>.\nEntity now has \`${count}\` strike(s) on record.`,
             fields: [
-                { name: 'Reason', value: reason, inline: false }
+                { name: 'Protocol Reason', value: `\`${reason}\``, inline: false },
+                { name: 'Authorized By', value: interaction.user.tag, inline: true }
             ],
-            color: '#FFCC00'
+            color: '#FFCC00',
+            footer: 'Nexus Security Database | SEC-STRIKE-IDX'
         });
 
         await interaction.reply({ embeds: [embed] });

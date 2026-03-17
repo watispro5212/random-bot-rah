@@ -5,7 +5,7 @@ const logger = require('../utils/logger');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('lock')
-        .setDescription('Locks the current channel by denying SendMessages for @everyone')
+        .setDescription('Initiates a total sector lockdown for unauthorized lifeforms.')
         ,
     async execute(interaction) {
         const channel = interaction.channel;
@@ -18,9 +18,10 @@ module.exports = {
             logger.info(`${interaction.user.tag} locked channel #${channel.name}`);
 
             const embed = createEmbed({
-                title: '🔒 Channel Locked',
-                description: 'This channel has been locked by a moderator. Only authorized roles may speak.',
-                color: 0xED4245
+                title: '🔒 Sector Lockdown Active',
+                description: `\`[ALERT]\` Communication channels suspended. \nOnly high-clearance entities may transmit data.`,
+                color: 0xED4245,
+                footer: 'Nexus Security | SEC-LOCK-9'
             });
 
             await interaction.reply({ embeds: [embed] });
@@ -28,8 +29,8 @@ module.exports = {
             logger.error(`Failed to lock #${channel.name}: ${error}`);
             await interaction.reply({
                 embeds: [createEmbed({
-                    title: '❌ Error',
-                    description: 'Could not lock the channel. Check my permissions (Manage Roles/Channels).',
+                    title: '❌ Lockdown Failed',
+                    description: 'Protocol Error: Insufficient override permissions.',
                     color: 0xED4245
                 })],
                 flags: 64

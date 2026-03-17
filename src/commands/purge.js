@@ -5,10 +5,10 @@ const logger = require('../utils/logger');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('purge')
-        .setDescription('Bulk delete messages in the current channel.')
+        .setDescription('Deletes a segment of the current channel\'s data history.')
         .addIntegerOption(option => 
             option.setName('amount')
-                .setDescription('Number of messages to delete (1-100)')
+                .setDescription('Number of data packets (messages) to delete (1-100).')
                 .setRequired(true)
                 .setMinValue(1)
                 .setMaxValue(100))
@@ -20,27 +20,25 @@ module.exports = {
         await interaction.deferReply({ flags: 64 });
 
         try {
-            // Fetch messages to delete
             const fetched = await interaction.channel.messages.fetch({ limit: amount });
-            
-            // Delete messages (true filters out messages older than 14 days which would throw an error)
             const deleted = await interaction.channel.bulkDelete(fetched, true);
             
             logger.info(`${interaction.user.tag} purged ${deleted.size} messages in #${interaction.channel.name}`);
 
             await interaction.editReply({
                 embeds: [createEmbed({
-                    title: '🗑️ Messages Purged',
-                    description: `Successfully deleted **${deleted.size}** messages.`,
-                    color: 0x57F287, // Green SUCCESS color
+                    title: '🗑️ Data Purge Successful',
+                    description: `\`[ERASURE]\` Successfully wiped **${deleted.size}** packets from the history stream.`,
+                    color: 0x57F287,
+                    footer: 'Nexus Channel Maintenance | PAC-DEL-COMPLETE'
                 })]
             });
         } catch (error) {
             logger.error(`Failed to purge messages in #${interaction.channel.name}: ${error}`);
             await interaction.editReply({
                 embeds: [createEmbed({
-                    title: '❌ Error',
-                    description: 'An error occurred while purging messages. Messages older than 14 days cannot be bulk deleted.',
+                    title: '❌ Purge Anomaly',
+                    description: 'Protocol Error: Failed to erase data packets. Ancient packets (>14 days) are immutable by this protocol.',
                     color: 0xED4245
                 })]
             });

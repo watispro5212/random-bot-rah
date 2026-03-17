@@ -4,14 +4,14 @@ const { createEmbed } = require('../utils/embed');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('remind')
-        .setDescription('I\'ll keep tabs on something for you.')
+        .setDescription('Anchors a neural memory trace for a specified temporal window.')
         .addStringOption(option => 
             option.setName('time')
-                .setDescription('When? (e.g., 10s, 5m, 1h).')
+                .setDescription('Temporal offset (e.g., 10s, 5m, 1h).')
                 .setRequired(true))
         .addStringOption(option => 
             option.setName('reason')
-                .setDescription('The details.')
+                .setDescription('The neural data to archive.')
                 .setRequired(true)),
     async execute(interaction) {
         const timeStr = interaction.options.getString('time');
@@ -19,7 +19,10 @@ module.exports = {
 
         const timeMatch = timeStr.match(/^(\d+)([smh])$/);
         if (!timeMatch) {
-            return interaction.reply({ content: 'Format is wrong. Try something like 10s, 5m, or 1h.', flags: 64 });
+            return interaction.reply({ 
+                content: '`[ERROR]` Invalid temporal syntax. Use formats such as `10s`, `5m`, or `1h`.', 
+                flags: 64 
+            });
         }
 
         const value = parseInt(timeMatch[1]);
@@ -31,13 +34,17 @@ module.exports = {
         else if (unit === 'h') ms = value * 60 * 60 * 1000;
 
         if (ms > 24 * 60 * 60 * 1000) {
-            return interaction.reply({ content: 'That\'s too far out. 24 hours is my current limit.', flags: 64 });
+            return interaction.reply({ 
+                content: '`[LIMIT EXCEEDED]` Neural anchors cannot exceed a 24-hour temporal window.', 
+                flags: 64 
+            });
         }
 
         const embed = createEmbed({
-            title: '⏰ Synchronized',
-            description: `I've set a pulse for: **${reason}**. Returning in **${timeStr}**.`,
-            color: '#F1C40F'
+            title: '🧠 Neural Memory Anchored',
+            description: `\`[ARCHIVED]\` **Data Point:** \`${reason}\` \nLink established: <t:${Math.floor((Date.now() + ms) / 1000)}:R>`,
+            color: '#F1C40F',
+            footer: 'Nexus Neural Bridge | SEQ-REMIND-SET'
         });
 
         await interaction.reply({ embeds: [embed], flags: 64 });
@@ -45,9 +52,10 @@ module.exports = {
         setTimeout(async () => {
             try {
                 const reminderEmbed = createEmbed({
-                    title: '🔔 Alert!',
-                    description: `Hey! The pulse you set for **${reason}** is up.`,
-                    color: '#00FFCC'
+                    title: '🔔 Neural Link Triggered',
+                    description: `\`[URGENT]\` Archived memory trace recovered: \n**${reason}**`,
+                    color: '#00FFCC',
+                    footer: 'Nexus Neural Bridge | SEQ-REMIND-FIN'
                 });
 
                 await interaction.user.send({ embeds: [reminderEmbed] });

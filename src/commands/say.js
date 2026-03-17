@@ -1,21 +1,19 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('say')
-        .setDescription('Transmit a cleartext message through the Nexus.')
+        .setDescription('Executes a high-priority cleartext broadcast through the Nexus sector.')
         .addStringOption(option => 
             option.setName('message')
-                .setDescription('The message to transmit.')
+                .setDescription('The cleartext payload to broadcast.')
                 .setRequired(true))
         ,
     async execute(interaction) {
         const message = interaction.options.getString('message');
         
-        // Acknowledge the interaction so Discord doesn't timeout
-        await interaction.reply({ content: 'Transmission sent.', flags: 64 });
+        await interaction.reply({ content: '\`[SYSTEM]\` Transmission successfully prioritized and sent.', flags: 64 });
         
-        // Send the actual message
-        await interaction.channel.send(message);
+        await interaction.channel.send(`\`🚀 [BROADCAST]\` \n${message}`);
     },
 };

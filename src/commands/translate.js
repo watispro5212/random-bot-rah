@@ -4,14 +4,14 @@ const { createEmbed } = require('../utils/embed');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('translate')
-        .setDescription('Translate text to another language.')
+        .setDescription('Decrypts and translates textual data packets into a specified language.')
         .addStringOption(option => 
             option.setName('text')
-                .setDescription('The text to translate.')
+                .setDescription('The source text to decrypt.')
                 .setRequired(true))
         .addStringOption(option => 
             option.setName('to')
-                .setDescription('The language code to translate to (e.g., en, es, fr, de).')
+                .setDescription('The target language code (e.g., en, es, zh, ja).')
                 .setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply();
@@ -19,31 +19,31 @@ module.exports = {
         const targetLang = interaction.options.getString('to');
 
         try {
-            // Using a free translation API (MyMemory)
             const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=auto|${targetLang}`);
             const data = await res.json();
 
             if (data.responseStatus !== 200) {
-                return interaction.editReply(`Translation failed: ${data.responseDetails}`);
+                return interaction.editReply(`\`[FATAL ERROR]\` Translation matrix offline: ${data.responseDetails}`);
             }
 
             const translatedText = data.responseData.translatedText;
 
             const embed = createEmbed({
-                title: '🌍 Translation',
-                color: '#2ECC71'
+                title: '🌍 Polyglot Translation Matrix',
+                description: `\`[DECODING...ACCESSING LINGUISTIC DATABASE...SUCCESS]\``,
+                color: '#2ECC71',
+                footer: `Protocol: MyMemory | Target Lang: ${targetLang.toUpperCase()}`
             })
             .addFields(
-                { name: 'Original', value: text },
-                { name: 'Translated', value: translatedText }
-            )
-            .setFooter({ text: `Translated to: ${targetLang.toUpperCase()}` });
+                { name: '📥 Source Signal', value: `>>> ${text}` },
+                { name: '📤 Decrypted Signal', value: `>>> **${translatedText}**` }
+            );
 
             await interaction.editReply({ embeds: [embed] });
 
         } catch (error) {
             console.error(error);
-            await interaction.editReply('Something went wrong during translation.');
+            await interaction.editReply('`[ERROR]` Translation core encountered a syntax anomaly.');
         }
     },
 };
