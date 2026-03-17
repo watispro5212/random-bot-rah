@@ -10,7 +10,7 @@ const { createEmbed } = require('../utils/embed');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('verify-setup')
-        .setDescription('Drops an interactive panel into this channel that users can click to get verified.')
+        .setDescription('Deploys a Biometric Verification Node into the current sector.')
         ,
     async execute(interaction) {
         
@@ -19,21 +19,20 @@ module.exports = {
         const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
                 .setCustomId('verify_role_button')
-                .setLabel('✅ Click Here to Verify')
+                .setLabel('🛂 Authenticate Identity')
                 .setStyle(ButtonStyle.Success)
         );
 
         const embed = createEmbed({
-            title: '🛂 Server Verification',
-            description: `Welcome to **${interaction.guild.name}**!\n\nTo prove you are human and gain access to the rest of the server, please click the button below.`,
+            title: '🛡️ Biometric Verification Node',
+            description: `Welcome to sector **${interaction.guild.name}**.\n\nTo prove your neural authenticity and gain access to secure channels, please click the authentication button below.`,
             color: '#00FFCC',
-            thumbnail: interaction.guild.iconURL()
+            thumbnail: interaction.guild.iconURL(),
+            footer: 'Nexus Security | BIO-AUTH-NODE'
         });
 
-        // Send the panel
         await interaction.channel.send({ embeds: [embed], components: [row] });
 
-        // Acknowledge setup completion
-        await interaction.editReply({ content: '✅ Verification panel successfully deployed to this channel.' });
+        await interaction.editReply({ content: '\`[SUCCESS]\` Biometric Verification Node successfully deployed.' });
     },
 };

@@ -10,7 +10,7 @@ const { createEmbed } = require('../utils/embed');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('ticket-setup')
-        .setDescription('Drops an interactive panel to create Support Tickets.')
+        .setDescription('Deploys a Support Matrix Uplink panel for sector residents.')
         ,
     async execute(interaction) {
         
@@ -19,21 +19,20 @@ module.exports = {
         const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
                 .setCustomId('create_ticket_btn')
-                .setLabel('🎫 Create Ticket')
+                .setLabel('🎫 Initialize Uplink')
                 .setStyle(ButtonStyle.Primary)
         );
 
         const embed = createEmbed({
-            title: '🛠️ Support Tickets',
-            description: `Need help from the staff team in **${interaction.guild.name}**?\n\nClick the button below to open a private channel with the Administrators.`,
+            title: '🛠️ Support Matrix Uplink',
+            description: `Required assistance within **${interaction.guild.name}**?\n\nExecute the button below to initialize a high-security encrypted line with the Administrators.`,
             color: '#00FFCC',
-            thumbnail: interaction.guild.iconURL()
+            thumbnail: interaction.guild.iconURL(),
+            footer: 'Nexus Support System | ENCRYPTED-LINE'
         });
 
-        // Send the panel
         await interaction.channel.send({ embeds: [embed], components: [row] });
 
-        // Acknowledge setup completion
-        await interaction.editReply({ content: '✅ Ticket panel successfully deployed.' });
+        await interaction.editReply({ content: '\`[SUCCESS]\` Support Matrix Uplink successfully deployed.' });
     },
 };

@@ -21,13 +21,9 @@ const TRIVIA_QUESTIONS = [
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('trivia')
-        .setDescription('Test your knowledge with a random trivia question!'),
+        .setDescription('Initiates a neural data retrieval sequence (Trivia).'),
     async execute(interaction) {
-        
-        // Grab a random question
         const questionObj = TRIVIA_QUESTIONS[Math.floor(Math.random() * TRIVIA_QUESTIONS.length)];
-        
-        // Shuffle options so the correct answer isn't always in the same button spot
         const shuffledOptions = [...questionObj.options].sort(() => Math.random() - 0.5);
 
         const row = new ActionRowBuilder();
@@ -41,9 +37,10 @@ module.exports = {
         });
 
         const embed = createEmbed({
-            title: '🧠 Trivia Time!',
-            description: `**${questionObj.q}**\n\n*You have 15 seconds to answer.*`,
-            color: '#00FFCC'
+            title: '🧠 Neural Data Retrieval',
+            description: `\`[DECRYPTING QUERY...]\` \n\n**${questionObj.q}**\n\n*Temporal Response Window: 15 seconds.*`,
+            color: '#00FFCC',
+            footer: 'Nexus Knowledge-Base | TRIVIA-RETRIEVAL'
         });
 
         const reply = await interaction.reply({ 
@@ -54,21 +51,22 @@ module.exports = {
 
         const collector = reply.createMessageComponentCollector({ 
             componentType: ComponentType.Button, 
-            time: 30000 
+            time: 15000 
         });
 
         collector.on('collect', async i => {
             if (i.user.id !== interaction.user.id) {
-                return i.reply({ content: 'Start your own trivia game with `/trivia`!', flags: 64 });
+                return i.reply({ content: '\`[UNAUTHORIZED]\` Access restricted to sequence initiator.', flags: 64 });
             }
 
             const chosenAnswer = shuffledOptions[parseInt(i.customId.split('_')[1])];
             const isCorrect = chosenAnswer === questionObj.a;
 
             const resultEmbed = createEmbed({
-                title: isCorrect ? '✅ Correct!' : '❌ Incorrect!',
-                description: `**${questionObj.q}**\n\nYou chose: \`${chosenAnswer}\`\nCorrect Answer: \`${questionObj.a}\``,
-                color: isCorrect ? '#00FFCC' : '#FF4B2B'
+                title: isCorrect ? '✅ Sync Successful' : '❌ Sync Failure',
+                description: `**Query:** ${questionObj.q}\n\n**Input:** \`${chosenAnswer}\`\n**Required:** \`${questionObj.a}\``,
+                color: isCorrect ? '#00FFCC' : '#FF4B2B',
+                footer: isCorrect ? 'Neural patterns aligned.' : 'Pattern mismatch detected.'
             });
 
             await i.update({ embeds: [resultEmbed], components: [] });
@@ -78,8 +76,8 @@ module.exports = {
         collector.on('end', async (_, reason) => {
             if (reason === 'time') {
                 const timeoutEmbed = createEmbed({
-                    title: '⏰ Time\'s Up!',
-                    description: `**${questionObj.q}**\n\nCorrect Answer: \`${questionObj.a}\``,
+                    title: '⏰ Retrieval Timed Out',
+                    description: `\`[ABORT]\` Data stream collapsed.\n\n**Required Info:** \`${questionObj.a}\``,
                     color: '#A3B1C6'
                 });
                 await interaction.editReply({ embeds: [timeoutEmbed], components: [] }).catch(() => null);

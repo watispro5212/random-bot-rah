@@ -16,18 +16,19 @@ const CHOICES = {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('rps')
-        .setDescription('Play Rock, Paper, Scissors against the bot!'),
+        .setDescription('Initiates a hand-gesture conflict resolution sequence (RPS).'),
     async execute(interaction) {
         const row = new ActionRowBuilder().addComponents(
-            new ButtonBuilder().setCustomId('rps_rock').setEmoji('🪨').setStyle(ButtonStyle.Primary),
-            new ButtonBuilder().setCustomId('rps_paper').setEmoji('📄').setStyle(ButtonStyle.Primary),
-            new ButtonBuilder().setCustomId('rps_scissors').setEmoji('✂️').setStyle(ButtonStyle.Primary)
+            new ButtonBuilder().setCustomId('rps_rock').setEmoji('🪨').setStyle(ButtonStyle.Primary).setLabel('Rock'),
+            new ButtonBuilder().setCustomId('rps_paper').setEmoji('📄').setStyle(ButtonStyle.Primary).setLabel('Paper'),
+            new ButtonBuilder().setCustomId('rps_scissors').setEmoji('✂️').setStyle(ButtonStyle.Primary).setLabel('Scissors')
         );
 
         const embed = createEmbed({
-            title: 'Rock, Paper, Scissors!',
-            description: 'Choose your weapon below. You have 15 seconds.',
-            color: '#00FFCC'
+            title: '👊 Hand-Gesture Conflict Resolution',
+            description: `\`[AWAITING INPUT...]\` \n\nSelect your maneuver below.\n*Temporal window: 15 seconds.*`,
+            color: '#00FFCC',
+            footer: 'Nexus Combat Matrix | RPS-SEQUENCE'
         });
 
         const reply = await interaction.reply({ 
@@ -38,15 +39,15 @@ module.exports = {
 
         const collector = reply.createMessageComponentCollector({ 
             componentType: ComponentType.Button, 
-            time: 30000 
+            time: 15000 
         });
 
         collector.on('collect', async i => {
             if (i.user.id !== interaction.user.id) {
-                return i.reply({ content: 'Start your own game with `/rps`!', flags: 64 });
+                return i.reply({ content: '\`[UNAUTHORIZED]\` Access restricted to conflict initiator.', flags: 64 });
             }
 
-            const userChoiceId = i.customId.split('_')[1]; // rock, paper, or scissors
+            const userChoiceId = i.customId.split('_')[1];
             const botChoiceId = Object.keys(CHOICES)[Math.floor(Math.random() * 3)];
 
             const userChoice = CHOICES[userChoiceId];
@@ -56,26 +57,26 @@ module.exports = {
             let color = '#00FFCC';
 
             if (userChoiceId === botChoiceId) {
-                resultLabel = '🤝 It\'s a Tie!';
-                color = '#FFCC00'; // yellow
+                resultLabel = '🤝 Sequence Standoff (Tie)';
+                color = '#FFCC00';
             } else if (userChoice.beats === botChoiceId) {
-                resultLabel = '🏆 You Win!';
-                color = '#00FFCC'; // green
+                resultLabel = '🏆 Tactical Overpower (Win)';
+                color = '#00FFCC';
             } else {
-                resultLabel = '💀 Bot Wins!';
-                color = '#FF4B2B'; // red
+                resultLabel = '💀 System Dominance (Loss)';
+                color = '#FF4B2B';
             }
 
             const resultEmbed = createEmbed({
                 title: resultLabel,
                 fields: [
-                    { name: 'You chose', value: `${userChoice.emoji} ${userChoice.label}`, inline: true },
-                    { name: 'Bot chose', value: `${botChoice.emoji} ${botChoice.label}`, inline: true }
+                    { name: 'Your Selection', value: `${userChoice.emoji} ${userChoice.label}`, inline: true },
+                    { name: 'Nexus Response', value: `${botChoice.emoji} ${botChoice.label}`, inline: true }
                 ],
-                color: color
+                color: color,
+                footer: 'Conflict resolution final.'
             });
 
-            // Respond to interaction and halt the collector immediately
             await i.update({ embeds: [resultEmbed], components: [] });
             collector.stop('played');
         });
@@ -83,8 +84,8 @@ module.exports = {
         collector.on('end', async (_, reason) => {
             if (reason === 'time') {
                 const timeoutEmbed = createEmbed({
-                    title: '⏰ Too Slow!',
-                    description: 'You took too long to choose a weapon.',
+                    title: '⏰ Resolution Timed Out',
+                    description: '\`[ABORT]\` Too slow to execute maneuver. Conflict abandoned.',
                     color: '#A3B1C6'
                 });
                 await interaction.editReply({ embeds: [timeoutEmbed], components: [] }).catch(() => null);

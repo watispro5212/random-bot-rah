@@ -9,86 +9,86 @@ const { createEmbed } = require('../utils/embed');
 
 const CATEGORIES = {
     utility: {
-        label: 'Utility Commands',
-        description: 'General bot and server information',
+        label: 'Nexus Utilities',
+        description: 'Core system tools and diagnostics.',
         emoji: '🔧',
         commands: [
-            { name: 'ping', desc: 'Checks the bot\'s network status and latency metrics' },
-            { name: 'info', desc: 'Displays information about the bot and the current server' },
-            { name: 'serverinfo', desc: 'Displays detailed information about the current server' },
-            { name: 'userinfo', desc: 'Displays detailed information about a user' },
-            { name: 'avatar', desc: 'Displays a user\'s avatar in high resolution' },
-            { name: 'math', desc: 'Evaluates a mathematical expression' },
-            { name: 'timer', desc: 'Sets a countdown timer' }
+            { name: 'ping', desc: 'Checks the bot\'s network status and latency pulse.' },
+            { name: 'info', desc: 'Displays a core specification scan of the Nexus.' },
+            { name: 'serverinfo', desc: 'Displays detailed encryption and sector data.' },
+            { name: 'userinfo', desc: 'Initiates a biometric scan on a specified entity.' },
+            { name: 'avatar', desc: 'Retrieves high-fidelity visual iconography.' },
+            { name: 'math', desc: 'Executes complex neural computations.' },
+            { name: 'timer', desc: 'Sets a temporal countdown anchor.' }
         ]
     },
     economy: {
-        label: 'Economy & Finance',
-        description: 'Earn, manage, and steal credits!',
+        label: 'Financial Matrix',
+        description: 'Manage Nexus credits and assets.',
         emoji: '💰',
         commands: [
-            { name: 'balance', desc: 'Check your current account balance and net worth' },
-            { name: 'daily', desc: 'Claim your 24-hour reward and build streaks' },
-            { name: 'work', desc: 'Work a random shift to earn some credits' },
-            { name: 'rob', desc: 'Risk it all and attempt to steal from a user' },
-            { name: 'transfer', desc: 'Safely transfer credits to another user' },
-            { name: 'leaderboard', desc: 'Displays the top 10 richest users based on net worth' },
-            { name: 'shop', desc: 'View the item shop catalog' },
-            { name: 'buy', desc: 'Buy an item from the shop' },
-            { name: 'inventory', desc: 'View your purchased items' }
+            { name: 'balance', desc: 'Check current credit reserves and net worth.' },
+            { name: 'daily', desc: 'Claim your 24-hour credit allocation.' },
+            { name: 'work', desc: 'Submit a labor packet to earn credits.' },
+            { name: 'rob', desc: 'Risk a breach to siphon credits from others.' },
+            { name: 'transfer', desc: 'Execute a secure credit transaction.' },
+            { name: 'leaderboard', desc: 'Displays the top 10 richest entities.' },
+            { name: 'shop', desc: 'View the credit exchange catalog.' },
+            { name: 'buy', desc: 'Purchase an asset from the exchange.' },
+            { name: 'inventory', desc: 'View your secure asset storage.' }
         ]
     },
     casino: {
-        label: 'Casino & High Rollers',
-        description: 'Gamble your credits away!',
+        label: 'Probability Casino',
+        description: 'Bet credits on high-risk sequences.',
         emoji: '🎰',
         commands: [
-            { name: 'blackjack', desc: 'Play a game of Blackjack against the dealer' },
-            { name: 'slots', desc: 'Bet your credits on the slot machine' }
+            { name: 'blackjack', desc: 'Challenge the dealer in a risk-reward matrix.' },
+            { name: 'slots', desc: 'Test your luck against the RNG modules.' }
         ]
     },
     leveling: {
-        label: 'Leveling System',
-        description: 'Track your XP and Rank',
+        label: 'Neural Progression',
+        description: 'Track XP and rank metrics.',
         emoji: '📈',
         commands: [
-            { name: 'rank', desc: 'Displays your current Level and XP progress' }
+            { name: 'rank', desc: 'Displays your current neural level and XP pulse.' }
         ]
     },
     moderation: {
-        label: 'Moderation Commands',
-        description: 'Tools for server administrators',
+        label: 'Sector Security',
+        description: 'Enforcement tools for sector admins.',
         emoji: '🛡️',
         commands: [
-            { name: 'ban', desc: 'Ban a user from the server' },
-            { name: 'kick', desc: 'Kick a user from the server' },
-            { name: 'purge', desc: 'Bulk delete messages in the current channel' },
-            { name: 'lock', desc: 'Locks the current channel (@everyone cannot send messages)' },
-            { name: 'unlock', desc: 'Unlocks the current channel' },
-            { name: 'slowmode', desc: 'Sets the channel slowmode duration' },
-            { name: 'verify-setup', desc: 'Drops a verification panel (Admin Only)' }
+            { name: 'ban', desc: 'Terminate an entity\'s access permanently.' },
+            { name: 'kick', desc: 'Expel an entity from the sector.' },
+            { name: 'purge', desc: 'Wipe multiple transmission logs.' },
+            { name: 'lock', desc: 'Execute a sector-wide transmission lock.' },
+            { name: 'unlock', desc: 'Restore standard transmission protocols.' },
+            { name: 'slowmode', desc: 'Adjust transmission throttling delays.' },
+            { name: 'verify-setup', desc: 'Deploy a biometric verification node.' }
         ]
     },
     fun: {
-        label: 'Fun & Games',
-        description: 'Games and entertainment',
+        label: 'Recreation Modules',
+        description: 'Entertainment and probability sequences.',
         emoji: '🎲',
         commands: [
-            { name: '8ball', desc: 'Ask the Magic 8-Ball a yes/no question' },
-            { name: 'coinflip', desc: 'Flips a coin returning Heads or Tails' },
-            { name: 'roll', desc: 'Rolls a die (default 6 sides)' },
-            { name: 'rps', desc: 'Play Rock, Paper, Scissors against the bot' },
-            { name: 'trivia', desc: 'Answer a random trivia question' }
+            { name: '8ball', desc: 'Consult the Nexus Oracle for predictions.' },
+            { name: 'coinflip', desc: 'Execute a binary probability sequence.' },
+            { name: 'roll', desc: 'Roll a multi-sided randomization module.' },
+            { name: 'rps', desc: 'Initiate a conflict resolution sequence.' },
+            { name: 'trivia', desc: 'Initiate a neural data retrieval game.' }
         ]
     },
     media: {
-        label: 'Images & Media',
-        description: 'Cute animals and fresh memes',
+        label: 'Intelligence & Media',
+        description: 'Retrieval of scans and data packets.',
         emoji: '📸',
         commands: [
-            { name: 'cat', desc: 'Fetches a random picture of a cute cat' },
-            { name: 'dog', desc: 'Fetches a random picture of a cute dog' },
-            { name: 'meme', desc: 'Fetches a random top meme' }
+            { name: 'cat', desc: 'Retrieve a random feline biometric asset.' },
+            { name: 'dog', desc: 'Retrieve a random canine biometric asset.' },
+            { name: 'meme', desc: 'Fetch a top-rated cultural data packet (Meme).' }
         ]
     }
 };
@@ -96,13 +96,11 @@ const CATEGORIES = {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('help')
-        .setDescription('Interface access. Browse the Nexus command modules.'),
+        .setDescription('Interface access. Browse the Nexus Directory Matrix.'),
     async execute(interaction) {
-        
-        // Build the dropdown menu
         const selectMenu = new StringSelectMenuBuilder()
             .setCustomId('help_category_select')
-            .setPlaceholder('Select a system module...')
+            .setPlaceholder('Select a system matrix...')
             .addOptions(
                 Object.entries(CATEGORIES).map(([id, data]) => 
                     new StringSelectMenuOptionBuilder()
@@ -115,12 +113,11 @@ module.exports = {
 
         const row = new ActionRowBuilder().addComponents(selectMenu);
 
-        // Initial embed
         const initialEmbed = createEmbed({
-            title: '💿 Nexus Interface | Directory',
-            description: 'Select a command module from the dropdown below to view available functions.',
+            title: '💿 Nexus Directory Matrix',
+            description: `\`[SYSTEM READY]\` \nSelect a command module from the dropdown below to view available functions.`,
             color: '#00FFCC',
-            footer: 'Module interface active for 3 minutes.'
+            footer: 'Directory interface active for 3 minutes.'
         });
 
         const response = await interaction.reply({ 
@@ -129,22 +126,19 @@ module.exports = {
             withResponse: true 
         }).then(i => i.resource ? i.resource.message : i.fetchReply());
 
-        // Setup component collector for the dropdown
         const collector = response.createMessageComponentCollector({ 
             componentType: ComponentType.StringSelect, 
-            time: 180000 // 3 minutes
+            time: 180000 
         });
 
         collector.on('collect', async i => {
-            // Only allow the original unvoker to use the dropdown
             if (i.user.id !== interaction.user.id) {
-                return i.reply({ content: 'Unauthorized access. This interface is locked to the original user.', flags: 64 });
+                return i.reply({ content: '\`[UNAUTHORIZED]\` Access restricted to directory initiator.', flags: 64 });
             }
 
             const categoryId = i.values[0];
             const categoryData = CATEGORIES[categoryId];
 
-            // Build fields from commands
             const fields = categoryData.commands.map(cmd => ({
                 name: `/${cmd.name}`,
                 value: `↳ ${cmd.desc}`,
@@ -156,20 +150,19 @@ module.exports = {
                 description: `*${categoryData.description}*`,
                 fields: fields,
                 color: '#00FFCC',
-                footer: `Showing ${fields.length} commands`
+                footer: `Showing ${fields.length} available protocols`
             });
 
             await i.update({ embeds: [categoryEmbed], components: [row] });
         });
 
         collector.on('end', async () => {
-            // Disable the dropdown when time expires
             selectMenu.setDisabled(true);
             const disabledRow = new ActionRowBuilder().addComponents(selectMenu);
             
             await interaction.editReply({ 
                 components: [disabledRow] 
-            }).catch(() => null); // Catch if message was deleted
+            }).catch(() => null);
         });
     },
 };
