@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Premium | Elite Access</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        .price-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .price-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.1);
+            background: rgba(0, 255, 204, 0.02);
+        }
+        .price-card.featured {
+            border-color: var(--secondary);
+            background: rgba(188, 19, 254, 0.03);
+        }
+        .price-card.featured::before {
+            content: 'MOST_STABLE';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 40px;
+            font-size: 0.6rem;
+            font-family: 'Orbitron';
+            transform: rotate(45deg);
+        }
+        .price-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin: 1.5rem 0;
+            font-family: 'Orbitron';
+        }
+        .price-features {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+            text-align: left;
+            flex-grow: 1;
+        }
+        .price-features li {
+            margin-bottom: 1rem;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        .price-features li::before {
+            content: '→';
+            color: var(--primary);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="nexus-bg">
+        <div class="grid-overlay"></div>
+        <div class="scanline"></div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <span>NEXUS</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="commands.html">Commands</a>
+                <a href="wiki.html">Wiki</a>
+                <a href="staff.html">Staff</a>
+                <a href="premium.html" class="active">Premium</a>
+                <a href="status.html">Network</a>
+                <a href="https://discord.com/api/oauth2/authorize?client_id=1480725340753101031&permissions=8&scope=bot%20applications.commands" class="btn btn-primary" style="padding: 10px 25px; font-size: 0.8rem;">Initialize</a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 100px;">
+        <section class="section">
+            <div class="section-header reveal">
+                <span class="section-label">Access Tiers</span>
+                <h2 class="section-title">Elite Subscriptions</h2>
+                <p class="hero-desc">Bypass standard limitations and upgrade your digital terminal with high-priority protocols.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="price-card reveal">
+                    <h3>Beta Operative</h3>
+                    <div class="price-amount">$5<span style="font-size: 1rem; color: var(--text-dim);">/mo</span></div>
+                    <ul class="price-features">
+                        <li>Priority Command Queuing</li>
+                        <li>Exclusive Premium Badge</li>
+                        <li>2x Global Daily Bonus</li>
+                        <li>Custom Profile Accents</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Initialize Uplink</a>
+                </div>
+
+                <div class="price-card featured reveal">
+                    <h3 style="color: var(--secondary);">Zero-Day Hunter</h3>
+                    <div class="price-amount">$15<span style="font-size: 1rem; color: var(--text-dim);">/mo</span></div>
+                    <ul class="price-features">
+                        <li>High-Frequency Data Access</li>
+                        <li>Zero-Wait Slot Cooldowns</li>
+                        <li>Advanced Auto-Purge Nodes</li>
+                        <li>Private Dev Sector Access</li>
+                        <li>Custom Command Aliases</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="background: var(--secondary); border-color: var(--secondary);">Access Elite</a>
+                </div>
+
+                <div class="price-card reveal">
+                    <h3>Nexus Founder</h3>
+                    <div class="price-amount">$45<span style="font-size: 1rem; color: var(--text-dim);">/mo</span></div>
+                    <ul class="price-features">
+                        <li>Root Access Branding</li>
+                        <li>Global Network Statistics</li>
+                        <li>Direct Channel to Architects</li>
+                        <li>Priority Feature Voting</li>
+                        <li>Unrestricted Neural Levels</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Establish Root</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="margin-top: 100px;">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <div class="logo">
+                        <svg class="logo-icon" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        <span>NEXUS</span>
+                    </div>
+                    <p style="margin-top: 1rem; color: var(--text-dim); font-size: 0.9rem;">The elite protocol for digital communities. Secure. Scalable. Next-Gen.</p>
+                </div>
+                <div class="footer-links">
+                    <h4 style="color: white; margin-bottom: 1rem;">Navigation</h4>
+                    <a href="index.html">Home</a>
+                    <a href="commands.html">Commands</a>
+                    <a href="wiki.html">Wiki</a>
+                    <a href="staff.html">Staff</a>
+                    <a href="premium.html">Premium</a>
+                    <a href="status.html">Network</a>
+                </div>
+                <div class="footer-links">
+                    <h4 style="color: white; margin-bottom: 1rem;">Legal</h4>
+                    <a href="terms.html">Terms of Service</a>
+                    <a href="privacy.html">Privacy Protocol</a>
+                </div>
+            </div>
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: var(--text-dim); font-size: 0.8rem;">
+                &copy; 2026 NEXUS_PROTOCOL. ALL_RIGHTS_RESERVED.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

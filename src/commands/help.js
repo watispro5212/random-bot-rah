@@ -105,7 +105,19 @@ const CATEGORIES = {
             { name: 'Firewall', desc: 'A defensive barrier monitoring incoming data vectors.' },
             { name: 'Breach', desc: 'An unauthorized security bypass or system intrusion.' },
             { name: 'Cyber-Heist', desc: 'A high-stakes operation to siphon restricted credits.' },
-            { name: 'Biometric', desc: 'Unique biological signatures used for entity scans.' }
+            { name: 'Biometric', desc: 'Unique biological signatures used for entity scans.' },
+            { name: 'Sync', desc: 'The process of aligning local state with the global Nexus database.' },
+            { name: 'Callback', desc: 'A functional trigger returned after a process completes.' },
+            { name: 'Gateway', desc: 'The entry point for all neural transmissions to Discord.' },
+            { name: 'Websocket', desc: 'A persistent, bidirectional data stream protocol.' },
+            { name: 'Shard ID', desc: 'The unique identifier for a specific bot instance.' },
+            { name: 'Cluster', desc: 'A collection of shards operating on the same hardware node.' },
+            { name: 'Env', desc: 'System variables defining the operative environment config.' },
+            { name: 'API Key', desc: 'A cryptographic token used for unauthorized-free access.' },
+            { name: 'Webhook', desc: 'An automated data push to a specific sector endpoint.' },
+            { name: 'Packet', desc: 'A discrete unit of data transmitted over the network.' },
+            { name: 'Handshake', desc: 'The initial cryptographic greeting between two nodes.' },
+            { name: 'SSL', desc: 'Secure Sockets Layer - encryption for protocol safety.' }
         ]
     }
 };

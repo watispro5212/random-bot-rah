@@ -22,6 +22,8 @@
                 <a href="index.html">Home</a>
                 <a href="commands.html">Commands</a>
                 <a href="wiki.html">Wiki</a>
+                <a href="staff.html">Staff</a>
+                <a href="premium.html">Premium</a>
                 <a href="status.html">Network</a>
                 <a href="https://discord.com/api/oauth2/authorize?client_id=1480725340753101031&permissions=8&scope=bot%20applications.commands" class="btn btn-primary" style="padding: 10px 25px; font-size: 0.8rem;">Initialize</a>
             </div>
@@ -68,41 +70,25 @@
             </div>
         </section>
 
-        <section class="section" id="commands">
+        <section class="section" id="operations">
             <div class="section-header reveal">
-                <span class="section-label">Inventory</span>
-                <h2 class="section-title">Command Explorer</h2>
+                <span class="section-label">Real-Time</span>
+                <h2 class="section-title">Operations Feed</h2>
+                <p class="hero-desc">Live stream of cross-sector system events and protocol executions.</p>
             </div>
             
-            <div class="terminal-container reveal">
+            <div class="terminal-container reveal" style="margin-top: 3rem;">
                 <div class="terminal-header">
-                    <div class="terminal-dots">
-                        <div class="dot red"></div>
-                        <div class="dot yellow"></div>
-                        <div class="dot green"></div>
-                    </div>
-                    <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--primary);">NEXUS_SHELL // EXECUTING_QUERY...</div>
+                    <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--primary);">NEXUS_EVENT_STREAM // MONITORING_ACTIVE</div>
                 </div>
-                
-                <div class="terminal-body">
-                    <div class="search-box">
-                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        <input type="text" id="command-search" placeholder="Scan for command signal...">
-                    </div>
-
-                    <div class="tab-nav" id="category-tabs">
-                        <button class="tab-btn active" data-category="utility">Utility</button>
-                        <button class="tab-btn" data-category="economy">Economy</button>
-                        <button class="tab-btn" data-category="casino">Casino</button>
-                        <button class="tab-btn" data-category="leveling">Leveling</button>
-                        <button class="tab-btn" data-category="moderation">Moderation</button>
-                        <button class="tab-btn" data-category="fun">Fun</button>
-                        <button class="tab-btn" data-category="media">Media</button>
-                    </div>
-
-                    <div class="cmd-grid" id="command-list">
-                        <!-- Commands injected by JS -->
-                    </div>
+                <div class="terminal-body" style="height: 250px; overflow: hidden; font-family: 'JetBrains Mono'; font-size: 0.75rem; padding: 1.5rem; color: var(--text-dim); line-height: 1.6;">
+                    <div style="margin-bottom: 0.5rem;"><span style="color: var(--secondary);">[21:52:10]</span> <span style="color: var(--primary);">SHARD_0</span>: Initializing neural level sync for guild_8829... <span style="color: #00FF88;">SUCCESS</span></div>
+                    <div style="margin-bottom: 0.5rem;"><span style="color: var(--secondary);">[21:52:12]</span> <span style="color: var(--primary);">FIREWALL</span>: Unauthorized breach attempt detected in sector_G4. Blocking vector... <span style="color: #FF4B2B;">BLOCKED</span></div>
+                    <div style="margin-bottom: 0.5rem;"><span style="color: var(--secondary);">[21:52:15]</span> <span style="color: var(--primary);">CORE</span>: Global heartbeat pulse emitted. Latency: 18ms.</div>
+                    <div style="margin-bottom: 0.5rem;"><span style="color: var(--secondary);">[21:52:20]</span> <span style="color: var(--primary);">UPLINK</span>: Gateway handshake confirmed with Discord API nodes.</div>
+                    <div style="margin-bottom: 0.5rem;"><span style="color: var(--secondary);">[21:52:25]</span> <span style="color: var(--primary);">ECONOMY</span>: Batching 4,821 credit transactions to global ledger...</div>
+                    <div style="margin-bottom: 0.5rem;"><span style="color: var(--secondary);">[21:52:28]</span> <span style="color: var(--primary);">SHARD_0</span>: Processing /HELP request from entity_0092...</div>
+                    <div style="margin-top: 1rem; color: var(--primary); animation: blink 1s infinite;">_ LISTENING_FOR_TRAFFIC...</div>
                 </div>
             </div>
         </section>
