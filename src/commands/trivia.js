@@ -49,7 +49,7 @@ module.exports = {
         const reply = await interaction.reply({ 
             embeds: [embed], 
             components: [row],
-            fetchReply: true 
+            withResponse: true 
         });
 
         const collector = reply.createMessageComponentCollector({ 
@@ -59,7 +59,7 @@ module.exports = {
 
         collector.on('collect', async i => {
             if (i.user.id !== interaction.user.id) {
-                return i.reply({ content: 'Start your own trivia game with `/trivia`!', ephemeral: true });
+                return i.reply({ content: 'Start your own trivia game with `/trivia`!', flags: 64 });
             }
 
             const chosenAnswer = shuffledOptions[parseInt(i.customId.split('_')[1])];

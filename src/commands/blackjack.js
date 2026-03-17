@@ -74,7 +74,7 @@ module.exports = {
                                  ` Credits**.`,
                     color: 0xED4245
                 })],
-                ephemeral: true
+                flags: 64
             });
         }
 
@@ -130,14 +130,14 @@ module.exports = {
         const reply = await interaction.reply({ 
             embeds: [buildEmbed('Game in progress. Your turn.', '#00FFCC')], 
             components: [buttons], 
-            fetchReply: true 
+            withResponse: true 
         });
 
         const collector = reply.createMessageComponentCollector({ componentType: ComponentType.Button, time: 60000 });
 
         collector.on('collect', async i => {
             if (i.user.id !== userId) {
-                return i.reply({ content: 'Play your own game by typing `/blackjack`!', ephemeral: true });
+                return i.reply({ content: 'Play your own game by typing `/blackjack`!', flags: 64 });
             }
 
             if (i.customId === 'bj_hit') {

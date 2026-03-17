@@ -43,7 +43,7 @@ module.exports = {
                     description: 'Could not evaluate the expression. Ensure you are only using numbers and `+ - * / ( )`.',
                     color: 0xED4245
                 })],
-                ephemeral: true
+                flags: 64
             });
         }
     },

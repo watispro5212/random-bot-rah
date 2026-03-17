@@ -5,8 +5,7 @@ const logger = require('../utils/logger');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('lock')
-        .setDescription('Locks the current channel by denying SendMessages for @everyone')
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDescription('Locks the current channel by denying SendMessages for @everyone'),
     async execute(interaction) {
         const channel = interaction.channel;
 
@@ -32,7 +31,7 @@ module.exports = {
                     description: 'Could not lock the channel. Check my permissions (Manage Roles/Channels).',
                     color: 0xED4245
                 })],
-                ephemeral: true
+                flags: 64
             });
         }
     },

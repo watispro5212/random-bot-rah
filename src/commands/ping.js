@@ -14,7 +14,7 @@ module.exports = {
                     color: '#00FFCC'
                 })
             ], 
-            fetchReply: true 
+            withResponse: true 
         });
 
         const roundtripLatency = sent.createdTimestamp - interaction.createdTimestamp;

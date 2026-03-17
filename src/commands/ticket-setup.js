@@ -10,11 +10,10 @@ const { createEmbed } = require('../utils/embed');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('ticket-setup')
-        .setDescription('Drops an interactive panel to create Support Tickets.')
-        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+        .setDescription('Drops an interactive panel to create Support Tickets.'),
     async execute(interaction) {
         
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ flags: 64 });
 
         const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder()

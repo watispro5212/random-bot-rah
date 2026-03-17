@@ -20,7 +20,7 @@ module.exports = {
         const text = interaction.options.getString('text').toLowerCase();
         
         if (text.length > 50) {
-            return interaction.reply({ content: 'Payload too large. Keep it under 50 characters.', ephemeral: true });
+            return interaction.reply({ content: 'Payload too large. Keep it under 50 characters.', flags: 64 });
         }
 
         let emojified = '';

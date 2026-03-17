@@ -28,7 +28,7 @@ module.exports = {
                     description: `You are trying to bet **${bet.toLocaleString()} Credits**, but your wallet only has **${data.wallet.toLocaleString()} Credits**.`,
                     color: 0xED4245
                 })],
-                ephemeral: true
+                flags: 64
             });
         }
 

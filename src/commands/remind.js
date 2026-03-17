@@ -19,7 +19,7 @@ module.exports = {
 
         const timeMatch = timeStr.match(/^(\d+)([smh])$/);
         if (!timeMatch) {
-            return interaction.reply({ content: 'Format is wrong. Try something like 10s, 5m, or 1h.', ephemeral: true });
+            return interaction.reply({ content: 'Format is wrong. Try something like 10s, 5m, or 1h.', flags: 64 });
         }
 
         const value = parseInt(timeMatch[1]);
@@ -31,7 +31,7 @@ module.exports = {
         else if (unit === 'h') ms = value * 60 * 60 * 1000;
 
         if (ms > 24 * 60 * 60 * 1000) {
-            return interaction.reply({ content: 'That\'s too far out. 24 hours is my current limit.', ephemeral: true });
+            return interaction.reply({ content: 'That\'s too far out. 24 hours is my current limit.', flags: 64 });
         }
 
         const embed = createEmbed({
@@ -40,7 +40,7 @@ module.exports = {
             color: '#F1C40F'
         });
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.reply({ embeds: [embed], flags: 64 });
 
         setTimeout(async () => {
             try {

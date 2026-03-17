@@ -24,14 +24,14 @@ module.exports = {
         if (targetUser.bot) {
             return interaction.reply({ 
                 content: 'You cannot send credits to a bot!', 
-                ephemeral: true 
+                flags: 64 
             });
         }
         
         if (targetId === senderId) {
             return interaction.reply({ 
                 content: 'You cannot send credits to yourself!', 
-                ephemeral: true 
+                flags: 64 
             });
         }
 
@@ -44,7 +44,7 @@ module.exports = {
                     description: `You only have **${senderData.wallet.toLocaleString()} Credits** in your wallet.`,
                     color: 0xED4245
                 })],
-                ephemeral: true
+                flags: 64
             });
         }
 

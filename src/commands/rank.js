@@ -31,7 +31,7 @@ module.exports = {
         const target = interaction.options.getUser('target') || interaction.user;
         
         if (target.bot) {
-            return interaction.reply({ content: 'Bots don\'t earn XP!', ephemeral: true });
+            return interaction.reply({ content: 'Bots don\'t earn XP!', flags: 64 });
         }
 
         const data = await economy.getUser(target.id, interaction.guild.id);

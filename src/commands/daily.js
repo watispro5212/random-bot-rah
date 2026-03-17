@@ -28,7 +28,7 @@ module.exports = {
                     description: `Your daily Nexus allocation has already been dispersed.\nNext drop available in **${hours}h ${minutes}m**.`,
                     color: '#FF4B2B'
                 })],
-                ephemeral: true 
+                flags: 64 
             });
         }
 

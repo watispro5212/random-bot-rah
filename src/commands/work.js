@@ -37,7 +37,7 @@ module.exports = {
                     description: `Your neural link needs to cool down. Rest for **${minutes} more minutes** before accepting a new gig.`,
                     color: '#FF4B2B'
                 })],
-                ephemeral: true 
+                flags: 64 
             });
         }
 

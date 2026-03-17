@@ -22,7 +22,7 @@ module.exports = {
         if (targetUser.bot || targetId === robberId) {
             return interaction.reply({ 
                 content: 'Invalid target parameters.', 
-                ephemeral: true 
+                flags: 64 
             });
         }
 
@@ -41,7 +41,7 @@ module.exports = {
                     description: `Nexus Security is actively scanning for your signature. Lay low for **${minutes} minutes** before attempting another heist.`,
                     color: '#FF4B2B'
                 })],
-                ephemeral: true
+                flags: 64
             });
         }
 
@@ -52,7 +52,7 @@ module.exports = {
                     description: `You need at least **${FINE_AMOUNT} Credits** in your local wallet to cover potential Nexus Security fines.`,
                     color: '#FF4B2B'
                 })],
-                ephemeral: true
+                flags: 64
             });
         }
 
@@ -65,7 +65,7 @@ module.exports = {
                     description: `Target <@${targetId}> has less than 100 Credits in their wallet. Not worth the network bandwidth.`,
                     color: '#FF4B2B'
                 })],
-                ephemeral: true
+                flags: 64
             });
         }
 
