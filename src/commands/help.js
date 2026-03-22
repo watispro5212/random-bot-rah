@@ -6,6 +6,7 @@ const {
     ComponentType
 } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
+const { isOwner } = require('../utils/ownerGate');
 
 const CATEGORIES = {
     utility: {
@@ -149,16 +150,41 @@ const CATEGORIES = {
     }
 };
 
+// Owner-only category — hidden from regular players
+const OWNER_CATEGORY = {
+    owner: {
+        label: '🔒 Root Access Panel',
+        description: 'Owner-only system override commands.',
+        emoji: '🔐',
+        commands: [
+            { name: 'shutdown', desc: 'Emergency shutdown all Nexus shard processes.' },
+            { name: 'eval', desc: 'Execute raw JavaScript in the Nexus core runtime.' },
+            { name: 'set-credits', desc: 'Override an operative\'s wallet or bank balance.' },
+            { name: 'set-level', desc: 'Override an operative\'s neural level and XP.' },
+            { name: 'announce', desc: 'Broadcast an official announcement through the Nexus.' },
+            { name: 'blacklist', desc: 'Sever an operative from using the Nexus entirely.' },
+            { name: 'server-list', desc: 'Display all sectors running the Nexus Protocol.' },
+            { name: 'reload', desc: 'Hot-reload a command module without restarting.' }
+        ]
+    }
+};
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('help')
         .setDescription('Interface access. Browse the Nexus Directory Matrix.'),
     async execute(interaction) {
+        // Build categories object — include owner panel only for the owner
+        const userIsOwner = isOwner(interaction.user.id);
+        const visibleCategories = userIsOwner 
+            ? { ...CATEGORIES, ...OWNER_CATEGORY } 
+            : CATEGORIES;
+
         const selectMenu = new StringSelectMenuBuilder()
             .setCustomId('help_category_select')
             .setPlaceholder('Select a system matrix...')
             .addOptions(
-                Object.entries(CATEGORIES).map(([id, data]) => 
+                Object.entries(visibleCategories).map(([id, data]) => 
                     new StringSelectMenuOptionBuilder()
                         .setLabel(data.label)
                         .setDescription(data.description)
@@ -169,10 +195,13 @@ module.exports = {
 
         const row = new ActionRowBuilder().addComponents(selectMenu);
 
+        const totalCommands = Object.values(visibleCategories).reduce((sum, cat) => sum + cat.commands.length, 0);
+        const totalModules = Object.keys(visibleCategories).length;
+
         const initialEmbed = createEmbed({
-            title: '💿 Nexus Directory Matrix',
-            description: `\`[SYSTEM READY]\` \nSelect a command module from the dropdown below to view available functions.\n\n**${Object.values(CATEGORIES).reduce((sum, cat) => sum + cat.commands.length, 0)}** total protocols across **${Object.keys(CATEGORIES).length}** modules.`,
-            color: '#00FFCC',
+            title: userIsOwner ? '💿 Nexus Directory Matrix — ROOT ACCESS' : '💿 Nexus Directory Matrix',
+            description: `\`[SYSTEM READY]\` \nSelect a command module from the dropdown below to view available functions.\n\n**${totalCommands}** total protocols across **${totalModules}** modules.${userIsOwner ? '\n\n🔐 *Root Access Panel unlocked.*' : ''}`,
+            color: userIsOwner ? '#FF0000' : '#00FFCC',
             footer: 'Directory interface active for 3 minutes.'
         });
 
@@ -193,10 +222,14 @@ module.exports = {
             }
 
             const categoryId = i.values[0];
-            const categoryData = CATEGORIES[categoryId];
+            const categoryData = visibleCategories[categoryId];
+
+            if (!categoryData) {
+                return i.reply({ content: '`[ERROR]` Category not found.', flags: 64 });
+            }
 
             const fields = categoryData.commands.map(cmd => ({
-                name: categoryId === 'glossary' ? `📖 ${cmd.name}` : `/${cmd.name}`,
+                name: categoryId === 'glossary' ? `📖 ${cmd.name}` : categoryId === 'owner' ? `🔒 /${cmd.name}` : `/${cmd.name}`,
                 value: `↳ ${cmd.desc}`,
                 inline: false
             }));
@@ -205,7 +238,7 @@ module.exports = {
                 title: `${categoryData.emoji} ${categoryData.label}`,
                 description: `*${categoryData.description}*`,
                 fields: fields,
-                color: '#00FFCC',
+                color: categoryId === 'owner' ? '#FF0000' : '#00FFCC',
                 footer: `Showing ${fields.length} available protocols`
             });
 
