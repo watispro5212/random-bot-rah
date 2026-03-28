@@ -35,7 +35,7 @@ const COOLDOWN_DURATIONS = {
 const COMMAND_CATEGORIES = {
     economy: ['balance', 'daily', 'work', 'rob', 'transfer', 'leaderboard', 'shop', 'buy', 'inventory'],
     casino: ['blackjack', 'slots', 'coinflip'],
-    moderation: ['ban', 'kick', 'warn', 'purge', 'lock', 'unlock', 'slowmode', 'say', 'verify-setup', 'ticket-setup'],
+    moderation: ['ban', 'kick', 'warn', 'purge', 'lock', 'unlock', 'slowmode', 'say', 'verify-setup', 'ticket-setup', 'automod-setup', 'log-setup', 'starboard-setup'],
     fun: ['8ball', 'roll', 'rps', 'trivia', 'hack', 'emojify', 'joke', 'fact', 'quote'],
     media: ['cat', 'dog', 'meme', 'urban'],
 };
@@ -238,7 +238,7 @@ module.exports = {
         const config = await getCachedConfig(interaction.guild.id);
         
         if (config) {
-            const economyCmds = ['balance', 'daily', 'work', 'buy', 'inventory', 'shop', 'transfer'];
+            const economyCmds = ['balance', 'daily', 'work', 'buy', 'inventory', 'shop', 'transfer', 'quests'];
             const casinoCmds = ['blackjack', 'slots', 'coinflip', 'rob'];
             const funCmds = ['8ball', 'cat', 'dog', 'emojify', 'fact', 'hack', 'joke', 'meme', 'quote', 'roll', 'rps', 'say', 'trivia', 'urban'];
             const levelingCmds = ['rank', 'leaderboard'];

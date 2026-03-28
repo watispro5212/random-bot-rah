@@ -17,17 +17,21 @@ for (const file of commandFiles) {
     }
 }
 
+if (!process.env.TOKEN) {
+    console.error('[FATAL] TOKEN is not set in the environment.');
+    process.exit(1);
+}
+
 const rest = new REST().setToken(process.env.TOKEN);
 
 (async () => {
     try {
         console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-
         const clientId = process.env.DISCORD_CLIENT_ID || process.env.CLIENT_ID;
-        
+
         if (!clientId) {
-            throw new Error("Missing DISCORD_CLIENT_ID or CLIENT_ID in .env file.");
+            throw new Error('Missing DISCORD_CLIENT_ID or CLIENT_ID in .env file.');
         }
 
         const data = await rest.put(

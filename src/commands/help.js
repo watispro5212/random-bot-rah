@@ -42,7 +42,8 @@ const CATEGORIES = {
             { name: 'leaderboard', desc: 'Displays the top 10 richest entities.' },
             { name: 'shop', desc: 'View the credit exchange catalog.' },
             { name: 'buy', desc: 'Purchase an asset from the exchange.' },
-            { name: 'inventory', desc: 'View your secure asset storage.' }
+            { name: 'inventory', desc: 'View your secure asset storage.' },
+            { name: 'quests', desc: 'Accept daily sub-routines for credit bounties.' }
         ]
     },
     casino: {
@@ -78,7 +79,10 @@ const CATEGORIES = {
             { name: 'slowmode', desc: 'Adjust transmission throttling delays.' },
             { name: 'say', desc: 'Transmit a cleartext message through the Nexus.' },
             { name: 'verify-setup', desc: 'Deploy a biometric verification node.' },
-            { name: 'ticket-setup', desc: 'Deploy a support ticket interface.' }
+            { name: 'ticket-setup', desc: 'Deploy a support ticket interface.' },
+            { name: 'automod-setup', desc: 'Configure automatic spam and content filters.' },
+            { name: 'log-setup', desc: 'Route moderation audit logs to a channel.' },
+            { name: 'starboard-setup', desc: 'Archive highly-reacted messages to a channel.' }
         ]
     },
     fun: {

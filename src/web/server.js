@@ -24,8 +24,8 @@ function initWebServer(manager) {
 
             const totalGuilds = reqs[0].reduce((acc, shardCount) => acc + shardCount, 0);
             const totalMembers = reqs[1].reduce((acc, memberCount) => acc + memberCount, 0);
-            // Average ping across all shards
-            const avgPing = Math.round(reqs[2].reduce((acc, ping) => acc + ping, 0) / manager.totalShards);
+            const shardCount = Math.max(1, manager.totalShards || reqs[2].length || 1);
+            const avgPing = Math.round(reqs[2].reduce((acc, ping) => acc + ping, 0) / shardCount);
 
             res.json({
                 guilds: totalGuilds,

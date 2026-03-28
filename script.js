@@ -46,7 +46,8 @@ const CATEGORIES = {
         { name: 'verify-setup', desc: 'Drop a secure verification portal (Admin Only)' },
         { name: 'ticket-setup', desc: 'Deploy a support ticket interface' },
         { name: 'automod-setup', desc: 'Configure automatic network filters for spam and unauthorized uplinks' },
-        { name: 'log-setup', desc: 'Establish an audit logging channel for purged and modified transmissions' }
+        { name: 'log-setup', desc: 'Establish an audit logging channel for purged and modified transmissions' },
+        { name: 'starboard-setup', desc: 'Initialize a starboard node to archive highlighted transmissions' }
     ],
     fun: [
         { name: '8ball', desc: 'Query the Oracle array for a yes/no outcome' },
@@ -57,8 +58,7 @@ const CATEGORIES = {
         { name: 'rps', desc: 'Simulate Rock, Paper, Scissors against the CPU' },
         { name: 'trivia', desc: 'Process a trivia data packet' },
         { name: 'hack', desc: 'Initiate a harmless penetration test on a target' },
-        { name: 'emojify', desc: 'Convert text data into an encrypted emoji string' },
-        { name: 'starboard-setup', desc: 'Initialize a starboard node to archive highlighted transmissions' }
+        { name: 'emojify', desc: 'Convert text data into an encrypted emoji string' }
     ],
     advanced: [
         { name: 'cyber-heist', desc: 'Execute a high-stakes multi-phase heist operation' },
@@ -121,8 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Command Rendering ---
-    function renderCommands(filter = '') {
+    // --- Command Rendering (let allows safe wrapping for hover re-attach) ---
+    let renderCommands = function renderCommands(filter = '') {
         if (!commandList) return;
         
         commandList.innerHTML = '';
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             commandList.appendChild(div);
         });
-    }
+    };
 
     // Tabs
     if (tabContainer) {
@@ -200,8 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function animateCounters() {
         const counters = document.querySelectorAll('.stat-number');
         counters.forEach(counter => {
-            const target = parseInt(counter.dataset.target);
-            if (!target || counter.dataset.done) return;
+            const target = parseInt(counter.dataset.target, 10);
+            if (Number.isNaN(target) || counter.dataset.done) return;
 
             const suffix = counter.dataset.suffix || '';
             const duration = 2000;
@@ -497,41 +497,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Live Bot Stats Integration ---
-    fetch('http://localhost:3000/api/stats')
+    // --- Live Bot Stats Integration (same origin when site is served by the bot's Express static host) ---
+    fetch('/api/stats', { credentials: 'same-origin' })
         .then(res => {
-            if (!res.ok) throw new Error('API Offline');
+            if (!res.ok) throw new Error('API offline');
             return res.json();
         })
         .then(data => {
-            console.log('[NEXUS] Received Live Telemetry:', data);
-            
-            // 1. Update Homepage Counters (if any)
+            const guilds = typeof data.guilds === 'number' ? data.guilds : 0;
+            const ping = typeof data.ping === 'number' ? data.ping : 0;
+            const shards = Math.max(1, data.shards || 1);
+
             const counters = document.querySelectorAll('.stat-number');
-            if (counters.length >= 4) {
-                counters[0].dataset.target = data.guilds; // Servers
-                // Only update data target before animation runs. If it ran, just text content.
-                if (counters[0].dataset.done) counters[0].textContent = data.guilds + '+';
-                else counters[0].dataset.target = data.guilds;
+            if (counters.length >= 1) {
+                const c0 = counters[0];
+                if (c0.dataset.done) {
+                    c0.textContent = `${guilds.toLocaleString()}+`;
+                } else {
+                    c0.dataset.target = String(guilds);
+                }
             }
 
-            // 2. Update Status Page (status.html)
-            const networkPings = document.querySelectorAll('.terminal-body span');
-            networkPings.forEach(span => {
-                if (span.innerText === '24ms') span.innerText = `${data.ping || 0}ms`;
-                if (span.innerText === '001 / 001') span.innerText = `${data.shards || 1} / ${data.shards || 1}`;
+            document.querySelectorAll('[data-stat="latency"]').forEach(el => {
+                el.textContent = `${ping}ms`;
+            });
+            document.querySelectorAll('[data-stat="shards"]').forEach(el => {
+                const s = String(shards).padStart(3, '0');
+                el.textContent = `${s} / ${s}`;
             });
 
-            // 3. Update active shard counter in dashboard/status visual
             const shardHealth = document.querySelector('.shard-item');
             if (shardHealth) {
                 shardHealth.innerHTML = `
-                    <span style="color: var(--primary); font-family: 'JetBrains Mono'; font-size: 0.8rem;">SHARD_ACTIVE (${data.shards || 1})</span>
-                    <div style="font-size: 0.6rem; color: var(--text-dim);">UPLINK: ACTIVE | LATENCY: ${data.ping}ms</div>
+                    <span style="color: var(--primary); font-family: 'JetBrains Mono'; font-size: 0.8rem;">SHARD_ACTIVE (${shards})</span>
+                    <div style="font-size: 0.6rem; color: var(--text-dim);">UPLINK: ACTIVE | LATENCY: ${ping}ms</div>
                 `;
             }
         })
-        .catch(err => {
-            console.warn('[NEXUS] Falling back to offline simulator.', err);
+        .catch(() => {
+            /* Static preview or API down — placeholder values remain */
         });
 });
