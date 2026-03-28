@@ -6,6 +6,7 @@ const {
     ComponentType 
 } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
+const { replyWithMessage } = require('../utils/replyMessage');
 
 const CHOICES = {
     rock: { emoji: '🪨', beats: 'scissors', label: 'Rock' },
@@ -31,11 +32,10 @@ module.exports = {
             footer: 'Nexus Combat Matrix | RPS-SEQUENCE'
         });
 
-        const reply = await interaction.reply({ 
-            embeds: [embed], 
+        const reply = await replyWithMessage(interaction, {
+            embeds: [embed],
             components: [row],
-            withResponse: true 
-        }).then(i => i.resource ? i.resource.message : i.fetchReply());
+        });
 
         const collector = reply.createMessageComponentCollector({ 
             componentType: ComponentType.Button, 

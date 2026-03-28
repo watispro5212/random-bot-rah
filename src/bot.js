@@ -19,6 +19,7 @@ const client = new Client({
 });
 
 client.commands = new Collection();
+client.blacklist = new Set();
 
 // load commands dynamically
 const commandsPath = path.join(__dirname, 'commands');

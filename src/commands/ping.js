@@ -1,21 +1,21 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
+const { replyWithMessage } = require('../utils/replyMessage');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Measure the latency between the physical world and the Nexus.'),
     async execute(interaction) {
-        const sent = await interaction.reply({ 
+        const sent = await replyWithMessage(interaction, {
             embeds: [
                 createEmbed({
                     title: '🛰️ Calibrating Neural Link...',
                     description: '`[CONNECTING]` established... Tapping into the global data bus.',
-                    color: '#FFCC00'
-                })
-            ], 
-            withResponse: true 
-        }).then(i => i.resource ? i.resource.message : i.fetchReply());
+                    color: '#FFCC00',
+                }),
+            ],
+        });
 
         const roundtripLatency = sent.createdTimestamp - interaction.createdTimestamp;
         const wsLatency = Math.round(interaction.client.ws.ping);

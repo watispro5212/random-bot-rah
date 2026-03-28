@@ -1,4 +1,4 @@
-const { Events, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { Events, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, PermissionFlagsBits } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
 const logger = require('../utils/logger');
 const cooldownManager = require('../utils/cooldownManager');
@@ -33,7 +33,7 @@ const COOLDOWN_DURATIONS = {
 
 // Categorize commands for cooldown purposes
 const COMMAND_CATEGORIES = {
-    economy: ['balance', 'daily', 'work', 'rob', 'transfer', 'leaderboard', 'shop', 'buy', 'inventory'],
+    economy: ['balance', 'daily', 'work', 'rob', 'transfer', 'leaderboard', 'shop', 'buy', 'inventory', 'quests'],
     casino: ['blackjack', 'slots', 'coinflip'],
     moderation: ['ban', 'kick', 'warn', 'purge', 'lock', 'unlock', 'slowmode', 'say', 'verify-setup', 'ticket-setup', 'automod-setup', 'log-setup', 'starboard-setup'],
     fun: ['8ball', 'roll', 'rps', 'trivia', 'hack', 'emojify', 'joke', 'fact', 'quote'],
@@ -105,20 +105,29 @@ module.exports = {
 
                     const ticketChannel = await interaction.guild.channels.create({
                         name: `ticket-${interaction.user.username}`,
-                        type: 0,
+                        type: ChannelType.GuildText,
                         permissionOverwrites: [
                             {
                                 id: interaction.guild.id,
-                                deny: ['ViewChannel'],
+                                deny: [PermissionFlagsBits.ViewChannel],
                             },
                             {
                                 id: interaction.user.id,
-                                allow: ['ViewChannel', 'SendMessages', 'ReadMessageHistory'],
+                                allow: [
+                                    PermissionFlagsBits.ViewChannel,
+                                    PermissionFlagsBits.SendMessages,
+                                    PermissionFlagsBits.ReadMessageHistory,
+                                ],
                             },
                             {
                                 id: client.user.id,
-                                allow: ['ViewChannel', 'SendMessages', 'ReadMessageHistory', 'ManageChannels'],
-                            }
+                                allow: [
+                                    PermissionFlagsBits.ViewChannel,
+                                    PermissionFlagsBits.SendMessages,
+                                    PermissionFlagsBits.ReadMessageHistory,
+                                    PermissionFlagsBits.ManageChannels,
+                                ],
+                            },
                         ],
                     });
 

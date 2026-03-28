@@ -33,7 +33,10 @@ module.exports = {
         const type = interaction.options.getString('type');
         const amount = interaction.options.getInteger('amount');
 
-        const userData = await EconomyManager.getUser(target.id);
+        const userData = await EconomyManager.getUser(target.id, interaction.guild.id);
+        if (!userData) {
+            return interaction.reply({ content: '`[ERROR]` Could not load user economy record.', flags: 64 });
+        }
         const oldAmount = userData[type];
         userData[type] = amount;
         await userData.save();

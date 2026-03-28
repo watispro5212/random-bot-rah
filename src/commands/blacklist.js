@@ -23,14 +23,6 @@ module.exports = {
         const target = interaction.options.getUser('target');
         const reason = interaction.options.getString('reason') || 'No reason specified.';
 
-        // Store blacklist in client collection
-        if (!client) {
-            // Fallback: get client from interaction
-        }
-        if (!interaction.client.blacklist) {
-            interaction.client.blacklist = new Set();
-        }
-
         if (interaction.client.blacklist.has(target.id)) {
             // Remove from blacklist (toggle)
             interaction.client.blacklist.delete(target.id);

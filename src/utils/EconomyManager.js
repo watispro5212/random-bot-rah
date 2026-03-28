@@ -44,6 +44,18 @@ class EconomyManager {
     }
 
     /**
+     * Adjust wallet balance by delta (can be negative). Clamps wallet at 0.
+     */
+    async addBalance(userId, guildId, delta) {
+        const user = await this.getUser(userId, guildId);
+        if (!user) return null;
+        user.wallet += delta;
+        if (user.wallet < 0) user.wallet = 0;
+        await user.save();
+        return user;
+    }
+
+    /**
      * Get the top 10 users by net worth in a specific guild.
      * @param {string} guildId 
      */

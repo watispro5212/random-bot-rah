@@ -36,6 +36,9 @@ module.exports = {
         }
 
         const senderData = await economy.getUser(senderId, interaction.guild.id);
+        if (!senderData) {
+            return interaction.reply({ content: '`[ERROR]` Could not load your economy profile.', flags: 64 });
+        }
 
         if (senderData.wallet < amount) {
             return interaction.reply({
@@ -49,13 +52,16 @@ module.exports = {
         }
 
         const targetData = await economy.getUser(targetId, interaction.guild.id);
+        if (!targetData) {
+            return interaction.reply({ content: '`[ERROR]` Could not load recipient economy profile.', flags: 64 });
+        }
 
         // Perform the transfer
         senderData.wallet -= amount;
         targetData.wallet += amount;
 
-        economy.saveUser(senderId, senderData);
-        economy.saveUser(targetId, targetData);
+        await economy.saveUser(senderData);
+        await economy.saveUser(targetData);
 
         const embed = createEmbed({
             title: '💸 Transfer Successful',

@@ -24,9 +24,8 @@ module.exports = {
             return interaction.reply({ content: '`[ALERT]` Nexus-AI Firewalls are impenetrable by standard protocols.', flags: 64 });
         }
 
-        await interaction.reply({ 
-            content: `\`[SYSTEM]\` Initiating **Mainframe Penetration Protocol** on subject: **${target.username}**...`, 
-            withResponse: true 
+        await interaction.reply({
+            content: `\`[SYSTEM]\` Initiating **Mainframe Penetration Protocol** on subject: **${target.username}**...`,
         });
 
         const steps = [

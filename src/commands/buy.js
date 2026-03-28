@@ -25,6 +25,9 @@ module.exports = {
 
         const userId = interaction.user.id;
         const data = await economy.getUser(userId, interaction.guild.id);
+        if (!data) {
+            return interaction.reply({ content: '`[ERROR]` Could not load your economy profile.', flags: 64 });
+        }
 
         if (data.wallet < item.price) {
             return interaction.reply({
@@ -60,7 +63,7 @@ module.exports = {
             data.inventory.push(item.id);
         }
 
-        economy.saveUser(userId, data);
+        await economy.saveUser(data);
 
         const embed = createEmbed({
             title: '🛍️ Transaction Authorized',

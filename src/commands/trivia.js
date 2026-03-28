@@ -6,6 +6,7 @@ const {
     ComponentType 
 } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
+const { replyWithMessage } = require('../utils/replyMessage');
 
 const TRIVIA_QUESTIONS = [
     { q: "What is the capital of France?", options: ["Berlin", "Madrid", "Paris", "Rome"], a: "Paris" },
@@ -43,11 +44,10 @@ module.exports = {
             footer: 'Nexus Knowledge-Base | TRIVIA-RETRIEVAL'
         });
 
-        const reply = await interaction.reply({ 
-            embeds: [embed], 
+        const reply = await replyWithMessage(interaction, {
+            embeds: [embed],
             components: [row],
-            withResponse: true 
-        }).then(i => i.resource ? i.resource.message : i.fetchReply());
+        });
 
         const collector = reply.createMessageComponentCollector({ 
             componentType: ComponentType.Button, 

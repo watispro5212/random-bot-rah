@@ -7,6 +7,7 @@ const {
 } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
 const economy = require('../utils/EconomyManager');
+const { replyWithMessage } = require('../utils/replyMessage');
 
 // Simulating a deck of cards
 const SUITS = ['♠️', '♥️', '♦️', '♣️'];
@@ -65,6 +66,12 @@ module.exports = {
         const bet = interaction.options.getInteger('bet');
         const userId = interaction.user.id;
         let data = await economy.getUser(userId, interaction.guild.id);
+        if (!data) {
+            return interaction.reply({
+                content: '`[ERROR]` Could not load economy profile. Database may be unavailable.',
+                flags: 64,
+            });
+        }
 
         if (data.wallet < bet) {
             return interaction.reply({
@@ -80,7 +87,7 @@ module.exports = {
 
         // Deduct upfront
         data.wallet -= bet;
-        economy.saveUser(userId, data);
+        await economy.saveUser(data);
 
         const deck = createDeck();
         const playerHand = [deck.pop(), deck.pop()];
@@ -122,17 +129,16 @@ module.exports = {
         if (playerValue === 21 && dealerValue !== 21) {
             const winnings = Math.floor(bet * 2.5); // 3:2 payout for native blackjack
             data.wallet += winnings;
-            economy.saveUser(userId, data);
+            await economy.saveUser(data);
             return interaction.reply({ 
                 embeds: [buildEmbed('**BLACKJACK!** You win!', '#00FFCC').addFields({ name: 'Payout', value: `+${winnings.toLocaleString()}` })] 
             });
         }
 
-        const reply = await interaction.reply({ 
-            embeds: [buildEmbed('Game in progress. Your turn.', '#00FFCC')], 
-            components: [buttons], 
-            withResponse: true 
-        }).then(i => i.resource ? i.resource.message : i.fetchReply());
+        const reply = await replyWithMessage(interaction, {
+            embeds: [buildEmbed('Game in progress. Your turn.', '#00FFCC')],
+            components: [buttons],
+        });
 
         const collector = reply.createMessageComponentCollector({ componentType: ComponentType.Button, time: 60000 });
 
@@ -185,7 +191,7 @@ module.exports = {
 
             if (winnings > 0) {
                 data.wallet += winnings;
-                economy.saveUser(userId, data);
+                await economy.saveUser(data);
             }
 
             const finalEmbed = buildEmbed(resultMsg, color);

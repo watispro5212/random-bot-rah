@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
+const { replyWithMessage } = require('../utils/replyMessage');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -40,10 +41,9 @@ module.exports = {
             footer: `Protocol Initiator: ${interaction.user.tag} | Nexus Governance`
         });
 
-        const message = await interaction.reply({ 
-            embeds: [embed], 
-            withResponse: true 
-        }).then(i => i.resource ? i.resource.message : i.fetchReply());
+        const message = await replyWithMessage(interaction, {
+            embeds: [embed],
+        });
         
         for (let i = 0; i < optionsList.length; i++) {
             await message.react(emojis[i]);

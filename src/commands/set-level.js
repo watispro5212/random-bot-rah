@@ -31,7 +31,10 @@ module.exports = {
         const level = interaction.options.getInteger('level');
         const xp = interaction.options.getInteger('xp') ?? 0;
 
-        const userData = await EconomyManager.getUser(target.id);
+        const userData = await EconomyManager.getUser(target.id, interaction.guild.id);
+        if (!userData) {
+            return interaction.reply({ content: '`[ERROR]` Could not load user economy record.', flags: 64 });
+        }
         const oldLevel = userData.level;
         const oldXp = userData.xp;
         userData.level = level;

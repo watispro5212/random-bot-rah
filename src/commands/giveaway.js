@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
+const { replyWithMessage } = require('../utils/replyMessage');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -52,17 +53,22 @@ module.exports = {
             footer: 'Nexus Logistics | AIRDROP-001'
         });
 
-        const message = await interaction.reply({ 
-            embeds: [embed], 
-            withResponse: true 
-        }).then(i => i.resource ? i.resource.message : i.fetchReply());
+        const message = await replyWithMessage(interaction, {
+            embeds: [embed],
+        });
         await message.react('🎉');
 
         setTimeout(async () => {
             try {
                 const fetchedMsg = await interaction.channel.messages.fetch(message.id);
                 const reaction = fetchedMsg.reactions.cache.get('🎉');
-                
+
+                if (!reaction) {
+                    return interaction.followUp({
+                        content: `\`[ABORT]\` Airdrop for **${prize}** ended — could not read reactions.`,
+                    });
+                }
+
                 const users = await reaction.users.fetch();
                 const validUsers = users.filter(u => !u.bot).map(u => u);
 

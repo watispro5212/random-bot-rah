@@ -7,6 +7,7 @@ const {
 } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
 const { isOwner } = require('../utils/ownerGate');
+const { replyWithMessage } = require('../utils/replyMessage');
 
 const CATEGORIES = {
     utility: {
@@ -209,11 +210,10 @@ module.exports = {
             footer: 'Directory interface active for 3 minutes.'
         });
 
-        const response = await interaction.reply({ 
-            embeds: [initialEmbed], 
+        const response = await replyWithMessage(interaction, {
+            embeds: [initialEmbed],
             components: [row],
-            withResponse: true 
-        }).then(i => i.resource ? i.resource.message : i.fetchReply());
+        });
 
         const collector = response.createMessageComponentCollector({ 
             componentType: ComponentType.StringSelect, 
