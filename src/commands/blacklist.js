@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
 const { isOwner } = require('../utils/ownerGate');
+const { persistAdd, persistRemove } = require('../utils/blacklistService');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -24,26 +25,27 @@ module.exports = {
         const reason = interaction.options.getString('reason') || 'No reason specified.';
 
         if (interaction.client.blacklist.has(target.id)) {
-            // Remove from blacklist (toggle)
             interaction.client.blacklist.delete(target.id);
+            await persistRemove(target.id);
 
             const embed = createEmbed({
                 title: '🟢 Operative Un-Blacklisted',
                 description: `**${target.tag}** (${target.id}) has been restored to the Nexus.`,
                 color: '#00FF88',
-                footer: `Action by ${interaction.user.tag}`
+                footer: `Action by ${interaction.user.tag}`,
             });
 
             return interaction.reply({ embeds: [embed], flags: 64 });
         }
 
         interaction.client.blacklist.add(target.id);
+        await persistAdd(target.id, reason);
 
         const embed = createEmbed({
             title: '🔴 Operative Blacklisted',
             description: `**${target.tag}** (${target.id}) has been severed from the Nexus.\n\n**Reason:** ${reason}`,
             color: '#FF0000',
-            footer: `Action by ${interaction.user.tag}`
+            footer: `Action by ${interaction.user.tag}`,
         });
 
         await interaction.reply({ embeds: [embed], flags: 64 });

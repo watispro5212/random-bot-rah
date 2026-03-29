@@ -2,6 +2,7 @@ const CATEGORIES = {
     utility: [
         { name: 'ping', desc: 'Checks the module connection and data latency' },
         { name: 'invite', desc: 'Get a link to add Nexus to another server' },
+        { name: 'uptime', desc: 'Process uptime, client session, ping, and shard layout' },
         { name: 'info', desc: 'Access global terminal and bot classification data' },
         { name: 'serverinfo', desc: 'Scan parameters and data regarding the current node' },
         { name: 'userinfo', desc: 'Pull system file and data on a specific user' },

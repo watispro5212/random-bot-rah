@@ -35,7 +35,7 @@ const COOLDOWN_DURATIONS = {
 
 // Categorize commands for cooldown purposes
 const COMMAND_CATEGORIES = {
-    utility: ['ping', 'invite', 'info', 'serverinfo', 'userinfo', 'avatar', 'servericon', 'math', 'timer', 'remind', 'poll', 'translate', 'weather', 'profile', 'help'],
+    utility: ['ping', 'invite', 'uptime', 'info', 'serverinfo', 'userinfo', 'avatar', 'servericon', 'math', 'timer', 'remind', 'poll', 'translate', 'weather', 'profile', 'help'],
     economy: ['balance', 'daily', 'work', 'rob', 'transfer', 'leaderboard', 'shop', 'buy', 'inventory', 'quests'],
     casino: ['blackjack', 'slots', 'coinflip'],
     moderation: ['ban', 'kick', 'warn', 'purge', 'lock', 'unlock', 'slowmode', 'say', 'verify-setup', 'ticket-setup', 'automod-setup', 'log-setup', 'starboard-setup'],

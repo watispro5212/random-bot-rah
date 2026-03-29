@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const logger = require('./logger');
 
 class EconomyManager {
     /**
@@ -25,7 +26,7 @@ class EconomyManager {
 
             return user;
         } catch (error) {
-            console.error('[EconomyManager] Error in getUser:', error);
+            logger.error(`[EconomyManager] getUser: ${error.message}`);
             return null;
         }
     }
@@ -39,7 +40,7 @@ class EconomyManager {
         try {
             await user.save();
         } catch (error) {
-            console.error('[EconomyManager] Error in saveUser:', error);
+            logger.error(`[EconomyManager] saveUser: ${error.message}`);
         }
     }
 
@@ -70,7 +71,7 @@ class EconomyManager {
                 net: user.wallet + user.bank
             }));
         } catch (error) {
-            console.error('[EconomyManager] Error in getLeaderboard:', error);
+            logger.error(`[EconomyManager] getLeaderboard: ${error.message}`);
             return [];
         }
     }

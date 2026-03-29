@@ -17,6 +17,7 @@ const CATEGORIES = {
         commands: [
             { name: 'ping', desc: 'Checks the bot\'s network status and latency pulse.' },
             { name: 'invite', desc: 'Get a link to add Nexus to another server.' },
+            { name: 'uptime', desc: 'Show process uptime, session, gateway ping, and shard info.' },
             { name: 'info', desc: 'Displays a core specification scan of the Nexus.' },
             { name: 'serverinfo', desc: 'Displays detailed encryption and sector data.' },
             { name: 'userinfo', desc: 'Initiates a biometric scan on a specified entity.' },

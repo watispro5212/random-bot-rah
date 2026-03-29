@@ -1,7 +1,7 @@
 {
   "name": "nexus-protocol",
-  "version": "5.0.0",
-  "description": "Elite-tier Discord integration with neural economy, casino, leveling, advanced moderation, and a hardened companion web API.",
+  "version": "6.0.0",
+  "description": "Production-grade Discord bot: sharded Discord.js v14, MongoDB economy & config, persistent global blacklist, companion Express API, 68+ slash commands.",
   "author": "watispro5212, watispro1",
   "main": "src/index.js",
   "scripts": {

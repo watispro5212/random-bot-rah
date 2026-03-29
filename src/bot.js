@@ -4,11 +4,17 @@ const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-// MongoDB Connection
+// MongoDB — tuned for Atlas / replica sets
+const MONGO_OPTS = {
+    serverSelectionTimeoutMS: 12_000,
+    maxPoolSize: 10,
+};
+
 if (process.env.MONGODB_URI) {
-    mongoose.connect(process.env.MONGODB_URI)
+    mongoose
+        .connect(process.env.MONGODB_URI, MONGO_OPTS)
         .then(() => console.log('[DATABASE] Connected to MongoDB.'))
-        .catch(err => console.error('[DATABASE] Connection error:', err));
+        .catch((err) => console.error('[DATABASE] Connection error:', err));
 } else {
     console.warn('[DATABASE] MONGODB_URI is not set. Economy, guild config, and persistence commands will fail until it is configured.');
 }

@@ -1,10 +1,21 @@
+const mongoose = require('mongoose');
 const { Events, ActivityType } = require('discord.js');
 const logger = require('../utils/logger');
+const { hydrateClientBlacklist } = require('../utils/blacklistService');
 
 module.exports = {
     name: Events.ClientReady,
     once: true,
-    execute(client) {
+    async execute(client) {
+        const runHydrate = () => hydrateClientBlacklist(client);
+        if (mongoose.connection.readyState === 1) {
+            await runHydrate();
+        } else {
+            mongoose.connection.once('connected', () => {
+                runHydrate().catch((e) => logger.error(`[Blacklist] hydrate: ${e.message}`));
+            });
+        }
+
         logger.info(`Ready! Logged in as ${client.user.tag}`);
         logger.info(`Tracking ${client.guilds.cache.size} server(s).`);
 

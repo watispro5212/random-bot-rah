@@ -49,6 +49,21 @@
 
             <div class="changelog-timeline">
                 <div class="changelog-entry reveal">
+                    <div class="changelog-version" style="color: var(--primary); text-shadow: 0 0 10px var(--primary-glow);">v6.0.0 — OPERATIONS CORE</div>
+                    <div class="changelog-date">March 28, 2026</div>
+                    <div class="changelog-body" style="border-color: var(--primary);">
+                        <ul>
+                            <li class="added"><strong>Blacklist persistence:</strong> Global blacklist stored in MongoDB (<code>BlacklistEntry</code>); all shards reload from the database on <code>ready</code>. Owner <code>/blacklist</code> add/remove syncs DB and memory.</li>
+                            <li class="added"><strong>Slash:</strong> New <code>/uptime</code> — process uptime, Discord client uptime, gateway ping, shard ids/count, build version, and loaded command count (ephemeral).</li>
+                            <li class="fixed"><strong>MongoDB:</strong> Connection options <code>serverSelectionTimeoutMS</code> (12s) and <code>maxPoolSize</code> (10) for healthier Atlas / replica-set behavior.</li>
+                            <li class="fixed"><strong>Sharding:</strong> Explicit <code>respawn: true</code> on <code>ShardingManager</code>; <code>shardError</code> logged to stderr.</li>
+                            <li class="fixed"><strong>EconomyManager:</strong> Errors logged via shared logger instead of raw <code>console.error</code>.</li>
+                            <li class="added"><strong>Docs &amp; site:</strong> README, SECURITY, LICENSE refreshed for v6; home/meta command count <code>68+</code> where applicable.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="changelog-entry reveal">
                     <div class="changelog-version" style="color: var(--primary); text-shadow: 0 0 10px var(--primary-glow);">v5.0.0 — CONVERGENCE OVERHAUL</div>
                     <div class="changelog-date">March 28, 2026</div>
                     <div class="changelog-body" style="border-color: var(--primary);">
