@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nexus Protocol — Elite Discord bot with advanced economy, moderation, leveling, and casino systems.">
+    <meta name="description" content="Nexus Protocol v5 — Sharded Discord bot: 67+ slash commands, neural economy, moderation, casino, rank cards, companion site & JSON API.">
     <meta name="theme-color" content="#030308">
     <meta property="og:title" content="Nexus Protocol">
     <meta property="og:description" content="Neural economy, moderation, leveling, casino, and live ops — Discord bot + companion site.">
@@ -11,7 +11,7 @@
     <title>Nexus Protocol | Elite Community Tools</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="page-home">
     <div class="nexus-bg">
         <canvas id="network-canvas"></canvas>
         <div class="grid-overlay"></div>
@@ -44,121 +44,193 @@
     </nav>
 
     <main>
-        <section class="hero">
-            <div class="badge reveal">Protocol v5.0 Active</div>
-            <h1 class="hero-title reveal"><span class="text-gradient">Unleash the</span><br>Digital Nexus.</h1>
-            <p class="hero-desc reveal">Experience the next generation of Discord integration. Advanced network economy, secure moderation nodes, and elite high-stakes interfaces.</p>
-            <div class="btn-group reveal">
-                <a href="https://discord.com/api/oauth2/authorize?client_id=1480725340753101031&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">Deploy Protocol</a>
-                <a href="#features" class="btn btn-outline">Explore Core</a>
+        <section class="home-hero-wrap" aria-label="Introduction">
+            <div class="home-hero">
+                <div class="home-hero-copy">
+                    <div class="badge reveal">Protocol v5.0 · Production</div>
+                    <h1 class="hero-title reveal home-hero-title">
+                        <span class="text-gradient">One neural stack</span><br>
+                        <span class="home-hero-title-line2">for the whole server.</span>
+                    </h1>
+                    <p class="hero-desc reveal home-hero-lead">Economy, moderation, XP, casino, tickets, automod hooks, and a live companion site—wired through Discord.js v14, MongoDB, and a sharded runtime built to scale with your community.</p>
+                    <div class="btn-group reveal">
+                        <a href="https://discord.com/api/oauth2/authorize?client_id=1480725340753101031&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">Add to Discord</a>
+                        <a href="commands.html" class="btn btn-outline">Browse commands</a>
+                        <a href="#features" class="btn btn-outline home-btn-ghost">Why Nexus</a>
+                    </div>
+                    <p class="home-hero-note reveal">No paywall for core features · <a href="premium.html">Premium</a> adds priority lanes &amp; cosmetic flair</p>
+                </div>
+                <aside class="home-hero-panel reveal" aria-hidden="true">
+                    <div class="home-hero-panel-glow"></div>
+                    <div class="home-hero-panel-inner">
+                        <div class="home-hero-panel-top">
+                            <span class="home-mono-tag">NEXUS_CORE</span>
+                            <span class="home-mono-ver">v5.0.0</span>
+                        </div>
+                        <div class="home-terminal-lines">
+                            <p><span class="home-term-prompt">›</span> <span class="home-term-ok">uplink</span> <span class="home-term-dim">............</span> <span class="home-term-ok">OK</span></p>
+                            <p><span class="home-term-prompt">›</span> <span class="home-term-ok">slash_registry</span> <span class="home-term-dim">..</span> <span class="home-term-val">67+</span></p>
+                            <p><span class="home-term-prompt">›</span> <span class="home-term-ok">shard_manager</span> <span class="home-term-dim">...</span> <span class="home-term-val">AUTO</span></p>
+                            <p><span class="home-term-prompt">›</span> <span class="home-term-ok">companion_http</span> <span class="home-term-dim">.</span> <span class="home-term-val">/api/*</span></p>
+                        </div>
+                        <div class="home-progress">
+                            <div class="home-progress-label"><span>Signal quality</span><span class="home-term-ok">Nominal</span></div>
+                            <div class="home-progress-bar" role="presentation"><span class="home-progress-fill"></span></div>
+                        </div>
+                    </div>
+                </aside>
             </div>
 
-            <div class="stats-grid reveal">
+            <div class="home-pill-row reveal" role="list">
+                <span class="home-pill" role="listitem">Discord.js v14</span>
+                <span class="home-pill" role="listitem">MongoDB + Mongoose</span>
+                <span class="home-pill" role="listitem">ShardingManager</span>
+                <span class="home-pill" role="listitem">Slash commands</span>
+                <span class="home-pill" role="listitem">REST /api/stats</span>
+            </div>
+
+            <div class="stats-grid home-stats reveal">
                 <div class="stat-item">
                     <span class="stat-number" data-target="4" data-suffix="+">0</span>
                     <span class="stat-label">Servers</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number" data-target="67" data-suffix="+">0</span>
-                    <span class="stat-label">Commands</span>
+                    <span class="stat-label">Slash commands</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number" data-target="99" data-suffix="%">0</span>
-                    <span class="stat-label">Uptime</span>
+                    <span class="stat-label">Uptime target</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number" data-target="9" data-suffix="">0</span>
-                    <span class="stat-label">Modules</span>
+                    <span class="stat-label">Help categories</span>
                 </div>
             </div>
         </section>
 
-        <section class="section" id="features">
+        <section class="section home-signal-section" id="features">
             <div class="section-header reveal">
                 <span class="section-label">Capabilities</span>
-                <h2 class="section-title">Root Access Systems</h2>
+                <h2 class="section-title">Systems online</h2>
+                <p class="hero-desc home-section-lead">Everything is modular: admins can tune economy, casino, fun, and leveling per server—without touching code.</p>
             </div>
-            <div class="feature-grid">
-                <div class="card reveal">
-                    <div class="card-icon">💎</div>
-                    <h3>Global Economy</h3>
-                    <p>Sophisticated credit system with encrypted transactions, underground shop nodes, and verified net worth auditing.</p>
-                </div>
-                <div class="card reveal">
-                    <div class="card-icon">⚡</div>
-                    <h3>High-Frequency Casino</h3>
-                    <p>Engage with low-latency casino modules: Slots, Blackjack, and Coinflip designed for maximum engagement.</p>
-                </div>
-                <div class="card reveal">
+            <div class="home-features-grid feature-grid">
+                <article class="card reveal card-home-featured">
+                    <div class="card-home-featured-inner">
+                        <div class="card-home-featured-visual" aria-hidden="true">💎</div>
+                        <div class="card-home-featured-copy">
+                            <h3>Economy &amp; progression</h3>
+                            <p>Credits, daily streaks, work gigs, encrypted transfers, quests, shop items, and a live leaderboard—balanced with cooldowns and guild-scoped data.</p>
+                            <a class="home-card-link" href="wiki.html">Read economy rules →</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="card reveal">
                     <div class="card-icon">🛡️</div>
-                    <h3>Firewall Moderation</h3>
-                    <p>Enforce network rules with purge protocols, channel locking, warn strikes, ticket systems, and automated threat detection.</p>
-                </div>
-                <div class="card reveal">
+                    <h3>Moderation suite</h3>
+                    <p>Ban, kick, warn, purge, locks, slowmode, verification, tickets, automod toggles, audit logs, and starboard—permission-aware by design.</p>
+                </article>
+                <article class="card reveal">
+                    <div class="card-icon">⚡</div>
+                    <h3>Casino lane</h3>
+                    <p>Blackjack, slots, and coinflip with credit stakes—optional module toggle so competitive servers stay clean.</p>
+                </article>
+                <article class="card reveal">
                     <div class="card-icon">🧬</div>
-                    <h3>Neural Rank System</h3>
-                    <p>Track operative activity with security clearance levels, XP progression, custom rank cards, and the /profile dossier.</p>
-                </div>
-                <div class="card reveal">
+                    <h3>Rank &amp; profile</h3>
+                    <p>XP, clearance-style levels, generated rank cards, and <code class="home-inline-code">/profile</code> dossiers tied to your guild.</p>
+                </article>
+                <article class="card reveal">
                     <div class="card-icon">🎒</div>
-                    <h3>Item Arsenal</h3>
-                    <p>8 unique items in the shop: XP Boosters, Shield Modules, Lucky Charms, Crate Keys, and more.</p>
-                </div>
-                <div class="card reveal">
+                    <h3>Shop &amp; inventory</h3>
+                    <p>Eight distinct items—boosters, shields, keys, and more—earned through credits and quests.</p>
+                </article>
+                <article class="card reveal">
                     <div class="card-icon">🎯</div>
-                    <h3>Advanced Operations</h3>
-                    <p>Execute multi-phase cyber-heists, manage giveaways, and monitor real-time shard diagnostics.</p>
+                    <h3>Advanced ops</h3>
+                    <p>Cyber-heists, giveaways, <code class="home-inline-code">/network-stats</code>, shard diagnostics—built for operators who want depth.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section home-stack-section">
+            <div class="section-header reveal">
+                <span class="section-label">Under the hood</span>
+                <h2 class="section-title">Built like infrastructure</h2>
+                <p class="hero-desc home-section-lead">The same patterns you would expect from a serious integration—not a single-file script.</p>
+            </div>
+            <div class="home-stack-grid reveal">
+                <div class="home-stack-card">
+                    <span class="home-stack-icon" aria-hidden="true">◈</span>
+                    <h3>Sharding</h3>
+                    <p>Horizontally scaled guild fan-out via <strong>ShardingManager</strong>, with per-shard clients and centralized command loading.</p>
+                </div>
+                <div class="home-stack-card">
+                    <span class="home-stack-icon" aria-hidden="true">◇</span>
+                    <h3>Persistent config</h3>
+                    <p>Guild settings, automod flags, and economy profiles live in <strong>MongoDB</strong>—not flat files alone.</p>
+                </div>
+                <div class="home-stack-card">
+                    <span class="home-stack-icon" aria-hidden="true">◎</span>
+                    <h3>Companion web</h3>
+                    <p>Static marketing pages plus <strong>Express</strong> routes: <code class="home-inline-code">/api/health</code>, <code class="home-inline-code">/api/version</code>, <code class="home-inline-code">/api/stats</code> when the bot hosts the site.</p>
+                </div>
+                <div class="home-stack-card">
+                    <span class="home-stack-icon" aria-hidden="true">▣</span>
+                    <h3>Safety layers</h3>
+                    <p>Blacklist gate, guild-only execution, owner-only root commands, and category cooldowns before your command runs.</p>
                 </div>
             </div>
         </section>
 
-        <section class="section" id="owner-panel">
+        <section class="section home-owner-section" id="owner-panel">
             <div class="section-header reveal">
-                <span class="section-label" style="color: #FF4444;">Classified</span>
-                <h2 class="section-title" style="color: #FF4444;">🔐 Root Access Panel</h2>
-                <p class="hero-desc">Owner-only system override commands. These protocols are restricted to the Nexus Architect.</p>
+                <span class="section-label home-owner-label">Classified</span>
+                <h2 class="section-title home-owner-title">Root access panel</h2>
+                <p class="hero-desc">Owner-only overrides—shutdown, eval, economy edits, broadcast, blacklist, and hot reload. Never exposed in the public command directory.</p>
             </div>
-            <div class="terminal-container reveal" style="border-color: rgba(255, 68, 68, 0.3);">
-                <div class="terminal-header" style="background: rgba(255, 68, 68, 0.08);">
+            <div class="terminal-container reveal home-owner-terminal">
+                <div class="terminal-header home-owner-terminal-head">
                     <div class="terminal-dots">
                         <div class="dot red"></div>
                         <div class="dot yellow"></div>
                         <div class="dot green"></div>
                     </div>
-                    <div class="terminal-label" style="color: #FF4444;">ROOT_TERMINAL // CLEARANCE: OMEGA</div>
+                    <div class="terminal-label home-owner-terminal-label">ROOT_TERMINAL // CLEARANCE: OMEGA</div>
                 </div>
-                <div class="terminal-body" style="padding: 1.5rem;">
-                    <div class="cmd-grid" style="gap: 1rem;">
-                        <div class="cmd-item" style="border-color: rgba(255, 68, 68, 0.2);">
-                            <div class="cmd-name"><span style="color: #FF4444;">🔒 /shutdown</span></div>
+                <div class="terminal-body home-owner-terminal-body">
+                    <div class="cmd-grid home-owner-cmd-grid">
+                        <div class="cmd-item home-owner-cmd-item">
+                            <div class="cmd-name"><span class="home-owner-cmd-name">🔒 /shutdown</span></div>
                             <p class="cmd-desc">Emergency shutdown all Nexus shard processes.</p>
                         </div>
-                        <div class="cmd-item" style="border-color: rgba(255, 68, 68, 0.2);">
-                            <div class="cmd-name"><span style="color: #FF4444;">🔒 /eval</span></div>
+                        <div class="cmd-item home-owner-cmd-item">
+                            <div class="cmd-name"><span class="home-owner-cmd-name">🔒 /eval</span></div>
                             <p class="cmd-desc">Execute raw JavaScript in the Nexus core runtime.</p>
                         </div>
-                        <div class="cmd-item" style="border-color: rgba(255, 68, 68, 0.2);">
-                            <div class="cmd-name"><span style="color: #FF4444;">🔒 /set-credits</span></div>
+                        <div class="cmd-item home-owner-cmd-item">
+                            <div class="cmd-name"><span class="home-owner-cmd-name">🔒 /set-credits</span></div>
                             <p class="cmd-desc">Override an operative's wallet or bank balance.</p>
                         </div>
-                        <div class="cmd-item" style="border-color: rgba(255, 68, 68, 0.2);">
-                            <div class="cmd-name"><span style="color: #FF4444;">🔒 /set-level</span></div>
+                        <div class="cmd-item home-owner-cmd-item">
+                            <div class="cmd-name"><span class="home-owner-cmd-name">🔒 /set-level</span></div>
                             <p class="cmd-desc">Override an operative's neural level and XP.</p>
                         </div>
-                        <div class="cmd-item" style="border-color: rgba(255, 68, 68, 0.2);">
-                            <div class="cmd-name"><span style="color: #FF4444;">🔒 /announce</span></div>
+                        <div class="cmd-item home-owner-cmd-item">
+                            <div class="cmd-name"><span class="home-owner-cmd-name">🔒 /announce</span></div>
                             <p class="cmd-desc">Broadcast an official announcement through the Nexus.</p>
                         </div>
-                        <div class="cmd-item" style="border-color: rgba(255, 68, 68, 0.2);">
-                            <div class="cmd-name"><span style="color: #FF4444;">🔒 /blacklist</span></div>
+                        <div class="cmd-item home-owner-cmd-item">
+                            <div class="cmd-name"><span class="home-owner-cmd-name">🔒 /blacklist</span></div>
                             <p class="cmd-desc">Sever an operative from using the Nexus entirely.</p>
                         </div>
-                        <div class="cmd-item" style="border-color: rgba(255, 68, 68, 0.2);">
-                            <div class="cmd-name"><span style="color: #FF4444;">🔒 /server-list</span></div>
+                        <div class="cmd-item home-owner-cmd-item">
+                            <div class="cmd-name"><span class="home-owner-cmd-name">🔒 /server-list</span></div>
                             <p class="cmd-desc">Display all sectors running the Nexus Protocol.</p>
                         </div>
-                        <div class="cmd-item" style="border-color: rgba(255, 68, 68, 0.2);">
-                            <div class="cmd-name"><span style="color: #FF4444;">🔒 /reload</span></div>
+                        <div class="cmd-item home-owner-cmd-item">
+                            <div class="cmd-name"><span class="home-owner-cmd-name">🔒 /reload</span></div>
                             <p class="cmd-desc">Hot-reload a command module without restarting.</p>
                         </div>
                     </div>
@@ -166,11 +238,11 @@
             </div>
         </section>
 
-        <section class="section" id="operations">
+        <section class="section home-ops-section" id="operations">
             <div class="section-header reveal">
                 <span class="section-label">Real-Time</span>
-                <h2 class="section-title">Operations Feed</h2>
-                <p class="hero-desc">Live stream of cross-sector system events and protocol executions.</p>
+                <h2 class="section-title">Operations feed</h2>
+                <p class="hero-desc">Sample telemetry from the Nexus event stream—mirrors the kind of signals your mods and logs would see when the bot is under load.</p>
             </div>
             
             <div class="terminal-container reveal">
@@ -186,49 +258,68 @@
             </div>
         </section>
 
-        <section class="section" id="explore">
+        <section class="section home-explore-section" id="explore">
             <div class="section-header reveal">
                 <span class="section-label">Reference</span>
-                <h2 class="section-title">Explore the protocol</h2>
-                <p class="hero-desc">Jump to documentation, support answers, and live diagnostics.</p>
+                <h2 class="section-title">Maps &amp; manuals</h2>
+                <p class="hero-desc">Docs are first-class: search commands, read the wiki, or check live API stats when you self-host the stack.</p>
             </div>
-            <div class="explore-grid reveal">
+            <div class="explore-grid home-explore-grid reveal">
                 <a href="wiki.html" class="explore-card">
                     <h3>Wiki</h3>
-                    <p>Glossary, economy rules, deployment steps, and lore—everything in one matrix.</p>
+                    <p>Glossary, deployment, HTTP endpoints, and how the economy loop works end-to-end.</p>
                 </a>
                 <a href="faq.html" class="explore-card">
                     <h3>FAQ</h3>
-                    <p>Short answers to credits, auto-mod, premium, rate limits, and privacy.</p>
+                    <p>Credits, cooldowns, premium lanes, privacy, and troubleshooting in plain language.</p>
                 </a>
                 <a href="commands.html" class="explore-card">
                     <h3>Commands</h3>
-                    <p>Searchable directory with copy-to-clipboard slash commands by category.</p>
+                    <p>Full slash directory with search, category tabs, and one-click copy for Discord.</p>
                 </a>
                 <a href="status.html" class="explore-card">
                     <h3>Network</h3>
-                    <p>Shard health, latency, and uplink telemetry when the bot API is online.</p>
+                    <p>Shard list, latency, and JSON stats when <code class="home-inline-code">/api/stats</code> is reachable.</p>
                 </a>
                 <a href="features.html" class="explore-card">
-                    <h3>Features</h3>
-                    <p>Economy depth, casino modules, moderation stack, and what makes Nexus different.</p>
+                    <h3>Feature tour</h3>
+                    <p>Deeper narrative on economy simulation, casino, and moderation philosophy.</p>
+                </a>
+                <a href="dashboard.html" class="explore-card">
+                    <h3>Dashboard</h3>
+                    <p>Legacy operator UI shell—module toggles and session context (when wired to your instance).</p>
                 </a>
             </div>
         </section>
 
-        <section class="section" id="network-status" style="padding-top: 0;">
-            <div class="terminal-container reveal" style="max-width: 600px; margin: 0 auto; border-color: var(--glass-border);">
-                <div class="terminal-header" style="background: rgba(0, 255, 204, 0.05);">
-                    <div class="terminal-label">SHARD_LIST // STATUS: NOMINAL</div>
+        <section class="home-cta-band reveal" aria-labelledby="home-cta-heading">
+            <div class="home-cta-inner">
+                <p class="home-cta-eyebrow">Deploy</p>
+                <h2 id="home-cta-heading" class="home-cta-title">Bring Nexus online in your server</h2>
+                <p class="home-cta-desc">Authorize with Administrator to register slash commands, then run <code class="home-inline-code">/help</code> or <code class="home-inline-code">/invite</code> to orient your staff.</p>
+                <div class="btn-group">
+                    <a href="https://discord.com/api/oauth2/authorize?client_id=1480725340753101031&permissions=8&scope=bot%20applications.commands" class="btn btn-primary">Add to Discord</a>
+                    <a href="changelog.html" class="btn btn-outline">See what shipped in v5</a>
                 </div>
-                <div class="terminal-body" style="padding: 20px; display: flex; justify-content: space-between; align-items: center;">
-                    <div class="shard-item">
-                        <span style="color: var(--primary); font-family: 'JetBrains Mono'; font-size: 0.8rem;">SHARD_001</span>
-                        <div style="font-size: 0.6rem; color: var(--text-dim);">UPLINK: ACTIVE</div>
+            </div>
+        </section>
+
+        <section class="section home-network-section" id="network-status">
+            <div class="terminal-container home-network-card reveal">
+                <div class="terminal-header home-network-head">
+                    <div class="terminal-label">SHARD_LIST // UPLINK_SAMPLE</div>
+                </div>
+                <div class="terminal-body home-network-body">
+                    <div class="home-network-row">
+                        <div class="shard-item">
+                            <span class="home-network-shard-id">SHARD_001</span>
+                            <span class="home-network-shard-sub">AUTO-SCALED · GATEWAY</span>
+                        </div>
+                        <div class="status-indicator" aria-hidden="true">
+                            <div class="dot green pulse home-network-pulse"></div>
+                        </div>
                     </div>
-                    <div class="status-indicator">
-                        <div class="dot green pulse" style="box-shadow: 0 0 10px #27C93F;"></div>
-                    </div>
+                    <p class="home-network-hint">Live ping and guild counts appear on the <a href="status.html">Network</a> page when the bot serves this site.</p>
                 </div>
             </div>
         </section>
@@ -241,7 +332,7 @@
                     <svg class="logo-icon" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                     <span>NEXUS</span>
                 </div>
-                <p class="footer-tagline">Elite Node Integration for Modern Communities.</p>
+                <p class="footer-tagline">Sharded Discord ops · Neural economy · Companion web &amp; API</p>
             </div>
             <div class="footer-links">
                 <a href="commands.html">Commands</a>
