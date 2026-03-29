@@ -956,1129 +956,1485 @@ let easystar = new EasyStar.js();
             HTML.set("menuDiv");
             HTML.resetHTML();
             HTML.setCSS(`
-body {
-    will-change: transform;
+/* ============================================================
+   INSANE MOD — GLOTUS-STYLE CENTERED MODAL MENU v6
+   Big centered dialog · left sidebar nav · right content pane
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    --m-bg:          #111117;
+    --m-surface:     #18181f;
+    --m-surface2:    #1f1f28;
+    --m-surface3:    #27272f;
+    --m-surface4:    #2e2e38;
+    --m-border:      rgba(255,255,255,0.06);
+    --m-border2:     rgba(255,255,255,0.11);
+    --m-border3:     rgba(255,255,255,0.18);
+    --m-accent:      #7c6af5;
+    --m-accent2:     #9b8ff7;
+    --m-accent-dim:  rgba(124,106,245,0.15);
+    --m-accent-glow: rgba(124,106,245,0.4);
+    --m-green:       #4ade80;
+    --m-green-dim:   rgba(74,222,128,0.15);
+    --m-red:         #f87171;
+    --m-yellow:      #fbbf24;
+    --m-text:        #e8e8f0;
+    --m-text2:       #9999b0;
+    --m-text3:       #55556a;
+    --m-shadow:      0 32px 80px rgba(0,0,0,0.85), 0 8px 32px rgba(0,0,0,0.6);
+    --m-radius:      16px;
+    --m-radius-sm:   10px;
+    --m-radius-xs:   6px;
+    --m-font:        'Inter', 'Segoe UI', system-ui, sans-serif;
+    --m-mono:        'JetBrains Mono', 'Cascadia Mono', monospace;
+    --m-ease:        cubic-bezier(0.22, 1, 0.36, 1);
+    --m-nav-w:       188px;
+    --m-modal-w:     780px;
+    --m-modal-h:     540px;
 }
-#pingDisplay {
-    display: none;
-}
-.menuCard {
-    border-radius: 10px;
-}
-#itemInfoHolder {
-    transition: all 1s ease-in-out;
-}
+
+body { will-change: transform; }
+#pingDisplay { display: none; }
+.menuCard { border-radius: 10px; }
+#itemInfoHolder { transition: all 1s ease-in-out; }
+
 #fadeOutContainer {
-    font-size: 15px;
-    height: 20px;
-    position: fixed;
-    opacity: 0;
-    transition: all 2s;
-	padding: 5px;
-	background-color: rgba(0, 0, 0, 0.25);
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	color: white;
-	padding: 5px;
-    z-index: 10000000;
-    padding-top: 7px;
-    padding-right: 10px;
-	pointer-events: none;
+    font-size: 12px; position: fixed; opacity: 0; transition: all 2s;
+    padding: 6px 12px; background: rgba(10,10,15,0.88); backdrop-filter: blur(12px);
+    border: 1px solid var(--m-border2); border-radius: var(--m-radius-xs);
+    color: var(--m-text); z-index: 10000000; pointer-events: none;
+    font-family: var(--m-mono);
 }
-.yellowText {
-    color: yellow;
+.yellowText { color: #fbbf24; }
+.redText    { color: #f87171; }
+.whiteText  { color: var(--m-text); }
+
+/* ---- keyframes ---- */
+@keyframes mModalIn {
+    from { opacity: 0; transform: translate(-50%,-50%) scale(0.93); }
+    to   { opacity: 1; transform: translate(-50%,-50%) scale(1); }
 }
-
-.redText {
-    color: red;
+@keyframes mModalOut {
+    from { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    to   { opacity: 0; transform: translate(-50%,-50%) scale(0.93); }
 }
-
-.whiteText {
-    color: white;
+@keyframes mOverlayIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mOverlayOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes mPanelIn {
+    from { opacity: 0; transform: translateX(14px); }
+    to   { opacity: 1; transform: translateX(0); }
 }
-
-#scoreDisplay {
-    bottom: 150px;
-}
-#mapDisplay {
-    height: 120px;
-    width: 120px;
-    border-radius: 9px;
-    backdrop-filter: blur(4px);
-}
-
-#leaderboardButton {
-    backdrop-filter: blur(4px);
-    display: block;
-    border-radius: 9px;
-    width: 35px;
-    height: 35px;
-    left: 20px;
-    top: auto;
-    bottom: 205px;
-    border: none;
-    user-select: none;
-    z-index: 99999999;
-}
-  .loader {
-  position: absolute;
-  top:110%;
-  left:46%;
-    border: 16px solid white;
-    border-radius: 50%;
-    border-top: 16px solid black;
-    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.4);
-    width: 60px;
-    height: 60px;
-    -webkit-animation: spin 0.5s linear infinite;
-    animation: spin 0.5s linear infinite;
-  }
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  @keyframes rainbow {
-    0% { filter: hue-rotate(0deg) }
-    100% { filter: hue-rotate(360deg) }
-  }
-
-  @keyframes insaneTabIn {
+@keyframes mNavItemIn {
     from { opacity: 0; transform: translateX(-8px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes insanePanelEnter {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes insanePulse {
-    0%, 100% { box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04); }
-    50% { box-shadow: 0 16px 44px rgba(0, 0, 0, 0.58), 0 0 26px rgba(245, 158, 11, 0.14); }
-  }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes mPulse {
+    0%,100% { box-shadow: var(--m-shadow); }
+    50%     { box-shadow: var(--m-shadow), 0 0 60px rgba(124,106,245,0.2); }
+}
+@keyframes mSpinLoader { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes fall { 0% { transform: translateY(-10vh); opacity:1; } 100% { transform: translateY(110vh); opacity:0; } }
+@keyframes rainbow { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+@keyframes insaneTabIn      { from { opacity:0; transform:translateX(-8px); } to { opacity:1; transform:translateX(0); } }
+@keyframes insanePanelEnter { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+@keyframes insanePulse      { 0%,100% { box-shadow: var(--m-shadow); } 50% { box-shadow: var(--m-shadow), 0 0 40px rgba(124,106,245,0.25); } }
+@keyframes spin             { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-.menuClass {
-    position: absolute;
-    opacity: 0;
-    color: #f4f4f5;
-    font-size: 16px;
-    text-align: left;
-    padding: 0;
-    border-radius: 14px;
-    background: rgba(28, 28, 30, 0.92);
-    transition: left 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease, box-shadow 0.35s ease;
-    z-index: 100000;
-    overflow: hidden;
-    scrollbar-width: thin;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
-    box-sizing: border-box;
-    backdrop-filter: blur(16px);
-}
-.newMenuText {
-    font-size: 18px !important;
-    color: #a8a8a8 !important;
-    margin-top: 10px !important;
-}
-.menuLinkMS {
-    font-size: 18px !important;
-}
-
-.newMenuText2 {
-    font-size: 18px !important;
-    color: #a8a8a8 !important;
-    margin-top: 10px !important;
-}
-.menuLinkK {
-    font-size: 18px !important;
-}
-
-/* INSANE menu shell — slim icon rail + main sheet (right edge) */
-#menuDiv {
-    --insane-edge: 12px;
-    --insane-rail: 132px;
-    --insane-gap: 10px;
-    --nexus-edge: var(--insane-edge);
-    --nexus-rail: var(--insane-rail);
-    --nexus-gap: var(--insane-gap);
-    pointer-events: none;
-    position: fixed;
-    inset: 0;
-    overflow: visible;
-}
-#menuDiv > * {
-    pointer-events: auto;
-}
-.menuClassBest {
-    position: fixed;
-    opacity: 0;
-    color: #e8e8ea;
-    font-size: 11px;
-    text-align: left;
-    padding: 10px 5px 12px;
-    border-radius: 16px;
-    background: linear-gradient(180deg, rgba(32, 32, 34, 0.94) 0%, rgba(22, 22, 24, 0.97) 100%);
-    transition: opacity 0.3s ease, left 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease, width 0.25s ease;
-    z-index: 1000000;
-    overflow-x: hidden;
-    overflow-y: auto;
-    max-height: min(540px, calc(100vh - 80px));
-    border: 1px solid rgba(245, 158, 11, 0.38);
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    left: var(--insane-edge) !important;
-    right: auto !important;
-    top: 50%;
-    transform: translateY(-50%);
-    width: var(--insane-rail);
-    box-sizing: border-box;
-    text-align: left;
-}
-.menuClassBest.menu-open-pulse {
-    animation: insanePulse 2.4s ease-in-out infinite;
-}
-.menuClassBest.insane-compact {
-    padding: 8px 3px 10px;
-}
-.menuClassBest.insane-compact .insane-tab-btn.insane-tab-text {
-    font-size: 11px !important;
-    padding: 7px 8px !important;
-    min-height: 0 !important;
-}
-.menuClass {
-    position: fixed;
-    right: auto !important;
-    left: var(--insane-edge);
-    top: 50%;
-    transform: translateY(-50%);
-    width: min(600px, calc(100vw - var(--insane-edge) * 2 - var(--insane-rail) - var(--insane-gap)));
-    max-width: calc(100vw - 20px);
-    box-sizing: border-box;
-}
-.menuClass.moveRight {
-    right: auto !important;
-    left: calc(var(--insane-edge) + var(--insane-rail) + var(--insane-gap));
-}
-
-.insane-toolbar-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
-    font-size: 10px;
-    letter-spacing: 0.04em;
-    color: rgba(253, 230, 138, 0.75);
-    font-family: "Hammersmith One", sans-serif;
-}
-.insane-toolbar-actions {
-    flex-wrap: wrap;
-}
-.insane-toolbar-btn {
-    font-size: 10px !important;
-    padding: 7px 10px !important;
-    border-radius: 9px !important;
-    border: 1px solid rgba(245, 158, 11, 0.4) !important;
-    background: rgba(245, 158, 11, 0.1) !important;
-    color: #fef3c7 !important;
-    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-}
-.insane-toolbar-btn:hover {
-    transform: scale(1.04);
-    border-color: rgba(251, 191, 36, 0.65) !important;
-    background: rgba(245, 158, 11, 0.18) !important;
-}
-@media (max-width: 900px) {
-    .menuClass {
-        width: min(92vw, calc(100vw - var(--insane-edge) * 2 - var(--insane-rail) - var(--insane-gap)));
-    }
-    .menuClass.moveRight {
-        left: calc(var(--insane-edge) + min(var(--insane-rail), 36vw) + var(--insane-gap));
-    }
-}
 @media (prefers-reduced-motion: reduce) {
-    .insane-tab,
-    .menuC.insane-panel-enter {
-        animation: none !important;
-    }
-    .insane-tab {
-        transition: none !important;
-    }
-    .menuClass,
-    .menuClassBest {
-        transition: opacity 0.2s ease !important;
-    }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
-.insane-panel-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
-    padding: 12px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(20, 20, 22, 0.95);
+/* ================================================================
+   OVERLAY BACKDROP
+================================================================ */
+#m-overlay {
+    position: fixed; inset: 0; z-index: 9999990;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    display: none; opacity: 0;
 }
-.insane-panel-title {
-    font-family: "Hammersmith One", sans-serif;
-    font-size: 15px;
-    letter-spacing: 0.04em;
-    text-transform: none;
-    color: #f0f0f0;
-}
-.insane-panel-close {
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    font-size: 20px !important;
-    line-height: 1 !important;
-    font-family: system-ui, "Segoe UI", sans-serif !important;
-    color: rgba(255, 255, 255, 0.85) !important;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    background: rgba(0, 0, 0, 0.2) !important;
-    cursor: pointer;
-    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-}
-.insane-panel-close:hover {
-    color: #fff !important;
-    border-color: rgba(255, 255, 255, 0.25) !important;
-    transform: scale(1.05);
-    background: rgba(255, 255, 255, 0.08) !important;
-}
+#m-overlay.m-vis { display: block; animation: mOverlayIn 0.3s ease forwards; }
+#m-overlay.m-hide { animation: mOverlayOut 0.25s ease forwards; }
 
-.insane-rail-inner {
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-.insane-rail-head {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-.insane-mark {
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    color: #f5f5f5;
-    text-transform: none;
-    line-height: 1.25;
-    font-family: "Hammersmith One", sans-serif;
-}
-.insane-mark-sub {
-    font-size: 10px;
-    opacity: 0.5;
-    margin-top: 2px;
-    letter-spacing: 0.02em;
-    color: rgba(200, 200, 200, 0.9);
-}
-.insane-hint {
-    display: block;
-    text-align: left;
-    font-size: 9px;
-    opacity: 0.55;
-    margin-top: 8px;
-    line-height: 1.35;
-    color: rgba(180, 180, 180, 0.95);
-    font-family: "Hammersmith One", sans-serif;
-}
-.insane-tab-stack {
-    display: flex;
+/* ================================================================
+   MODAL SHELL
+================================================================ */
+#m-modal {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: var(--m-modal-w);
+    height: var(--m-modal-h);
+    max-width: calc(100vw - 24px);
+    max-height: calc(100vh - 24px);
+    z-index: 9999991;
+    display: none;
+    border-radius: var(--m-radius);
+    background: var(--m-bg);
+    border: 1px solid var(--m-border2);
+    box-shadow: var(--m-shadow);
+    overflow: hidden;
     flex-direction: column;
-    gap: 4px;
-    width: 100%;
-    margin-top: 6px;
-    align-items: stretch;
-    box-sizing: border-box;
+    font-family: var(--m-font);
+    color: var(--m-text);
 }
-.insane-tab {
-    display: block;
-    padding: 0;
-    border-radius: 8px;
-    background: transparent;
-    border: none;
-    box-sizing: border-box;
-    transition: background 0.15s ease;
-    animation: insaneTabIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-}
-.insane-tab:nth-child(1) { animation-delay: 0.03s; }
-.insane-tab:nth-child(2) { animation-delay: 0.06s; }
-.insane-tab:nth-child(3) { animation-delay: 0.09s; }
-.insane-tab:nth-child(4) { animation-delay: 0.12s; }
-.insane-tab:nth-child(5) { animation-delay: 0.15s; }
-.insane-tab:nth-child(6) { animation-delay: 0.18s; }
-.insane-tab:hover .insane-tab-btn.insane-tab-text {
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff !important;
-}
-.insane-tab-active .insane-tab-btn.insane-tab-text {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff !important;
-    box-shadow: inset 3px 0 0 #f59e0b;
-}
-.insane-tab-btn.insane-tab-text {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    transform: none !important;
-    outline: none !important;
-    font-size: 12px !important;
-    font-weight: 500;
-    width: 100%;
-    min-height: 0;
-    text-align: left;
-    color: rgba(220, 220, 220, 0.95) !important;
-    background: transparent !important;
-    border-radius: 8px !important;
-    border: none !important;
-    padding: 9px 12px !important;
-    cursor: pointer;
-    font-family: "Hammersmith One", sans-serif;
-    letter-spacing: 0.02em;
-    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-}
-.insane-tab-btn.insane-tab-text:active {
-    transform: scale(0.99);
-}
-.insane-theme-row {
+#m-modal.m-vis {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    animation: mModalIn 0.4s var(--m-ease) both, mPulse 5s ease-in-out 0.5s infinite;
 }
-.insane-theme-btn {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;
-    font-size: 11px !important;
-    font-family: "Hammersmith One", sans-serif;
-    outline: none !important;
-    cursor: pointer;
-    padding: 6px 10px !important;
-    border-radius: 8px !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    background: rgba(0, 0, 0, 0.25) !important;
-    color: rgba(230, 230, 230, 0.95) !important;
-    transition: background 0.15s ease, border-color 0.15s ease;
-}
-.insane-theme-btn:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
-    border-color: rgba(245, 158, 11, 0.35) !important;
-}
-.insane-status {
-    text-align: left;
-    font-size: 9px;
-    letter-spacing: 0.06em;
-    color: rgba(200, 200, 200, 0.9);
-    margin-top: 10px;
-    padding: 8px 8px;
-    font-variant-numeric: tabular-nums;
-    font-family: ui-monospace, "Cascadia Mono", monospace;
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.22);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    line-height: 1.4;
+#m-modal.m-hide {
+    animation: mModalOut 0.28s var(--m-ease) forwards !important;
 }
 
-.menuC {
-    color: #e8e8ea;
-    font-family: "Hammersmith One";
-    font-size: 14px;
-    line-height: 1.55;
-    height: auto;
-    min-height: 200px;
-    max-height: min(440px, calc(100vh - 130px));
-    overflow-y: auto;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    overflow-x: hidden;
-    scrollbar-width: thin;
-    padding: 16px 18px 18px;
+/* ── Title bar ── */
+#m-titlebar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 18px 12px;
+    background: var(--m-surface);
+    border-bottom: 1px solid var(--m-border);
+    flex-shrink: 0; cursor: grab; user-select: none; -webkit-user-select: none;
+}
+#m-titlebar:active { cursor: grabbing; }
+#m-title-icon {
+    font-size: 18px; line-height: 1;
+    background: linear-gradient(135deg, var(--m-accent), var(--m-accent2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+#m-title-text {
+    font-size: 15px; font-weight: 700;
+    letter-spacing: -0.01em; color: var(--m-text); flex: 1;
+}
+#m-title-text span {
+    font-size: 11px; font-weight: 400; color: var(--m-text3); margin-left: 7px; letter-spacing: 0;
+}
+.m-title-pills { display: flex; gap: 6px; align-items: center; }
+.m-title-pill {
+    font-size: 10px; font-family: var(--m-mono); padding: 3px 9px; border-radius: 20px;
+    border: 1px solid var(--m-border2); background: var(--m-surface3); color: var(--m-text2); letter-spacing: 0.03em;
+}
+.m-title-pill.m-accent { border-color: var(--m-accent-glow); background: var(--m-accent-dim); color: var(--m-accent2); }
+#m-close {
+    width: 28px; height: 28px; border-radius: var(--m-radius-xs);
+    border: 1px solid var(--m-border2); background: transparent; color: var(--m-text2);
+    font-size: 15px; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s; flex-shrink: 0;
+}
+#m-close:hover { background: rgba(248,113,113,0.14); border-color: rgba(248,113,113,0.4); color: var(--m-red); transform: scale(1.1); }
+
+/* ── Body ── */
+#m-body { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+
+/* ================================================================
+   LEFT SIDEBAR NAV
+================================================================ */
+#m-nav {
+    width: var(--m-nav-w); flex-shrink: 0;
+    background: var(--m-surface);
+    border-right: 1px solid var(--m-border);
+    display: flex; flex-direction: column;
+    overflow-y: auto; overflow-x: hidden; scrollbar-width: none;
+}
+#m-nav::-webkit-scrollbar { display: none; }
+
+/* search */
+#m-search-wrap { padding: 10px 12px; border-bottom: 1px solid var(--m-border); flex-shrink: 0; }
+#m-search {
+    width: 100%; box-sizing: border-box;
+    background: var(--m-surface3); border: 1px solid var(--m-border2);
+    border-radius: var(--m-radius-xs); color: var(--m-text);
+    font-family: var(--m-font); font-size: 11px; padding: 7px 10px 7px 28px; outline: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%2355556a' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: 9px center;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+#m-search::placeholder { color: var(--m-text3); }
+#m-search:focus { border-color: var(--m-accent); box-shadow: 0 0 0 3px var(--m-accent-dim); }
+
+/* nav items scroll area */
+#m-nav-list { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 8px 0; scrollbar-width: none; }
+#m-nav-list::-webkit-scrollbar { display: none; }
+
+.m-nav-group-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--m-text3); padding: 10px 16px 4px; display: block; pointer-events: none;
+}
+.m-nav-item {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%; padding: 9px 16px;
+    border: none; background: transparent;
+    color: var(--m-text2); font-family: var(--m-font);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    text-align: left; box-sizing: border-box; position: relative;
+    transition: color 0.15s, background 0.15s;
+    animation: mNavItemIn 0.3s var(--m-ease) backwards;
+}
+.m-nav-item:nth-child(1){animation-delay:0.04s}
+.m-nav-item:nth-child(2){animation-delay:0.08s}
+.m-nav-item:nth-child(3){animation-delay:0.12s}
+.m-nav-item:nth-child(4){animation-delay:0.16s}
+.m-nav-item:nth-child(5){animation-delay:0.20s}
+.m-nav-item:nth-child(6){animation-delay:0.24s}
+.m-nav-item:nth-child(7){animation-delay:0.28s}
+.m-nav-item:nth-child(8){animation-delay:0.32s}
+.m-nav-item-icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--m-surface3); display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0; transition: background 0.15s, box-shadow 0.15s;
+}
+.m-nav-item-label { flex: 1; }
+.m-nav-item-badge {
+    font-size: 9px; font-family: var(--m-mono); background: var(--m-surface4);
+    color: var(--m-text3); padding: 2px 5px; border-radius: 4px;
+    border: 1px solid var(--m-border); flex-shrink: 0;
+}
+.m-nav-item:hover { background: var(--m-surface2); color: var(--m-text); }
+.m-nav-item:hover .m-nav-item-icon { background: var(--m-surface4); }
+.m-nav-item.m-active {
+    color: var(--m-accent2);
+    background: linear-gradient(90deg, rgba(124,106,245,0.14) 0%, transparent 100%);
+}
+.m-nav-item.m-active::before {
+    content: ''; position: absolute;
+    left: 0; top: 16%; bottom: 16%; width: 3px;
+    background: linear-gradient(180deg, var(--m-accent), var(--m-accent2));
+    border-radius: 0 3px 3px 0;
+}
+.m-nav-item.m-active .m-nav-item-icon { background: var(--m-accent-dim); box-shadow: 0 0 12px var(--m-accent-dim); }
+.m-nav-item.m-active .m-nav-item-badge { background: var(--m-accent-dim); color: var(--m-accent2); border-color: var(--m-accent-glow); }
+
+/* nav footer */
+#m-nav-footer { border-top: 1px solid var(--m-border); padding: 10px 12px 12px; flex-shrink: 0; }
+#m-nav-clock { font-family: var(--m-mono); font-size: 9px; color: var(--m-text3); line-height: 1.75; padding: 4px 4px 0; }
+#m-nav-clock b { color: var(--m-text2); font-weight: 500; }
+.m-nav-foot-btns { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; }
+.m-nav-foot-btn {
+    flex: 1; min-width: 0; font-size: 10px; font-family: var(--m-font); font-weight: 500;
+    padding: 6px 4px; border-radius: var(--m-radius-xs);
+    border: 1px solid var(--m-border2); background: var(--m-surface3);
+    color: var(--m-text2); cursor: pointer; text-align: center;
+    transition: all 0.15s; white-space: nowrap;
+}
+.m-nav-foot-btn:hover { background: var(--m-surface4); border-color: var(--m-border3); color: var(--m-text); }
+.m-nav-foot-btn.m-danger:hover { border-color: rgba(248,113,113,0.4); color: var(--m-red); background: rgba(248,113,113,0.08); }
+#lightmode, #nexusCompact { display: none !important; }
+
+/* ================================================================
+   RIGHT CONTENT PANE
+================================================================ */
+#m-content { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+
+/* content header */
+#m-content-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 22px 14px;
+    border-bottom: 1px solid var(--m-border);
+    flex-shrink: 0; background: var(--m-surface);
+}
+#m-content-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--m-accent-dim); border: 1px solid var(--m-accent-glow);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px; flex-shrink: 0;
+    box-shadow: 0 4px 16px var(--m-accent-dim);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+#m-content-title { flex: 1; }
+#m-content-title h2 { font-size: 21px; font-weight: 700; color: var(--m-text); margin: 0; line-height: 1.2; letter-spacing: -0.02em; }
+#m-content-title p  { font-size: 12px; color: var(--m-text2); margin: 4px 0 0; line-height: 1; }
+
+/* panels */
+#m-panels { flex: 1; overflow: hidden; position: relative; }
+.m-panel {
+    position: absolute; inset: 0;
+    overflow-y: auto; overflow-x: hidden;
+    padding: 20px 24px 26px;
+    display: none;
+    scrollbar-width: thin; scrollbar-color: var(--m-surface4) transparent;
     box-sizing: border-box;
 }
-.menuC.insane-panel-enter {
-    animation: insanePanelEnter 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+.m-panel::-webkit-scrollbar { width: 5px; }
+.m-panel::-webkit-scrollbar-thumb { background: var(--m-surface4); border-radius: 4px; }
+.m-panel.m-active { display: block; animation: mPanelIn 0.32s var(--m-ease) both; }
+
+/* ================================================================
+   SECTION & ROW COMPONENTS
+================================================================ */
+.m-section { margin-bottom: 22px; }
+.m-section:last-child { margin-bottom: 4px; }
+.m-section-title {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--m-text2); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
 }
-.menuC .Cselect,
-.menuC select.Cselect {
-    font-size: 14px;
-    padding: 7px 10px;
-    min-height: 30px;
-    border-radius: 8px;
-    border-color: rgba(245, 158, 11, 0.35);
-    background-color: rgba(30, 24, 16, 0.85);
-    color: #fef3c7;
+.m-section-title::after { content:''; flex:1; height:1px; background: linear-gradient(90deg, var(--m-border2), transparent); }
+
+/* Row */
+.m-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 14px; border-radius: var(--m-radius-sm);
+    background: var(--m-surface2); border: 1px solid var(--m-border);
+    margin-bottom: 7px; transition: border-color 0.15s, background 0.15s;
+    min-height: 46px; box-sizing: border-box;
 }
-.menuC .customText {
-    font-size: 14px;
-    padding: 5px 8px;
-    min-width: 2.5em;
-    border-color: rgba(245, 158, 11, 0.4);
+.m-row:last-child { margin-bottom: 0; }
+.m-row:hover { border-color: var(--m-border2); background: var(--m-surface3); }
+.m-row-icon { font-size: 16px; flex-shrink: 0; width: 22px; text-align: center; line-height: 1; }
+.m-row-text { flex: 1; min-width: 0; }
+.m-row-label { font-size: 13px; font-weight: 500; color: var(--m-text); display: block; line-height: 1.3; }
+.m-row-sub   { font-size: 11px; color: var(--m-text2); display: block; margin-top: 2px; line-height: 1.3; }
+.m-row-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+/* ── Pill Toggle ── */
+.m-toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; cursor: pointer; }
+.m-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.m-toggle-track {
+    position: absolute; inset: 0; border-radius: 24px;
+    background: var(--m-surface4); border: 1px solid var(--m-border2);
+    transition: background 0.28s, border-color 0.28s, box-shadow 0.28s; cursor: pointer;
 }
-.menuCBest {
-    color: #e8e8ea;
-    font-family: "Hammersmith One";
-    font-size: 11px;
-    overflow-y: visible;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    min-height: 0;
-    padding-bottom: 4px;
-    box-sizing: border-box;
-    width: 100%;
+.m-toggle-track::after {
+    content: ''; position: absolute; left: 3px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--m-text3);
+    transition: left 0.28s var(--m-ease), background 0.28s, width 0.1s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+.m-toggle input:checked + .m-toggle-track {
+    background: linear-gradient(135deg, var(--m-accent), var(--m-accent2));
+    border-color: var(--m-accent); box-shadow: 0 0 14px var(--m-accent-glow);
+}
+.m-toggle input:checked + .m-toggle-track::after { left: calc(100% - 19px); background: #fff; }
+.m-toggle:active .m-toggle-track::after { width: 20px; }
+.m-toggle input:focus-visible + .m-toggle-track { box-shadow: 0 0 0 3px var(--m-accent-dim); }
+
+/* ── Select ── */
+.m-select {
+    background: var(--m-surface4); border: 1px solid var(--m-border2);
+    border-radius: var(--m-radius-xs); color: var(--m-text);
+    font-family: var(--m-font); font-size: 12px; font-weight: 500;
+    padding: 6px 28px 6px 10px; outline: none; cursor: pointer;
+    appearance: none; -webkit-appearance: none; max-width: 160px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%239999b0' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 8px center;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+.m-select:focus { border-color: var(--m-accent); box-shadow: 0 0 0 3px var(--m-accent-dim); }
+.m-select option { background: var(--m-surface3); color: var(--m-text); }
+
+/* ── Slider ── */
+.m-slider-wrap { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 130px; }
+.m-slider {
+    -webkit-appearance: none; appearance: none;
+    flex: 1; height: 4px; border-radius: 4px;
+    background: var(--m-surface4); outline: none; cursor: pointer; border: none;
+}
+.m-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--m-accent), var(--m-accent2));
+    border: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 10px var(--m-accent-glow); cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.m-slider::-webkit-slider-thumb:hover { transform: scale(1.3); box-shadow: 0 0 20px var(--m-accent-glow); }
+.m-slider::-moz-range-thumb {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--m-accent), var(--m-accent2));
+    border: 2px solid rgba(255,255,255,0.2); cursor: pointer;
+}
+.m-slider-val { font-size: 12px; font-family: var(--m-mono); font-weight: 600; color: var(--m-accent2); min-width: 32px; text-align: right; }
+.m-slider-reset {
+    font-size: 14px; line-height: 1; padding: 5px 10px;
+    border-radius: var(--m-radius-xs); border: 1px solid var(--m-border2);
+    background: var(--m-surface4); color: var(--m-text2); cursor: pointer; transition: all 0.15s;
+}
+.m-slider-reset:hover { border-color: var(--m-accent-glow); color: var(--m-accent2); background: var(--m-accent-dim); }
+
+/* ── Text Input ── */
+.m-input {
+    background: var(--m-surface4); border: 1px solid var(--m-border2);
+    border-radius: var(--m-radius-xs); color: var(--m-text);
+    font-family: var(--m-mono); font-size: 12px;
+    padding: 6px 9px; outline: none; width: 50px; text-align: center;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+.m-input:focus { border-color: var(--m-accent); box-shadow: 0 0 0 3px var(--m-accent-dim); background: rgba(124,106,245,0.06); }
+
+/* ── kbd ── */
+.m-kbd { font-size: 9px; font-family: var(--m-mono); background: var(--m-surface4); color: var(--m-text3); border: 1px solid var(--m-border2); border-radius: 4px; padding: 2px 5px; letter-spacing: 0.04em; }
+
+/* ── Divider ── */
+.m-divider { height: 1px; background: var(--m-border); margin: 14px 0; }
+
+/* ── Banner ── */
+.m-banner {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 11px 14px; border-radius: var(--m-radius-sm);
+    background: var(--m-accent-dim); border: 1px solid var(--m-accent-glow);
+    margin-bottom: 18px; font-size: 12px; color: var(--m-text2); line-height: 1.55;
+}
+.m-banner-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.m-banner-warn { background: rgba(251,191,36,0.1) !important; border-color: rgba(251,191,36,0.35) !important; }
+
+/* ── Stat chips (devtool) ── */
+.m-stat-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.m-stat-chip { display:flex; flex-direction:column; align-items:center; padding:10px 16px; border-radius:var(--m-radius-sm); background:var(--m-surface3); border:1px solid var(--m-border); min-width:72px; flex:1; }
+.m-stat-chip-val { font-size:20px; font-weight:700; font-family:var(--m-mono); color:var(--m-accent2); line-height:1; }
+.m-stat-chip-lbl { font-size:9px; text-transform:uppercase; letter-spacing:0.08em; color:var(--m-text3); margin-top:4px; }
+
+/* ================================================================
+   LIGHT MODE
+================================================================ */
+body.m-light #m-modal {
+    --m-bg: #f0f0f6; --m-surface: #e4e4ed; --m-surface2: #d9d9e6;
+    --m-surface3: #cdcdd9; --m-surface4: #c1c1ce;
+    --m-border: rgba(0,0,0,0.08); --m-border2: rgba(0,0,0,0.14); --m-border3: rgba(0,0,0,0.22);
+    --m-text: #1a1a2e; --m-text2: #44445a; --m-text3: #77778a;
 }
 
+/* ================================================================
+   GAME-UI TWEAKS
+================================================================ */
+#mapDisplay        { height:120px;width:120px;border-radius:9px;backdrop-filter:blur(4px); }
+#leaderboardButton { backdrop-filter:blur(4px);display:block;border-radius:9px;width:35px;height:35px;left:20px;top:auto;bottom:205px;border:none;user-select:none;z-index:99999999; }
+#storeButton,#allianceButton { right:20px;border-radius:9px;backdrop-filter:blur(4px); }
+#allianceButton    { top:auto;bottom:360px; }
+#storeButton       { top:auto;bottom:300px; }
+#killCounter       { right:inherit;bottom:185px;right:20px;border-radius:9px;backdrop-filter:blur(4px); }
+#noticationDisplay { right:20px;bottom:245px;top:auto; }
+#foodDisplay,#woodDisplay,#stoneDisplay,#scoreDisplay { border-radius:9px;backdrop-filter:blur(4px); }
+#scoreDisplay      { bottom:150px; }
+#upgradeHolder,#upgradeCounter { transition:2s; }
+#topInfoHolder     { transition:all 1s ease-in-out; }
+#leaderboard       { border-radius:13px;backdrop-filter:blur(4px); }
+#enterGame         { background-color:rgba(153,50,204,0.3);border-radius:15px;transition:all 0.7s ease-in-out; }
+#gameUI            { transition:all 1s; }
+.actionBarItem     { border-radius:9px;backdrop-filter:blur(4px); }
+#menuId1,#menuId6,#menuId7,#menuId3,#menuId4,#menuId5 { user-select:none;overflow:visible; }
+.loader { position:absolute;top:110%;left:46%;border:16px solid white;border-radius:50%;border-top:16px solid black;box-shadow:0 0 10px 10px rgba(0,0,0,0.4);width:60px;height:60px;animation:mSpinLoader 0.5s linear infinite; }
+.betaLow { background:white;-webkit-background-clip:text;color:transparent;position:absolute;font-size:13px; }
+#SoBetaLow { top:8px;right:10px;z-index:2; }
 
-#storeButton,
-#allianceButton {
-   right: 20px;
-   border-radius: 9px;
-   backdrop-filter: blur(4px);
-}
-
-#allianceButton {
-    top: auto;
-    bottom: 360px;
-}
-
-#storeButton {
-    top: auto;
-    bottom: 300px;
-}
-.betaLow {
-    background: white;
-    -webkit-background-clip: text;
-    color: transparent;
-    position: absolute;
-    font-size: 13px;
-    text-shadow: 0 0 10px rgba(200, 200, 200, 0.2);
-}
-
-#SoBetaLow {
-    top: 8px;
-    right: 10px;
-    z-index: 2;
-}
-.insane-ver {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent !important;
-    font-weight: 700;
-    font-size: 11px !important;
-}
-
-#killCounter {
-	right: inherit;
-    bottom: 185px;
-	right: 20px;
-    border-radius: 9px;
-    backdrop-filter: blur(4px);
-}
-
-.actionBarItem {
-    border-radius: 9px;
-    backdrop-filter: blur(4px);
-}
-
-#enterGame {
-    background-color: rgba(153, 50, 204, 0.3);
-    border-radius: 15px;
-    transition: all 0.7s ease-in-out;
-}
-
-#noticationDisplay {
-	right: 20px;
-	bottom: 245px;
-	top: auto;
-}
-
-#foodDisplay,
-#woodDisplay,
-#stoneDisplay,
-#scoreDisplay {
-    border-radius: 9px;
-    backdrop-filter: blur(4px);
-}
-
-#upgradeHolder,
-#upgradeCounter {
-    transition: 2s;
-}
-
-#topInfoHolder {
-    transition: all 1s ease-in-out;
-}
-
-#leaderboard {
-    border-radius: 13px;
-    backdrop-filter: blur(4px);
-}
-
-.menuB {
-    text-align: center;
-    background-color: transparent;
-    color: #fff;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    border: 2px solid #000;
-    cursor: pointer;
-}
-
-.menuB:hover {
-    border: 2px solid #fff;
-}
-
-.menuB:active {
-    color: rgb(25, 25, 25);
-    background-color: rgb(200, 200, 200);
-}
-
-.customText {
-    color: #000;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    border: 2px solid #000;
-}
-
-.customText:focus {
-    background-color: yellow;
-}
-
-.checkB {
-    position: relative;
-    top: 2px;
-    accent-color: #888;
-    cursor: pointer;
-}
-
-.menuoP {
-    background: black;
-    width: 100%;
-    heigth: 30px;
-}
-
-.slider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 240px;
-    max-width: 100%;
-    height: 12px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-    border-radius: 5px;
-}
-
-.slider:hover {
-    opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    background: linear-gradient(135deg, #fbbf24, #ea580c);
-    cursor: pointer;
-    border-radius: 50%;
-    box-shadow: 0 0 8px rgba(245, 158, 11, 0.45);
-}
-
-#gameUI {
-    transition: all 1s;
-}
-
-#menuId1,
-#menuId6,
-#menuId7,
-#menuId3,
-#menuId4,
-#menuId5 {
-    user-select: none;
-    overflow: visible;
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
-}
-
-.slider::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
-    background: linear-gradient(135deg, #fbbf24, #ea580c);
-    cursor: pointer;
-    border-radius: 50%;
-}
-
-.Cselect {
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 5px;
-    background-color: rgba(75, 75, 75, 0.5);
-    color: #fff;
-    border: 1px solid #000;
-}
-
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    opacity: 0;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: rgb(25, 25, 25);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:active {
-    background-color: rgb(230, 230, 230);
-}
+/* ── Legacy class compat ── */
+.menuClass{}.menuClassBest{}.menuC{}.menuCBest{}
+.menuB { text-align:center;background:transparent;color:var(--m-text,#e8e8f0);border-radius:var(--m-radius-xs,6px);border:1px solid rgba(255,255,255,0.18);cursor:pointer;font-family:var(--m-font);font-size:11px;padding:5px 9px;transition:all 0.15s; }
+.menuB:hover { border-color:var(--m-accent2,#9b8ff7);background:var(--m-accent-dim);color:#fff; }
+.menuB:active { background:#ddd;color:#111; }
+.customText { color:var(--m-text,#e8e8f0);border-radius:var(--m-radius-xs,6px);border:1px solid rgba(255,255,255,0.18);background:var(--m-surface2,#1f1f28);font-family:var(--m-mono);font-size:11px;padding:5px 8px; }
+.customText:focus { background:rgba(124,106,245,0.08);border-color:var(--m-accent,#7c6af5);outline:none; }
+.checkB { position:relative;top:2px;accent-color:var(--m-accent,#7c6af5);cursor:pointer; }
+.Cselect { border-radius:var(--m-radius-xs,6px);background:var(--m-surface3,#27272f);color:var(--m-text,#e8e8f0);border:1px solid rgba(255,255,255,0.15);font-family:var(--m-font);font-size:12px;padding:5px 9px; }
+.slider { -webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--m-surface4,#2e2e38);outline:none;border-radius:4px;cursor:pointer; }
+.slider::-webkit-slider-thumb { -webkit-appearance:none;appearance:none;width:16px;height:16px;background:linear-gradient(135deg,var(--m-accent,#7c6af5),var(--m-accent2,#9b8ff7));cursor:pointer;border-radius:50%;box-shadow:0 0 10px var(--m-accent-glow,rgba(124,106,245,0.4)); }
+.slider::-moz-range-thumb { width:16px;height:16px;background:linear-gradient(135deg,var(--m-accent,#7c6af5),var(--m-accent2,#9b8ff7));cursor:pointer;border-radius:50%; }
+.newMenuText{font-size:18px !important;color:#a8a8a8 !important;margin-top:10px !important;}
+.menuLinkMS{font-size:18px !important;}
+.newMenuText2{font-size:18px !important;color:#a8a8a8 !important;margin-top:10px !important;}
+.menuLinkK{font-size:18px !important;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--m-surface4,#2e2e38);border-radius:4px;}
+::-webkit-scrollbar-thumb:active{background:#555;}
 `);
-            HTML.startDiv({ id: "menuHeadLineBest", class: "menuClassBest" }, (html) => {
-                HTML.addDiv({ id: "menuBestEz", class: "menuCBest insane-rail-inner", appendID: "menuHeadLineBest" }, (html) => {
-                    HTML.addDiv({ class: "insane-rail-head", appendID: "menuBestEz" }, (html) => {
-                        html.add(`<div class="insane-mark">Insane</div>`);
-                        html.add(`<div class="insane-mark-sub">mod menu</div>`);
-                    });
-                    HTML.addDiv({ class: "insane-hint", appendID: "menuBestEz" }, (html) => {
-                        html.add(`Esc · \` peek`);
-                    });
-                    HTML.addDiv({ id: "nexusNavGrid", class: "insane-tab-stack", appendID: "menuBestEz" }, (html) => {
-                        HTML.addDiv({ class: "insane-tab insane-tab-active", appendID: "nexusNavGrid" }, (html) => {
-                            html.button({ id: "menuId1", class: "insane-tab-btn insane-tab-text", innerHTML: `Combat`, onclick: "window.changeMenu()" });
-                        });
-                        HTML.addDiv({ class: "insane-tab", appendID: "nexusNavGrid" }, (html) => {
-                            html.button({ id: "menuId5", class: "insane-tab-btn insane-tab-text", innerHTML: `Visual`, onclick: "window.changeMenu2()" });
-                        });
-                        HTML.addDiv({ class: "insane-tab", appendID: "nexusNavGrid" }, (html) => {
-                            html.button({ id: "menuId3", class: "insane-tab-btn insane-tab-text", innerHTML: `Range`, onclick: "window.changeMenu3()" });
-                        });
-                        HTML.addDiv({ class: "insane-tab", appendID: "nexusNavGrid" }, (html) => {
-                            html.button({ id: "menuId4", class: "insane-tab-btn insane-tab-text", innerHTML: `Misc`, onclick: "window.changeMenu4()" });
-                        });
-                        HTML.addDiv({ class: "insane-tab", appendID: "nexusNavGrid" }, (html) => {
-                            html.button({ id: "menuId6", class: "insane-tab-btn insane-tab-text", innerHTML: `Music`, onclick: "window.changeMenu6()" });
-                        });
-                        HTML.addDiv({ class: "insane-tab", appendID: "nexusNavGrid" }, (html) => {
-                            html.button({ id: "menuId7", class: "insane-tab-btn insane-tab-text", innerHTML: `Build`, onclick: "window.changeMenu7()" });
-                        });
-                    });
-                    HTML.addDiv({ id: "nexusThemeRow", class: "insane-theme-row", appendID: "menuBestEz" }, (html) => {
-                        html.button({ id: "menuMoon", class: "insane-theme-btn", innerHTML: `Dim`, onclick: "window.toggleLightModeUi()" });
-                        html.checkBox({ id: "lightmode", class: "checkB", checked: false });
-                        html.button({ id: "menuSun", class: "insane-theme-btn", innerHTML: `Bright`, onclick: "window.toggleLightModeUi()" });
-                    });
-                    HTML.addDiv({ class: "insane-toolbar-row", appendID: "menuBestEz" }, (html) => {
-                        html.add(`Tight rail`);
-                        html.checkBox({ id: "nexusCompact", class: "checkB", checked: false, onclick: "window.nexusToggleCompact()" });
-                    });
-                    HTML.addDiv({ class: "insane-toolbar-row insane-toolbar-actions", appendID: "menuBestEz" }, (html) => {
-                        html.button({ class: "menuB insane-toolbar-btn", innerHTML: "Reset sliders", onclick: "window.ResetAllNexusRanges()" });
-                    });
-                    HTML.addDiv({ id: "nexusClock", class: "insane-status", appendID: "menuBestEz" }, (html) => {
-                        html.add(`--:--:--`);
-                    });
-                });
-                HTML.addDiv({ id: "SoBetaLow", class: "betaLow insane-ver", appendID: "menuHeadLineBest" }, (html) => {
-                    html.add(`v4`);
-                });
+
+            let trueM = true;
+
+            /* ══════════════════════════════════════════════════════════════
+               BUILD THE MODAL DOM
+            ══════════════════════════════════════════════════════════════ */
+            const mEl  = (tag, cls, html) => { const e = document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; };
+            const mGet = id => document.getElementById(id);
+
+            /* ── overlay ── */
+            const overlayEl = mEl('div',''); overlayEl.id='m-overlay';
+            document.body.appendChild(overlayEl);
+
+            /* ── modal ── */
+            const modalEl = mEl('div',''); modalEl.id='m-modal';
+            document.body.appendChild(modalEl);
+
+            /* ── compat ghost divs so jQuery selectors don't crash ── */
+            const ghostRail  = mEl('div','menuClassBest'); ghostRail.id='menuHeadLineBest';  ghostRail.style.cssText='position:fixed;pointer-events:none;opacity:0;width:0;height:0;overflow:hidden;';
+            const ghostPanel = mEl('div','menuClass');     ghostPanel.id='menuHeadLine';     ghostPanel.style.cssText='position:fixed;pointer-events:none;opacity:0;width:0;height:0;overflow:hidden;';
+            document.getElementById('menuDiv').appendChild(ghostRail);
+            document.getElementById('menuDiv').appendChild(ghostPanel);
+
+            /* title bar */
+            const titlebarEl = mEl('div','');
+            titlebarEl.id = 'm-titlebar';
+            titlebarEl.innerHTML = `
+                <span id="m-title-icon">⚡</span>
+                <span id="m-title-text">Insane Mod <span>v4.1.0 · by wat</span></span>
+                <div class="m-title-pills">
+                    <span class="m-title-pill m-accent" id="m-active-pill">Combat</span>
+                    <span class="m-title-pill" id="m-sess-pill">0s</span>
+                </div>
+                <button id="m-close" title="Close  Esc">✕</button>
+            `;
+            modalEl.appendChild(titlebarEl);
+
+            /* body */
+            const bodyEl = mEl('div',''); bodyEl.id='m-body';
+            modalEl.appendChild(bodyEl);
+
+            /* left nav */
+            const navEl = mEl('div',''); navEl.id='m-nav';
+            bodyEl.appendChild(navEl);
+
+            /* search */
+            const srchWrap = mEl('div',''); srchWrap.id='m-search-wrap';
+            srchWrap.innerHTML='<input id="m-search" type="text" placeholder="Search settings…" autocomplete="off">';
+            navEl.appendChild(srchWrap);
+
+            /* scrollable nav list */
+            const navList = mEl('div',''); navList.id='m-nav-list';
+            navEl.appendChild(navList);
+
+            /* tab definitions */
+            const M_TABS = [
+                { group:'CORE',   id:'menuId1',   panel:'p-combat', icon:'⚔️', label:'Combat',  badge:'C', h2:'Combat',  sub:'Adjust combat settings, change pvp behavior' },
+                { group:'CORE',   id:'menuId5',   panel:'p-visual', icon:'👁️', label:'Visuals', badge:'V', h2:'Visuals', sub:'Change visual settings and effects' },
+                { group:'CORE',   id:'menuId7',   panel:'p-build',  icon:'🏗️', label:'Build',   badge:'B', h2:'Build',   sub:'Configure building and placement behavior' },
+                { group:'TUNING', id:'menuId3',   panel:'p-range',  icon:'🎚️', label:'Range',   badge:'R', h2:'Range',   sub:'Fine-tune render distances and night values' },
+                { group:'TUNING', id:'menuId6',   panel:'p-music',  icon:'🎵', label:'Music',   badge:'M', h2:'Music',   sub:'Control in-game audio and chat music' },
+                { group:'SYSTEM', id:'menuId4',   panel:'p-misc',   icon:'⚙️', label:'Misc',    badge:'X', h2:'Misc',    sub:'General settings and miscellaneous options' },
+                { group:'SYSTEM', id:'menuId-bot',panel:'p-bots',   icon:'🤖', label:'Bots',    badge:'B', h2:'Bots',    sub:'Spawn and control allied bots in-game' },
+                { group:'SYSTEM', id:'menuId-dev',panel:'p-dev',    icon:'🛠️', label:'DevTool', badge:'D', h2:'DevTool', sub:'Developer diagnostics and config reset' },
+            ];
+
+            let curGroup = null;
+            M_TABS.forEach(cfg => {
+                if(cfg.group !== curGroup) {
+                    curGroup = cfg.group;
+                    navList.appendChild(mEl('span','m-nav-group-label', cfg.group));
+                }
+                const btn = mEl('button','m-nav-item');
+                btn.id = cfg.id;
+                btn.innerHTML = `<span class="m-nav-item-icon">${cfg.icon}</span><span class="m-nav-item-label">${cfg.label}</span><span class="m-nav-item-badge">${cfg.badge}</span>`;
+                btn.addEventListener('click', () => mSwitch(cfg));
+                navList.appendChild(btn);
             });
-            HTML.startDiv({ id: "menuHeadLine", class: "menuClass" }, (html) => {
-                HTML.addDiv({ id: "nexusPanelTop", class: "insane-panel-top", appendID: "menuHeadLine" }, (html) => {
-                    html.add(`<span class="insane-panel-title">Settings</span>`);
-                    html.button({ id: "menuclose", class: "insane-panel-close", innerHTML: `×`, onclick: "window.closeMenu()" });
-                });
-                HTML.addDiv({ id: "menuRange", class: "menuC", appendID: "menuHeadLine" }, (html) => {
-                    HTML.addDiv({ style: "font-size: 20px; color: #E2E2E3; background-size: 20px 20px; background-repeat: no-repeat;", appendID: "menuRange" }, (html) => {
-                        html.add(`Combat: `);
-                        html.newLine();
-                    });
-                    HTML.addDiv({ style: "font-size: 15px; color: #fff; background-size: 25px 25px; background-repeat: no-repeat;", appendID: "menuRange" }, (html) => {
-                        html.add('Main Hat Type: ');
-                        html.select({
-                            id: "mainHat",
-                            class: "Cselect",
-                            option: {
-                                'Spike Gear': {
-                                    id: 'spikegear',
-                                },
-                                'Emp Gear': {
-                                    id: 'empgear',
-                                },
-                                'Soldier': {
-                                    id: 'soldier',
-                                    selected: true
-                                },
-                            }
-                        });
-                        html.newLine();
-                        html.add(`Auto: `);
-                        html.selectMenu({ id: "configsChanger3", class: "Cselect", menu: configs3 });
-                        html.newLine();
-                        html.add(`Avoid Functions: `);
-                        html.checkBox({ id: "testavoidspikes", class: "checkB", checked: true });
-                        html.newLine();
-                        html.add(`CxC Wings: `);
-                        html.checkBox({ id: "wingscxc", class: "checkB", checked: true });
-                        html.newLine(2);
-                        HTML.addDiv({ style: "font-size: 19px; color: #E2E2E3; background-size: 20px 20px; background-repeat: no-repeat;", appendID: "menuRange" }, (html) => {
-                            html.add(`Accessibility: `);
-                            html.newLine();
-                        });
-                        HTML.addDiv({ style: "font-size: 15px; color: #fff; background-size: 25px 25px; background-repeat: no-repeat;", appendID: "menuRange" }, (html) => {
-                            html.add(`AutoInsta: `);
-                            html.text({ id: "AIWithS", class: "customText", value: "5", size: "1em", maxLength: "2" }); html.add(` `);
-                            html.text({ id: "AIWithoutS", class: "customText", value: "5", size: "1em", maxLength: "2" }); html.add(` `);
-                            html.checkBox({ id: "autoinsta", class: "checkB", checked: true });
-                            html.newLine();
-                            html.add(`Path Finder: `);
-                            html.checkBox({ id: "pathfind", class: "checkB", checked: false });
-                            html.newLine();
-                        });
-                    });
-                    HTML.addDiv({ id: "menu6", style: "display: none", class: "menuC", appendID: "menuHeadLine" }, (html) => {
-                        HTML.addDiv({ style: "font-size: 20px; color: #E2E2E3; background-size: 20px 20px; background-repeat: no-repeat;", appendID: "menu6" }, (html) => {
-                            html.add(`Music: `);
-                            html.newLine();
-                        });
-                        HTML.addDiv({ style: "font-size: 15px; color: #fff; background-size: 25px 25px; background-repeat: no-repeat;", appendID: "menu6" }, (html) => {
-                            html.add(`Chat Music:`);
-                            html.checkBox({ id: "music1", class: "checkB", checked: false });
-                            html.newLine();
-                            html.add(`Chat Music 2:`);
-                            html.checkBox({ id: "music2", class: "checkB", checked: false });
-                            html.newLine();
-                        });
-                    });
-                    HTML.addDiv({ id: "menu7", style: "display: none", class: "menuC", appendID: "menuHeadLine" }, (html) => {
-                        HTML.addDiv({ style: "font-size: 20px; color: #E2E2E3; background-size: 20px 20px; background-repeat: no-repeat;", appendID: "menu7" }, (html) => {
-                            html.add(`Build: `);
-                        });
-                        HTML.addDiv({ style: "font-size: 15px; color: #fff; background-size: 25px 25px; background-repeat: no-repeat;", appendID: "menu7" }, (html) => {
-                            html.add('Auto Place Type: ');
-                            html.select({
-                                id: "placertypes",
-                                class: "Cselect",
-                                option: {
-                                    'Spike': {
-                                        id: 'spikesPlace',
-                                    },
-                                    'Trap': {
-                                        id: 'trapsPlace',
-                                        selected: true
-                                    },
-                                }
+
+            /* nav footer */
+            const navFoot = mEl('div',''); navFoot.id='m-nav-footer';
+            navFoot.innerHTML = `
+                <div id="m-nav-clock"><b id="m-clk-time">--:--:--</b><br>session <b id="m-clk-sess">0s</b></div>
+                <div class="m-nav-foot-btns">
+                    <button class="m-nav-foot-btn" id="menuMoon" onclick="window.mToggleTheme()">🌙 Theme</button>
+                    <button class="m-nav-foot-btn m-danger" onclick="window.ResetAllNexusRanges()">↺ Reset</button>
+                </div>
+                <input type="checkbox" id="lightmode"    class="checkB">
+                <input type="checkbox" id="nexusCompact" class="checkB">
+                <input type="checkbox" id="nexusClock"   class="checkB" style="display:none">
+            `;
+            navEl.appendChild(navFoot);
+
+            /* right content */
+            const contentEl = mEl('div',''); contentEl.id='m-content';
+            bodyEl.appendChild(contentEl);
+
+            const hdrEl = mEl('div',''); hdrEl.id='m-content-header';
+            hdrEl.innerHTML = `
+                <div id="m-content-icon">⚔️</div>
+                <div id="m-content-title">
+                    <h2 id="m-content-h2">Combat</h2>
+                    <p  id="m-content-p">Adjust combat settings, change pvp behavior</p>
+                </div>
+            `;
+            contentEl.appendChild(hdrEl);
+
+            const panelsWrap = mEl('div',''); panelsWrap.id='m-panels';
+            contentEl.appendChild(panelsWrap);
+
+            /* helpers */
+            function mPanel(id) { const p=mEl('div','m-panel'); p.id=id; panelsWrap.appendChild(p); return p; }
+            function mSec(parent, title) {
+                const s=mEl('div','m-section');
+                s.innerHTML=`<div class="m-section-title">${title}</div>`;
+                parent.appendChild(s);
+                const body=mEl('div',''); s.appendChild(body); return body;
+            }
+            function mTogRow(parent, icon, label, sub, cid, def, kbd) {
+                const row=mEl('div','m-row');
+                row.innerHTML=`<span class="m-row-icon">${icon}</span><span class="m-row-text"><span class="m-row-label">${label}</span>${sub?`<span class="m-row-sub">${sub}</span>`:''}</span><span class="m-row-right">${kbd?`<span class="m-kbd">${kbd}</span>`:''}<label class="m-toggle"><input type="checkbox" id="${cid}" class="checkB"${def?' checked':''}><span class="m-toggle-track"></span></label></span>`;
+                parent.appendChild(row); return row;
+            }
+            function mSelRow(parent, icon, label, sub, sid, opts) {
+                const row=mEl('div','m-row');
+                row.innerHTML=`<span class="m-row-icon">${icon}</span><span class="m-row-text"><span class="m-row-label">${label}</span>${sub?`<span class="m-row-sub">${sub}</span>`:''}</span><span class="m-row-right"><select id="${sid}" class="m-select Cselect">${opts}</select></span>`;
+                parent.appendChild(row); return row;
+            }
+            function mSlRow(parent, icon, label, sid, mn, mx, def, fn) {
+                const row=mEl('div','m-row');
+                row.innerHTML=`<span class="m-row-icon">${icon}</span><span class="m-row-text"><span class="m-row-label">${label}</span></span><span class="m-row-right m-slider-wrap"><input type="range" id="${sid}" class="m-slider slider" min="${mn}" max="${mx}" value="${def}"><span class="m-slider-val" id="${sid}_v">${def}</span><button class="m-slider-reset menuB" onclick="window.${fn}()">↺</button></span>`;
+                parent.appendChild(row);
+                const sl=row.querySelector(`#${sid}`),vl=row.querySelector(`#${sid}_v`);
+                if(sl&&vl) sl.addEventListener('input',()=>vl.textContent=sl.value);
+                return row;
+            }
+            function mBanRow(parent, icon, text, warn) {
+                const b=mEl('div', warn?'m-banner m-banner-warn':'m-banner');
+                b.innerHTML=`<span class="m-banner-icon">${icon}</span><span>${text}</span>`;
+                parent.appendChild(b); return b;
+            }
+            function mSelMenu(parent, id, menuObj) {
+                const row=mEl('div','m-row');
+                row.innerHTML=`<span class="m-row-icon">📋</span><span class="m-row-text"><span class="m-row-label">Auto Config</span><span class="m-row-sub">select auto-behavior preset</span></span><span class="m-row-right" id="${id}_wrap"></span>`;
+                parent.appendChild(row);
+                new HtmlAction(row.querySelector(`#${id}_wrap`)).selectMenu({id, class:'Cselect m-select', menu:menuObj});
+            }
+
+            /* also wire legacy IDs that game code reads */
+            function mMirrorPanel(newId, legacyId) {
+                /* create a hidden legacy div inside ghostPanel for JS compat */
+                const d=mEl('div','menuC'); d.id=legacyId; d.style.display='none';
+                ghostPanel.appendChild(d);
+            }
+
+            /* ══════════════════════════════════════
+               PANELS
+            ══════════════════════════════════════ */
+
+            /* COMBAT */
+            const pC = mPanel('p-combat');
+            mBanRow(pC,'💡','Auto-features only activate while in-game. Configure hat rotation and insta timing below.');
+            let b = mSec(pC,'Hat & Strategy');
+            mSelRow(b,'🎩','Main Hat Type','worn during combat rotation','mainHat',
+                `<option value="spikegear">Spike Gear</option><option value="empgear">Emp Gear</option><option value="soldier" selected>Soldier</option>`);
+            mSelMenu(b,'configsChanger3',configs3);
+            mTogRow(b,'🛡️','Avoid Functions','auto-dodge spikes and traps','testavoidspikes',true,null);
+            mTogRow(b,'🪽','CxC Wings','wing-slot auto-correction','wingscxc',true,null);
+            b = mSec(pC,'Insta & Pathing');
+            (() => {
+                const row=mEl('div','m-row');
+                row.innerHTML=`<span class="m-row-icon">🔁</span><span class="m-row-text"><span class="m-row-label">AutoInsta</span><span class="m-row-sub">frames with shield · frames without shield</span></span><span class="m-row-right" style="gap:7px;"><input type="text" id="AIWithS" class="m-input customText" value="5" maxlength="2"><input type="text" id="AIWithoutS" class="m-input customText" value="5" maxlength="2"><label class="m-toggle"><input type="checkbox" id="autoinsta" class="checkB" checked><span class="m-toggle-track"></span></label></span>`;
+                b.appendChild(row);
+            })();
+            mTogRow(b,'🗺️','Path Finder','A* auto-navigation to targets','pathfind',false,null);
+
+            /* VISUALS */
+            const pV = mPanel('p-visual');
+            b = mSec(pV,'Render Options');
+            mSelRow(b,'📡','Tracers Type','lines rendered toward targets','tracersvalue',
+                `<option value="">None</option><option value="tracersMe">Tracers Me</option><option value="tracersFor">Tracers For</option><option value="tracersThem" selected>Tracers Them</option>`);
+            (() => {
+                const row=mEl('div','m-row');
+                row.innerHTML=`<span class="m-row-icon">🔭</span><span class="m-row-text"><span class="m-row-label">Render Type</span><span class="m-row-sub">toggle leaderboard, players, HP bars, visuals</span></span><span class="m-row-right" id="cfg6w"></span>`;
+                b.appendChild(row);
+                new HtmlAction(row.querySelector('#cfg6w')).selectMenu({id:'configsChanger6',class:'Cselect m-select',menu:configs7});
+            })();
+            mSelRow(b,'📷','Camera Zoom','field-of-view preset','visualTypeZoom',
+                `<option value="Cam+">Camera +</option><option value="Cam0">Camera 0</option><option value="Cam1" selected>Camera 1</option><option value="Cam2">Camera 2</option><option value="Cam3">Camera 3</option>`);
+            b = mSec(pV,'HUD & Effects');
+            mTogRow(b,'🏷️','Nick Name',   'show player name tags',          'nickname',  true, null);
+            mTogRow(b,'❤️', 'Health Bar', 'render HP bars above players',   'healthbar', true, null);
+            mTogRow(b,'🎛️','Equalizer',   'audio-reactive visual wave',     'equalizer', false,null);
+            mTogRow(b,'❄️', 'Snow Effect','falling snowflakes overlay',     'cansnow',   false,null);
+
+            /* BUILD */
+            const pB = mPanel('p-build');
+            b = mSec(pB,'Placement');
+            mSelRow(b,'📌','Auto Place Type','structure to automatically place','placertypes',
+                `<option value="spikesPlace">Spike</option><option value="trapsPlace" selected>Trap</option>`);
+            mTogRow(b,'🔁','Auto Replace','replace destroyed structures instantly','autoreplace',true, null);
+            mTogRow(b,'🤖','Auto Place',  'place on trigger automatically',        'autoplace',  true, null);
+            mTogRow(b,'⏩','Pre Place',   'place before hit lands',                'preplace',   true, null);
+            b = mSec(pB,'Defense');
+            mTogRow(b,'🪤','Anti Trap',      'avoid walking into enemy traps',  'antitrap',   true, null);
+            mTogRow(b,'⚙️','Weapon Grinder', 'auto-grind for weapon XP',        'weapongrind',false,null);
+
+            /* RANGE */
+            const pR = mPanel('p-range');
+            mBanRow(pR,'🎚️','Drag sliders to tune render distances. Click ↺ to restore defaults.');
+            b = mSec(pR,'Render Distance');
+            mSlRow(b,'🎛️','Equalizer','menuequalizer','0', '100','45','ResetThis');
+            mSlRow(b,'👥','Players',  'players',      '10','100','90','ResetPlayers');
+            mSlRow(b,'🌙','Night',    'menunight',    '30','70', '35','ResetNight');
+            mSlRow(b,'🔲','Grids',    'slider',       '0', '50', '18','ResetGrids');
+
+            /* MUSIC */
+            const pM = mPanel('p-music');
+            mBanRow(pM,'ℹ️','Music plays via chat triggers. Toggle tracks independently below.');
+            b = mSec(pM,'Audio Tracks');
+            mTogRow(b,'🎶','Chat Music',  'trigger background track 1 via chat','music1',false,null);
+            mTogRow(b,'🎸','Chat Music 2','trigger background track 2 via chat','music2',false,null);
+
+            /* MISC */
+            const pX = mPanel('p-misc');
+            b = mSec(pX,'Gameplay Config');
+            (() => {
+                const row=mEl('div','m-row');
+                row.innerHTML=`<span class="m-row-icon">📋</span><span class="m-row-text"><span class="m-row-label">Configs</span><span class="m-row-sub">auto-upgrade · kill chat · auto-buy · real dir</span></span><span class="m-row-right" id="cfgw"></span>`;
+                b.appendChild(row);
+                new HtmlAction(row.querySelector('#cfgw')).selectMenu({id:'configsChanger',class:'Cselect m-select',menu:configs});
+            })();
+            mTogRow(b,'💊','Smooth Health','interpolate HP bar transitions',  'smoothhealth',false,null);
+            mTogRow(b,'🥷','Assassin Gear','auto-equip invisibility hat',     'invismode',   false,null);
+            b = mSec(pX,'UI & Camera');
+            mTogRow(b,'🔍','Wheel Zoom', 'scroll wheel to change field-of-view','zoomgg',  false,null);
+            mTogRow(b,'❤️','Health Regen','auto-use food for healing',          'heal',     true, null);
+            mTogRow(b,'🗺️','Map Sync',   'sync minimap with server state',      'mapsync',  true, null);
+
+            /* DEVTOOL */
+            const pD = mPanel('p-dev');
+            mBanRow(pD,'⚠️','Developer tools. Resetting configs clears ALL saved localStorage values for this mod.',true);
+            b = mSec(pD,'System Info');
+            (() => {
+                const chips=mEl('div','m-stat-row');
+                chips.innerHTML=`<div class="m-stat-chip"><span class="m-stat-chip-val" id="dev-ping">--</span><span class="m-stat-chip-lbl">Ping ms</span></div><div class="m-stat-chip"><span class="m-stat-chip-val" id="dev-fps">--</span><span class="m-stat-chip-lbl">FPS</span></div><div class="m-stat-chip"><span class="m-stat-chip-val" id="dev-sess">0s</span><span class="m-stat-chip-lbl">Session</span></div>`;
+                b.appendChild(chips);
+            })();
+            b = mSec(pD,'Actions');
+            (() => {
+                const row=mEl('div','m-row');
+                row.innerHTML=`<span class="m-row-icon">🗑️</span><span class="m-row-text"><span class="m-row-label">Reset All Configs</span><span class="m-row-sub">clears saved localStorage settings</span></span><span class="m-row-right"><button class="menuB m-slider-reset" onclick="try{window.removeConfigs();}catch(e){}alert('Configs reset!')">Reset</button></span>`;
+                b.appendChild(row);
+            })();
+
+            /* ══════════════════════════════════════
+               BOTS PANEL  (#p-bots)
+            ══════════════════════════════════════ */
+            const pBots = mPanel('p-bots');
+            mBanRow(pBots,'🤖','Bots open their own WebSocket connections to the server and join as real players. They run weapon-aware AI matching your current loadout style.');
+
+            /* ── bot status bar ── */
+            (() => {
+                const statRow = mEl('div','m-stat-row');
+                statRow.innerHTML = `
+                    <div class="m-stat-chip"><span class="m-stat-chip-val" id="bot-count-disp">0</span><span class="m-stat-chip-lbl">Active</span></div>
+                    <div class="m-stat-chip"><span class="m-stat-chip-val" id="bot-alive-disp">0</span><span class="m-stat-chip-lbl">Alive</span></div>
+                    <div class="m-stat-chip"><span class="m-stat-chip-val" id="bot-kills-disp">0</span><span class="m-stat-chip-lbl">Bot Kills</span></div>
+                `;
+                pBots.appendChild(statRow);
+            })();
+
+            let bBotCfg = mSec(pBots,'Spawn Settings');
+            mSlRow(bBotCfg,'#️⃣','Bot Count','bot-count','1','8','3','window.__botNoop');
+            mSelRow(bBotCfg,'🗡️','Bot Weapon Style','primary combat style','bot-weapon',
+                `<option value="dagger">Dagger (fast, aggressive)</option>
+                 <option value="sword" selected>Sword (balanced)</option>
+                 <option value="hammer">Hammer (break structures)</option>
+                 <option value="polearm">Polearm (long range)</option>
+                 <option value="bow">Bow (ranged)</option>`);
+            mSelRow(bBotCfg,'🎩','Bot Hat','hat bots equip','bot-hat',
+                `<option value="7" selected>Bull</option>
+                 <option value="6">Soldier</option>
+                 <option value="15">Emp</option>
+                 <option value="53">Booster</option>
+                 <option value="0">None</option>`);
+            mTogRow(bBotCfg,'👁️‍🗨️','Follow Player','bots stay near you','bot-follow',true,null);
+            mTogRow(bBotCfg,'🎯','Attack Enemies','bots auto-attack nearby enemies','bot-attack',true,null);
+            mTogRow(bBotCfg,'🏃','Bot Pathfind','bots navigate around obstacles','bot-pathfind',true,null);
+
+            let bBotCtrl = mSec(pBots,'Controls');
+            (() => {
+                const btnRow = mEl('div','m-row');
+                btnRow.style.gap = '8px';
+                btnRow.style.flexWrap = 'wrap';
+                btnRow.innerHTML = `
+                    <span class="m-row-icon">🚀</span>
+                    <span class="m-row-text"><span class="m-row-label">Spawn / Stop Bots</span><span class="m-row-sub">bots join the current server automatically</span></span>
+                    <span class="m-row-right" style="gap:8px;">
+                        <button class="menuB m-slider-reset" id="bot-spawn-btn" onclick="window.spawnBots()" style="background:rgba(74,222,128,0.12);border-color:rgba(74,222,128,0.4);color:#4ade80;padding:7px 14px;">▶ Spawn</button>
+                        <button class="menuB m-slider-reset" id="bot-stop-btn"  onclick="window.stopBots()"  style="background:rgba(248,113,113,0.12);border-color:rgba(248,113,113,0.4);color:#f87171;padding:7px 14px;">■ Stop</button>
+                    </span>
+                `;
+                bBotCtrl.appendChild(btnRow);
+            })();
+            mTogRow(bBotCtrl,'💬','Bot Chat','bots send random chat messages','bot-chat',false,null);
+            mSlRow(bBotCtrl,'⚡','Aggro Radius','bot-aggro','100','800','400','window.__botNoop');
+
+            /* bot log */
+            let bBotLog = mSec(pBots,'Bot Log');
+            (() => {
+                const log = mEl('div','');
+                log.id = 'bot-log';
+                log.style.cssText = 'background:var(--m-surface3);border:1px solid var(--m-border);border-radius:var(--m-radius-sm);padding:10px 12px;font-family:var(--m-mono);font-size:10px;color:var(--m-text2);height:90px;overflow-y:auto;line-height:1.7;';
+                log.textContent = 'No bots spawned yet.';
+                bBotLog.appendChild(log);
+            })();
+
+            window.__botNoop = function(){};
+
+            /* ══════════════════════════════════════
+               BOT ENGINE
+               Each bot = a real WebSocket to the game server.
+               Bots parse server packets (msgpack) and send
+               movement + attack packets based on weapon-aware AI.
+            ══════════════════════════════════════ */
+            (function() {
+                /* ═══════════════════════════════════════════════════════════════
+                   INSANE MOD — BOT ENGINE v3  (PROXY-BYPASS ARCHITECTURE)
+
+                   THE PROBLEM:
+                     The mod has TWO WebSocket.prototype.send overrides:
+                     1. Top-level PACKET_MAP Proxy: remaps packet types
+                        "a"→"9", "d"→"F", "G"→"z" etc.
+                     2. Inner send override: adds profanity filter, dedup,
+                        packet counting, and assigns WS = this.
+
+                     Both overrides intercept ALL WebSocket instances,
+                     including bot sockets. If bots call .send() normally,
+                     their packets get mangled — movement becomes "9",
+                     attack becomes "F", weapon select becomes "z".
+                     The server rejects them and closes the connection.
+
+                   THE FIX — nsend proxy bypass:
+                     WebSocket.prototype.nsend is saved BEFORE the inner
+                     override runs (it's the already-PACKET_MAP-proxied
+                     version). For bots we need to go even further back —
+                     we save the truly original WebSocket.prototype.send
+                     (pre-any-proxy) at engine init time using the stored
+                     `originalSend` reference from the top of the script,
+                     then call it directly on each bot socket via .call().
+
+                     This means bot packets:
+                       - Skip the PACKET_MAP type remapping
+                       - Skip the profanity / dedup / packet-counting logic
+                       - Are encoded in the correct wire format and sent raw
+
+                   WIRE FORMAT (what the server actually expects):
+                     msgpack( [type_string, [arg0, arg1, ...]] )
+
+                   KEY PACKETS:
+                     SEND  "M"  [{name, moofoll, skin}]    join / respawn
+                     SEND  "d"  [0, 0, 1]                  confirm spawn (after "C")
+                     SEND  "a"  [moveDir, 1]               move
+                     SEND  "D"  [aimDir]                   aim direction
+                     SEND  "d"  [wpnId, aimDir, 1]         attack swing
+                     SEND  "G"  [wpnId, 1]                 select weapon
+                     SEND  "c"  [0, hatId, 0]              equip hat (skin slot 0)
+                     SEND  "K"  [1, 1]                     auto-gather
+
+                     RECV  "io-init"  [token]              server hello
+                     RECV  "C"        [ourSID]             we spawned
+                     RECV  "D"        [playerData, isYou]  add player / our spawn data
+                     RECV  "a"        [flatArr13...]        player positions update
+                     RECV  "O"        [sid, hp]            health update
+                     RECV  "P"        [killerSid]          player died
+                     RECV  "A"        [teamsObj]           alliance init (NOT spawn)
+                ═══════════════════════════════════════════════════════════════ */
+
+                /* ── Capture the truly original send BEFORE any proxy wrapping ──
+                   `originalSend` is defined at the very top of the userscript,
+                   before any Proxy or override. We use it to bypass everything. */
+                const _rawSend = (typeof originalSend === 'function')
+                    ? originalSend
+                    : WebSocket.prototype.nsend || WebSocket.prototype.send;
+
+                const BOT_NAMES = ['Alpha','Bravo','Charlie','Delta','Echo','Foxtrot','Golf','Hotel'];
+
+                /* weapon style → combat profile */
+                const WEAPON_MAP = {
+                    dagger:  { primaryId:7,  secondaryId:11, range:65,  atkEvery:1, isRanged:false, rushIn:true  },
+                    sword:   { primaryId:3,  secondaryId:11, range:110, atkEvery:3, isRanged:false, rushIn:false },
+                    hammer:  { primaryId:0,  secondaryId:10, range:75,  atkEvery:3, isRanged:false, rushIn:true  },
+                    polearm: { primaryId:5,  secondaryId:11, range:142, atkEvery:7, isRanged:false, rushIn:false },
+                    bow:     { primaryId:9,  secondaryId:11, range:500, atkEvery:6, isRanged:true,  rushIn:false },
+                };
+
+                let _bots     = [];
+                let _botKills = 0;
+                let _botLog   = [];
+
+                /* ── logging ── */
+                function blogMsg(msg) {
+                    const ts = new Date().toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+                    _botLog.unshift('['+ts+'] '+msg);
+                    if(_botLog.length > 40) _botLog.length = 40;
+                    const el = document.getElementById('bot-log');
+                    if(el) el.innerHTML = _botLog.map(l=>'<div>'+l+'</div>').join('');
+                }
+
+                /* ── stat chips ── */
+                function updateBotStats() {
+                    const alive = _bots.filter(b=>b.alive).length;
+                    const e1=document.getElementById('bot-count-disp');
+                    const e2=document.getElementById('bot-alive-disp');
+                    const e3=document.getElementById('bot-kills-disp');
+                    if(e1) e1.textContent = _bots.length;
+                    if(e2) e2.textContent = alive;
+                    if(e3) e3.textContent = _botKills;
+                }
+
+                /* ── get the live server WebSocket URL ── */
+                function getServerUrl() {
+                    try {
+                        if(typeof WS !== 'undefined' && WS && WS.url) return WS.url;
+                    } catch(e){}
+                    const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+                    return proto + '//' + location.host + '/';
+                }
+
+                /* ── encode a packet in MooMoo wire format ── */
+                function botEncode(type, argsArray) {
+                    if(!window.msgpack) return null;
+                    try { return window.msgpack.encode([type, argsArray]); } catch(e){ return null; }
+                }
+
+                /* ── decode a server packet ── */
+                function botDecode(buf) {
+                    if(!window.msgpack) return null;
+                    try { return window.msgpack.decode(new Uint8Array(buf)); } catch(e){ return null; }
+                }
+
+                /* ════════════════════════════════════
+                   BOT CLASS
+                ════════════════════════════════════ */
+                class InsaneBot {
+                    constructor(name, index) {
+                        this.name       = name;
+                        this.index      = index;
+                        this.ws         = null;
+                        this.alive      = false;
+                        this.connected  = false;
+                        this.sid        = -1;
+                        this.x          = 7200;
+                        this.y          = 7200;
+                        this.health     = 100;
+                        this.aimDir     = 0;
+                        this.attackTick = 0;
+                        this.gatherTick = 0;
+                        this.loopId     = null;
+                        this.respawnId  = null;
+                        this.targetX    = 0;
+                        this.targetY    = 0;
+                        this.targetDist = Infinity;
+                        this.targetSid  = -1;
+                        this.hasTarget  = false;
+                        this.strafeSign = 1;
+                        this.strafeTick = 0;
+                    }
+
+                    /* ────────────────────────────────────────────────────────
+                       pkt() — bypasses ALL WebSocket.prototype overrides by
+                       calling the original send function directly via .call().
+                       This ensures the packet type is NOT remapped by PACKET_MAP
+                       and NOT filtered by the inner send override.
+                    ──────────────────────────────────────────────────────── */
+                    pkt(type, ...args) {
+                        if(!this.ws || this.ws.readyState !== 1 /*OPEN*/) return;
+                        const buf = botEncode(type, args);
+                        if(!buf) return;
+                        try {
+                            /* Call the truly original send, bound to our socket */
+                            _rawSend.call(this.ws, buf);
+                        } catch(e) {
+                            /* fallback: try nsend which at least skips inner override */
+                            try {
+                                if(this.ws.nsend) this.ws.nsend(buf);
+                            } catch(e2){}
+                        }
+                    }
+
+                    /* ── current weapon profile from UI ── */
+                    wcfg() {
+                        const style = (document.getElementById('bot-weapon')||{value:'sword'}).value;
+                        return WEAPON_MAP[style] || WEAPON_MAP.sword;
+                    }
+
+                    /* ── open WebSocket connection ── */
+                    connect() {
+                        const url = getServerUrl();
+                        blogMsg('['+this.name+'] connecting → '+url);
+                        try {
+                            /* Create socket — this triggers the inner send override to
+                               capture WS = this on first send, but since we bypass send
+                               entirely with _rawSend, our bot socket stays invisible
+                               to the mod's packet counter and dedup logic. */
+                            this.ws = new WebSocket(url);
+                            this.ws.binaryType = 'arraybuffer';
+                        } catch(e) {
+                            blogMsg('['+this.name+'] WS create failed: '+e.message);
+                            return;
+                        }
+
+                        this.ws.onopen = () => {
+                            this.connected = true;
+                            blogMsg('['+this.name+'] connected — joining');
+                            /* Send join packet via bypass — skips all proxy remapping */
+                            this.pkt('M', {
+                                name:    '[BOT]' + this.name,
+                                moofoll: true,
+                                skin:    '__proto__'
                             });
-                            html.newLine();
-                            html.add(`Weapon Grinder: `);
-                            html.checkBox({ id: "weapongrind", class: "checkB", checked: false });
-                            html.newLine();
-                            html.add(`Auto Replace: `);
-                            html.checkBox({ id: "autoreplace", class: "checkB", checked: true });
-                            html.newLine();
-                            html.add(`Auto Place: `);
-                            html.checkBox({ id: "autoplace", class: "checkB", checked: true });
-                            html.newLine();
-                            html.add(`Pre Place: `);
-                            html.checkBox({ id: "preplace", class: "checkB", checked: true });
-                            html.newLine();
-                            html.add(`Anti Trap:`);
-                            html.checkBox({ id: "antitrap", class: "checkB", checked: true });
-                            html.newLine();
-                        });
-                    });
-                    HTML.addDiv({ id: "menu2", style: "display: none", class: "menuC", appendID: "menuHeadLine" }, (html) => {
-                        HTML.addDiv({ style: "font-size: 20px; color: #E2E2E3; background-size: 20px 20px; background-repeat: no-repeat;", appendID: "menu2" }, (html) => {
-                            html.add(`Visual: `);
-                            html.newLine();
-                        });
-                        HTML.addDiv({ style: "font-size: 15px; color: #fff; background-size: 25px 25px; background-repeat: no-repeat;", appendID: "menu2" }, (html) => {
-                            html.add('Tracers Type: ');
-                            html.select({
-                                id: "tracersvalue",
-                                class: "Cselect",
-                                option: {
-                                    'None': {
-                                        id: '',
-                                    },
-                                    'Tracers Me': {
-                                        id: 'tracersMe',
-                                    },
-                                    'Tracers For': {
-                                        id: 'tracersFor',
-                                    },
-                                    'Tracers Them': {
-                                        id: 'tracersThem',
-                                        selected: true,
-                                    },
+                        };
+
+                        this.ws.onmessage = (ev) => {
+                            const decoded = botDecode(ev.data);
+                            if(!decoded || !decoded.length) return;
+                            /* Server → [type, arg0, arg1, ...] (variadic, NOT nested) */
+                            const type = decoded[0];
+                            const args = decoded.slice(1);
+                            this.onPacket(type, args);
+                        };
+
+                        this.ws.onclose = (ev) => {
+                            this.alive     = false;
+                            this.connected = false;
+                            this.stopLoop();
+                            blogMsg('['+this.name+'] closed (code='+ev.code+')');
+                            updateBotStats();
+                        };
+
+                        this.ws.onerror = (e) => {
+                            blogMsg('['+this.name+'] socket error');
+                        };
+                    }
+
+                    /* ── handle incoming server packets ── */
+                    onPacket(type, args) {
+                        switch(type) {
+
+                            case 'io-init':
+                                /* Server hello — token in args[0], not needed */
+                                blogMsg('['+this.name+'] io-init OK');
+                                break;
+
+                            case 'C':
+                                /* setupGame(ourSID) — server just spawned this bot.
+                                   MUST immediately confirm with a "d" packet or server
+                                   will disconnect us (same as real client behaviour). */
+                                this.sid    = args[0];
+                                this.alive  = true;
+                                this.health = 100;
+                                blogMsg('['+this.name+'] SPAWNED sid='+this.sid);
+
+                                /* ① Confirm spawn — critical, must be first packet back */
+                                this.pkt('d', 0, 0, 1);
+
+                                /* ② Select weapons */
+                                const wc = this.wcfg();
+                                this.pkt('G', wc.primaryId, 1);
+                                if(wc.secondaryId !== undefined) {
+                                    setTimeout(()=>{ this.pkt('G', wc.secondaryId, 1); }, 80);
                                 }
-                            });
-                            html.newLine();
-                            html.add(`Type: `);
-                            html.selectMenu({ id: "configsChanger6", class: "Cselect", menu: configs7 });
-                            html.newLine();
-                            html.add('Camera: ');
-                            html.select({
-                                id: "visualTypeZoom",
-                                class: "Cselect",
-                                option: {
-                                    'Camera +': {
-                                        id: 'Cam+',
-                                    },
-                                    'Camera 0': {
-                                        id: 'Cam0',
-                                    },
-                                    'Camera 1': {
-                                        id: 'Cam1',
-                                        selected: true
-                                    },
-                                    'Camera 2': {
-                                        id: 'Cam2',
-                                    },
-                                    'Camera 3': {
-                                        id: 'Cam3',
+
+                                /* ③ Equip hat */
+                                const hatId = parseInt(
+                                    (document.getElementById('bot-hat')||{value:'7'}).value
+                                )||7;
+                                setTimeout(()=>{ this.pkt('c', 0, hatId, 0); }, 160);
+
+                                updateBotStats();
+                                this.startLoop();
+                                break;
+
+                            case 'D':
+                                /* addPlayer(playerDataArray, isYou)
+                                   playerData: [id, sid, name, x, y, dir, hp, maxHp, scale, skinColor]
+                                   When args[1] is truthy this packet describes OUR bot. */
+                                if(args[1]) {
+                                    const pd = args[0];
+                                    if(Array.isArray(pd) && pd.length >= 5) {
+                                        this.x = pd[3];
+                                        this.y = pd[4];
+                                        blogMsg('['+this.name+'] pos='+Math.round(this.x)+','+Math.round(this.y));
                                     }
                                 }
-                            });
-                            html.newLine();
-                            html.add(`Nick Name: `);
-                            html.checkBox({id: "nickname", class: "checkB", checked: true});
-                            html.newLine();
-                            html.add(`Health Bar: `);
-                            html.checkBox({id: "healthbar", class: "checkB", checked: true});
-                            html.newLine();
-                            html.add(`Equalizer:`);
-                            html.checkBox({ id: "equalizer", class: "checkB", checked: false });
-                            html.newLine();
-                            html.add(`Snow: `);
-                            html.checkBox({id: "cansnow", class: "checkB", checked: false});
-                            html.newLine();
-                        });
-                        html.newLine();
-                    });
-                    HTML.addDiv({ id: "menu3", style: "display: none", class: "menuC", appendID: "menuHeadLine" }, (html) => {
-                        HTML.addDiv({ style: "font-size: 20px; color: #E2E2E3; background-size: 20px 20px; background-repeat: no-repeat;", appendID: "menu3" }, (html) => {
-                            html.add(`Range: `);
-                            html.newLine();
-                        });
-                        HTML.addDiv({ style: "font-size: 15px; color: #fff; background-size: 25px 25px; background-repeat: no-repeat;", appendID: "menu3" }, (html) => {
-                            html.add(`Equalizer: `);
-                            html.range({ id: 'menuequalizer', class: 'slider', min: '0', max: '100', value: '45' });
-                            html.add(` `);
-                            html.button({ class: "menuB", innerHTML: "45", onclick: "window.ResetThis()" });
-                            html.newLine();
-                            html.add(`Players: `);
-                            html.range({ id: 'players', class: 'slider', min: '10', max: '100', value: '90' });
-                            html.add(` `);
-                            html.button({ class: "menuB", innerHTML: "90", onclick: "window.ResetPlayers()" });
-                            html.newLine();
-                            html.add(`Night: `);
-                            html.range({ id: 'menunight', class: 'slider', min: '30', max: '70', value: '35' });
-                            html.add(` `);
-                            html.button({ class: "menuB", innerHTML: "35", onclick: "window.ResetNight()" });
-                            html.newLine();
-                            html.add(`Grids: `);
-                            html.range({ id: 'slider', class: 'slider', min: '0', max: '50', value: '18' });
-                            html.add(` `);
-                            html.button({ class: "menuB", innerHTML: "18", onclick: "window.ResetGrids()" });
-                            html.newLine();
-                        });
-                    });
-                    HTML.addDiv({ id: "menu4", style: "display: none", class: "menuC", appendID: "menuHeadLine" }, (html) => {
-                        HTML.addDiv({ style: "font-size: 20px; color: #E2E2E3; background-size: 20px 20px; background-repeat: no-repeat;", appendID: "menu4" }, (html) => {
-                            html.add(`Misc: `);
-                            html.newLine();
-                        });
-                        HTML.addDiv({ style: "font-size: 15px; color: #fff; background-size: 25px 25px; background-repeat: no-repeat;", appendID: "menu4" }, (html) => {
-                            html.add(`Configs: `);
-                            html.selectMenu({ id: "configsChanger", class: "Cselect", menu: configs });
-                            html.newLine();
-                            html.add(`Smooth Health: `);
-                            html.checkBox({id: "smoothhealth", class: "checkB", checked: false});
-                            html.newLine();
-                            html.add(`Assassin Gear: `);
-                            html.checkBox({ id: "invismode", class: "checkB", checked: false });
-                            html.newLine();
-                            html.add(`Wheel Zoom: `);
-                            html.checkBox({ id: "zoomgg", class: "checkB", checked: false });
-                            html.newLine();
-                            html.add(`Health: `);
-                            html.checkBox({ id: "heal", class: "checkB", checked: true });
-                            html.newLine();
-                            html.add(`Sync: `);
-                            html.checkBox({ id: "mapsync", class: "checkB", checked: true });
-                            html.newLine();
-                        });
+                                break;
 
-                    });
-                });
+                            case 'a':
+                                /* updatePlayers — flat array, 13 values per player:
+                                   [sid, x2, y2, dir, buildIdx, wpnIdx, wpnVar,
+                                    team, isLeader, skinIdx, tailIdx, iconIdx, zIdx, ...] */
+                                if(Array.isArray(args[0])) {
+                                    this.processBotUpdate(args[0]);
+                                }
+                                break;
 
+                            case 'O':
+                                /* updateHealth(sid, hp) */
+                                if(args[0] === this.sid) {
+                                    this.health = args[1];
+                                    if(this.health <= 0 && this.alive) {
+                                        this.alive = false;
+                                        this.stopLoop();
+                                        blogMsg('['+this.name+'] DIED — will respawn in 3s');
+                                        updateBotStats();
+                                        this.respawnId = setTimeout(()=>{
+                                            if(!_bots.includes(this) || !this.connected) return;
+                                            blogMsg('['+this.name+'] respawning...');
+                                            this.pkt('M', {
+                                                name:    '[BOT]' + this.name,
+                                                moofoll: true,
+                                                skin:    '__proto__'
+                                            });
+                                        }, 3000);
+                                    }
+                                }
+                                break;
+
+                            case 'P':
+                                /* killPlayer — broadcast to all clients.
+                                   Track kill if the dead player was our target. */
+                                if(this.hasTarget && args[0] === this.targetSid) {
+                                    _botKills++;
+                                    blogMsg('['+this.name+'] KILL #'+_botKills);
+                                    updateBotStats();
+                                }
+                                break;
+
+                            case 'A':
+                                /* setInitData — alliance teams object, not spawn. */
+                                break;
+                        }
+                    }
+
+                    /* ── parse updatePlayers flat array, find nearest enemy ── */
+                    processBotUpdate(data) {
+                        const STRIDE = 13;
+                        const aggroR  = parseInt((document.getElementById('bot-aggro')||{value:'400'}).value)||400;
+                        let bestDist  = Infinity;
+                        let bx=0, by=0, bsid=-1;
+
+                        for(let i = 0; i + STRIDE <= data.length; i += STRIDE) {
+                            const sid = data[i];
+                            /* Update our own position from the stream */
+                            if(sid === this.sid) {
+                                this.x = data[i+1];
+                                this.y = data[i+2];
+                                continue;
+                            }
+                            const ex = data[i+1];
+                            const ey = data[i+2];
+                            if(typeof ex !== 'number' || typeof ey !== 'number') continue;
+                            const dx = ex - this.x;
+                            const dy = ey - this.y;
+                            const d  = Math.sqrt(dx*dx + dy*dy);
+                            if(d < bestDist) {
+                                bestDist = d;
+                                bx = ex; by = ey; bsid = sid;
+                            }
+                        }
+
+                        if(bestDist <= aggroR) {
+                            this.hasTarget  = true;
+                            this.targetDist = bestDist;
+                            this.targetX    = bx;
+                            this.targetY    = by;
+                            this.targetSid  = bsid;
+                        } else {
+                            this.hasTarget  = false;
+                            this.targetDist = Infinity;
+                            this.targetSid  = -1;
+                        }
+                    }
+
+                    /* ── weapon-aware AI tick (~9/s) ── */
+                    tick() {
+                        if(!this.alive || !this.connected) return;
+
+                        const wc     = this.wcfg();
+                        const follow = (document.getElementById('bot-follow') ||{checked:true}).checked;
+                        const doAtk  = (document.getElementById('bot-attack') ||{checked:true}).checked;
+                        const doChat = (document.getElementById('bot-chat')   ||{checked:false}).checked;
+                        const hatId  = parseInt((document.getElementById('bot-hat')||{value:'7'}).value)||7;
+
+                        this.attackTick++;
+                        this.strafeTick++;
+
+                        /* Flip strafe side every 8 ticks to make movement unpredictable */
+                        if(this.strafeTick % 8 === 0) this.strafeSign *= -1;
+
+                        /* Refresh hat every 3 ticks */
+                        if(this.attackTick % 3 === 0) {
+                            this.pkt('c', 0, hatId, 0);
+                        }
+
+                        if(this.hasTarget && doAtk) {
+                            /* ── COMBAT ── */
+                            const dx   = this.targetX - this.x;
+                            const dy   = this.targetY - this.y;
+                            this.aimDir = Math.atan2(dy, dx);
+                            const dist  = this.targetDist;
+                            const range = wc.range;
+
+                            /* Weapon-specific movement */
+                            let moveDir;
+                            if(wc.isRanged) {
+                                if     (dist < range * 0.55) moveDir = this.aimDir + Math.PI;
+                                else if(dist > range * 0.85) moveDir = this.aimDir;
+                                else                          moveDir = this.aimDir + (Math.PI/2) * this.strafeSign;
+                            } else if(wc.rushIn) {
+                                moveDir = this.aimDir; /* dagger/hammer — always rush */
+                            } else if(wc.primaryId === 5 /*polearm*/) {
+                                if     (dist > range * 0.90) moveDir = this.aimDir;
+                                else if(dist < range * 0.65) moveDir = this.aimDir + Math.PI;
+                                else                          moveDir = this.aimDir + (Math.PI/2) * this.strafeSign;
+                            } else {
+                                /* sword / bat */
+                                if(dist > range * 0.80) moveDir = this.aimDir;
+                                else                    moveDir = this.aimDir + (Math.PI/2) * this.strafeSign;
+                            }
+
+                            this.pkt('a', moveDir, 1);   /* move */
+                            this.pkt('D', this.aimDir);  /* aim */
+
+                            if(dist <= range * 1.15) {
+                                this.pkt('G', wc.primaryId, 1); /* select weapon */
+                                if(this.attackTick % wc.atkEvery === 0) {
+                                    this.pkt('d', wc.primaryId, this.aimDir, 1); /* swing */
+                                    this.pkt('K', 1, 1); /* gather */
+                                }
+                            }
+
+                        } else if(follow) {
+                            /* ── FOLLOW PLAYER ── */
+                            try {
+                                if(typeof player !== 'undefined' && player && player.alive) {
+                                    const dx = player.x - this.x;
+                                    const dy = player.y - this.y;
+                                    const d  = Math.sqrt(dx*dx + dy*dy);
+                                    if(d > 130) {
+                                        const dir = Math.atan2(dy, dx);
+                                        this.pkt('a', dir, 1);
+                                        this.pkt('D', dir);
+                                    } else {
+                                        this.pkt('a', undefined, 0); /* stop */
+                                    }
+                                }
+                            } catch(e){}
+                        }
+
+                        /* Idle random gather */
+                        if(!this.hasTarget) {
+                            this.gatherTick++;
+                            if(this.gatherTick % 22 === 0) {
+                                const gDir = Math.random() * Math.PI * 2;
+                                this.pkt('a', gDir, 1);
+                                this.pkt('K', 1, 1);
+                            }
+                        }
+
+                        /* Random chat */
+                        if(doChat && Math.random() < 0.003) {
+                            const msgs = ['gg','nice','lol','rip','ez','got em'];
+                            this.pkt('6', msgs[Math.floor(Math.random()*msgs.length)]);
+                        }
+                    }
+
+                    startLoop() {
+                        this.stopLoop();
+                        this.loopId = setInterval(()=>this.tick(), 111);
+                        blogMsg('['+this.name+'] AI running');
+                    }
+
+                    stopLoop() {
+                        if(this.loopId)   { clearInterval(this.loopId);    this.loopId   = null; }
+                        if(this.respawnId){ clearTimeout(this.respawnId);  this.respawnId = null; }
+                    }
+
+                    destroy() {
+                        this.stopLoop();
+                        this.alive     = false;
+                        this.connected = false;
+                        if(this.ws) {
+                            try { this.ws.close(1000, 'stopped'); } catch(e){}
+                            this.ws = null;
+                        }
+                    }
+                }
+
+                /* ── public API ── */
+                window.spawnBots = function() {
+                    window.stopBots();
+                    const count = Math.min(8, parseInt(
+                        (document.getElementById('bot-count')||{value:'3'}).value
+                    )||3);
+                    blogMsg('Spawning '+count+' bot(s) with proxy bypass...');
+                    _botKills = 0;
+                    for(let i = 0; i < count; i++) {
+                        setTimeout(()=>{
+                            const bot = new InsaneBot(BOT_NAMES[i % BOT_NAMES.length], i);
+                            _bots.push(bot);
+                            bot.connect();
+                            updateBotStats();
+                        }, i * 800); /* stagger to avoid rate-limiting */
+                    }
+                };
+
+                window.stopBots = function() {
+                    if(_bots.length) blogMsg('Stopping '+_bots.length+' bot(s)');
+                    _bots.forEach(b => b.destroy());
+                    _bots = [];
+                    updateBotStats();
+                };
+
+                setInterval(updateBotStats, 2000);
+
+            })(); /* end bot engine IIFE */
+
+            /* also create legacy menuRange/menu2/3/4/6/7 IDs inside ghost div so game code can getEl() them */
+            ['menuRange','menu2','menu3','menu4','menu6','menu7'].forEach(id => {
+                const d=mEl('div','menuC'); d.id=id; d.style.display='none';
+                ghostPanel.appendChild(d);
             });
-            let trueM = true;
+
+            /* ══════════════════════════════════════
+               TAB SWITCHING
+            ══════════════════════════════════════ */
+            function mSwitch(cfg) {
+                panelsWrap.querySelectorAll('.m-panel').forEach(p=>p.classList.remove('m-active'));
+                navList.querySelectorAll('.m-nav-item').forEach(b=>b.classList.remove('m-active'));
+                const panel=mGet(cfg.panel); if(panel) panel.classList.add('m-active');
+                const btn=mGet(cfg.id);     if(btn)   btn.classList.add('m-active');
+                const icon=mGet('m-content-icon'); if(icon) icon.textContent=cfg.icon;
+                const h2=mGet('m-content-h2');     if(h2)   h2.textContent=cfg.h2;
+                const p=mGet('m-content-p');       if(p)    p.textContent=cfg.sub;
+                const pill=mGet('m-active-pill');  if(pill) pill.textContent=cfg.label;
+            }
+
+            /* legacy changeMenu* wires */
+            window.changeMenu  = ()=>mSwitch(M_TABS[0]);
+            window.changeMenu2 = ()=>mSwitch(M_TABS[1]);
+            window.changeMenu7 = ()=>mSwitch(M_TABS[2]);
+            window.changeMenu3 = ()=>mSwitch(M_TABS[3]);
+            window.changeMenu6 = ()=>mSwitch(M_TABS[4]);
+            window.changeMenu4 = ()=>mSwitch(M_TABS[5]);
+
+            /* open combat by default */
+            mSwitch(M_TABS[0]);
+
+            /* ══════════════════════════════════════
+               OPEN / CLOSE
+            ══════════════════════════════════════ */
+            function mOpen() {
+                overlayEl.classList.remove('m-hide'); overlayEl.classList.add('m-vis');
+                modalEl.classList.remove('m-hide');   modalEl.classList.add('m-vis');
+            }
+            function mClose() {
+                overlayEl.classList.add('m-hide');
+                modalEl.classList.add('m-hide');
+                setTimeout(()=>{
+                    overlayEl.classList.remove('m-vis','m-hide');
+                    modalEl.classList.remove('m-vis','m-hide');
+                },300);
+                MenuRangeIsTrue = false;
+            }
+            /* closeMenu is also re-defined later by game code — both call _mCloseQuiet */
+            window.closeMenu = mClose;
+            mGet('m-close').addEventListener('click', mClose);
+            overlayEl.addEventListener('click', mClose);
+
+            /* ── modal drag ── */
+            (function(){
+                let drag=false, ox=0, oy=0, initLeft=0, initTop=0;
+                titlebarEl.addEventListener('mousedown',e=>{
+                    if(e.target===mGet('m-close')||e.button!==0) return;
+                    drag=true;
+                    const r=modalEl.getBoundingClientRect();
+                    ox=e.clientX; oy=e.clientY;
+                    initLeft=r.left; initTop=r.top;
+                    modalEl.style.transition='none';
+                    modalEl.style.transform='none';
+                    modalEl.style.left=(r.left+r.width/2)+'px';
+                    modalEl.style.top=(r.top+r.height/2)+'px';
+                    e.preventDefault();
+                });
+                document.addEventListener('mousemove',e=>{
+                    if(!drag) return;
+                    const dx=e.clientX-ox, dy=e.clientY-oy;
+                    modalEl.style.left=(initLeft+dx+modalEl.offsetWidth/2)+'px';
+                    modalEl.style.top =(initTop +dy+modalEl.offsetHeight/2)+'px';
+                });
+                document.addEventListener('mouseup',()=>{ drag=false; });
+            })();
+
+            /* ── search ── */
+            mGet('m-search').addEventListener('input',function(){
+                const q=this.value.trim().toLowerCase();
+                navList.querySelectorAll('.m-nav-item').forEach(b=>{
+                    const l=b.querySelector('.m-nav-item-label');
+                    if(l) b.style.display=(!q||l.textContent.toLowerCase().includes(q))?'':'none';
+                });
+                navList.querySelectorAll('.m-nav-group-label').forEach(l=>l.style.display=q?'none':'');
+                if(!q) return;
+                panelsWrap.querySelectorAll('.m-panel').forEach(panel=>{
+                    let any=false;
+                    panel.querySelectorAll('.m-row').forEach(row=>{
+                        const match=row.textContent.toLowerCase().includes(q);
+                        row.style.display=match?'':'none';
+                        if(match) any=true;
+                    });
+                    if(any){
+                        panelsWrap.querySelectorAll('.m-panel').forEach(p=>p.classList.remove('m-active'));
+                        panel.classList.add('m-active');
+                        const h2=mGet('m-content-h2'); if(h2) h2.textContent='Search';
+                        const pp=mGet('m-content-p'); if(pp) pp.textContent=`Showing results for "${q}"`;
+                    }
+                });
+            });
+
+            /* ── clock ── */
+            window.__nexusT0 = Date.now();
+            window.nexusPeekThrough = false;
+            function mClockTick(){
+                const sec=Math.floor((Date.now()-window.__nexusT0)/1000);
+                const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;
+                const up=h>0?h+'h '+m+'m':m>0?m+'m '+s+'s':s+'s';
+                const t=new Date().toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+                const ct=mGet('m-clk-time'), cs=mGet('m-clk-sess'), sp=mGet('m-sess-pill'), ds=mGet('dev-sess');
+                if(ct) ct.textContent=t;
+                if(cs) cs.textContent=up;
+                if(sp) sp.textContent=up;
+                if(ds) ds.textContent=up;
+            }
+            mClockTick();
+            setInterval(mClockTick,1000);
+
+            /* ── theme ── */
+            window.mToggleTheme = function(){
+                const on=document.body.classList.toggle('m-light');
+                const box=mGet('lightmode'); if(box) box.checked=on;
+                saveVal('mLight',on?'1':'0');
+            };
+            window.toggleLightModeUi = window.mToggleTheme;
+            window.nexusToggleCompact = function(){};
+            window.nexusApplyRailWidth = function(){};
+
+            /* restore prefs */
+            (function(){ if(getSavedVal('mLight')==='1') window.mToggleTheme(); })();
+
+            /* ── keyboard ── */
+            document.addEventListener('keydown',function(ev){
+                if(ev.code==='Escape') { try{mClose();}catch(e){} }
+                if(ev.code==='Backquote'&&!ev.repeat){
+                    const t=ev.target;
+                    if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable)) return;
+                    window.nexusPeekThrough=!window.nexusPeekThrough;
+                    modalEl.style.opacity=window.nexusPeekThrough?'0.25':'';
+                    modalEl.style.pointerEvents=window.nexusPeekThrough?'none':'';
+                }
+            },true);
+
+            /* ── expose stable open/close for the game render loop ── */
+            window._mOpen = mOpen;
+            window._mCloseQuiet = function() {
+                /* close without touching MenuRangeIsTrue (game already manages it) */
+                overlayEl.classList.add('m-hide');
+                modalEl.classList.add('m-hide');
+                setTimeout(()=>{
+                    overlayEl.classList.remove('m-vis','m-hide');
+                    modalEl.classList.remove('m-vis','m-hide');
+                }, 300);
+            };
+
+
+            /* ── legacy variable/function stubs ── */
             let AntiBull = false;
             let bultect = false;
             let instaType = true;
             let crossHair = true;
             let plaguemask = true;
-
-            window.toggleLightModeUi = function () {
-                const el = document.getElementById("lightmode");
-                if (el) el.checked = !el.checked;
-            };
-
-            window.nexusApplyRailWidth = function (compact) {
-                const md = getEl("menuDiv");
-                const rail = getEl("menuHeadLineBest");
-                if (md) md.style.setProperty("--insane-rail", compact ? "104px" : "132px");
-                if (rail) rail.classList.toggle("insane-compact", !!compact);
-            };
-            window.nexusToggleCompact = function () {
-                const box = getEl("nexusCompact");
-                const on = !!(box && box.checked);
-                saveVal("nexusCompact", on ? "1" : "0");
-                window.nexusApplyRailWidth(on);
-            };
-
-            window.__nexusT0 = Date.now();
-            window.nexusPeekThrough = false;
-            function nexusClockUpdate() {
-                const el = document.getElementById("nexusClock");
-                if (!el) return;
-                const t = new Date().toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-                const sec = Math.floor((Date.now() - window.__nexusT0) / 1000);
-                const h = Math.floor(sec / 3600);
-                const m = Math.floor((sec % 3600) / 60);
-                const s = sec % 60;
-                let up;
-                if (h > 0) up = h + "h " + m + "m";
-                else if (m > 0) up = m + "m " + s + "s";
-                else up = s + "s";
-                let line = t + " · session " + up;
-                if (window.nexusPeekThrough) line += " · ` click-through";
-                el.textContent = line;
-            }
-            nexusClockUpdate();
-            setInterval(nexusClockUpdate, 1000);
-            (function nexusLoadLayoutPrefs() {
-                if (getSavedVal("nexusCompact") === "1") {
-                    const box = getEl("nexusCompact");
-                    if (box) box.checked = true;
-                    window.nexusApplyRailWidth(true);
-                }
-            })();
-            document.addEventListener("keydown", function (ev) {
-                if (ev.code !== "Backquote" || ev.repeat) return;
-                const t = ev.target;
-                if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-                window.nexusPeekThrough = !window.nexusPeekThrough;
-                nexusClockUpdate();
-            }, true);
-
-            function nexusAnimatePanel(panelId) {
-                const el = getEl(panelId);
-                if (!el) return;
-                el.classList.remove("insane-panel-enter");
-                void el.offsetWidth;
-                el.classList.add("insane-panel-enter");
-            }
-            function nexusSetActiveTab(panelKey) {
-                const map = { menuRange: "menuId1", menu2: "menuId5", menu3: "menuId3", menu4: "menuId4", menu6: "menuId6", menu7: "menuId7" };
-                const bid = map[panelKey];
-                const grid = document.getElementById("nexusNavGrid");
-                if (grid) grid.querySelectorAll(".insane-tab").forEach(function (tab) { tab.classList.remove("insane-tab-active"); });
-                const b = bid && getEl(bid);
-                if (b && b.closest) {
-                    const tab = b.closest(".insane-tab");
-                    if (tab) tab.classList.add("insane-tab-active");
-                }
-            }
-            window.changeMenu2 = function() {
-                getEl("menuRange").style.display = "none";
-                getEl("menu3").style.display = "none";
-                getEl("menu2").style.display = "block";
-                getEl("menu4").style.display = "none";
-                getEl("menu6").style.display = "none";
-                getEl("menu7").style.display = "none";
-                nexusAnimatePanel("menu2");
-                nexusSetActiveTab("menu2");
-            };
-            window.changeMenu3 = function() {
-                getEl("menuRange").style.display = "none";
-                getEl("menu3").style.display = "block";
-                getEl("menu2").style.display = "none";
-                getEl("menu4").style.display = "none";
-                getEl("menu6").style.display = "none";
-                getEl("menu7").style.display = "none";
-                nexusAnimatePanel("menu3");
-                nexusSetActiveTab("menu3");
-            };
-            window.changeMenu = function() {
-                getEl("menuRange").style.display = "block";
-                getEl("menu3").style.display = "none";
-                getEl("menu2").style.display = "none";
-                getEl("menu4").style.display = "none";
-                getEl("menu6").style.display = "none";
-                getEl("menu7").style.display = "none";
-                nexusAnimatePanel("menuRange");
-                nexusSetActiveTab("menuRange");
-            };
-            window.changeMenu4 = function() {
-                getEl("menuRange").style.display = "none";
-                getEl("menu3").style.display = "none";
-                getEl("menu2").style.display = "none";
-                getEl("menu4").style.display = "block";
-                getEl("menu6").style.display = "none";
-                getEl("menu7").style.display = "none";
-                nexusAnimatePanel("menu4");
-                nexusSetActiveTab("menu4");
-            };
-            window.changeMenu6 = function() {
-                getEl("menuRange").style.display = "none";
-                getEl("menu3").style.display = "none";
-                getEl("menu2").style.display = "none";
-                getEl("menu4").style.display = "none";
-                getEl("menu6").style.display = "block";
-                getEl("menu7").style.display = "none";
-                nexusAnimatePanel("menu6");
-                nexusSetActiveTab("menu6");
-            };
-            window.changeMenu7 = function() {
-                getEl("menuRange").style.display = "none";
-                getEl("menu3").style.display = "none";
-                getEl("menu2").style.display = "none";
-                getEl("menu4").style.display = "none";
-                getEl("menu6").style.display = "none";
-                getEl("menu7").style.display = "block";
-                nexusAnimatePanel("menu7");
-                nexusSetActiveTab("menu7");
-            };
+            function nexusAnimatePanel(){}
+            function nexusSetActiveTab(){}
+            function nexusClockUpdate(){ mClockTick(); }
 
             let mStatus = document.createElement("div");
             mStatus.id = "status";
@@ -6485,17 +6841,120 @@ body {
             let mapMarker = {};
             let mapPings = [];
             let tmpPing;
+            /* ══════════════════════════════════════════════════
+               WEAPON-AWARE COMBAT PROFILES
+               Indexed by player.weapons[0] (primary weapon id)
+               0=hammer 1=axe 2=greataxe 3=sword 4=katana
+               5=polearm 6=bat 7=dagger 8=stick
+               9=bow 10=hammer 11=shield 12=crossbow 13=repeater 14=mc 15=mc2
+            ══════════════════════════════════════════════════ */
+            const WEAPON_PROFILES = {
+                /* id: { engageRange, retreatRange, strafeRadius, checkDist, smoothStep, predictFrames, rushIn, circleStrafe } */
+                0:  { engageRange: 65,  retreatRange: 30,  strafeRadius: 55,  checkDist: 30, smoothStep:1, predictFrames:3,  rushIn:true,  circleStrafe:false, name:'Hammer'   },
+                1:  { engageRange: 70,  retreatRange: 35,  strafeRadius: 60,  checkDist: 32, smoothStep:2, predictFrames:4,  rushIn:true,  circleStrafe:false, name:'Axe'      },
+                2:  { engageRange: 75,  retreatRange: 40,  strafeRadius: 65,  checkDist: 34, smoothStep:2, predictFrames:4,  rushIn:true,  circleStrafe:false, name:'GreatAxe' },
+                3:  { engageRange: 110, retreatRange: 60,  strafeRadius: 90,  checkDist: 36, smoothStep:2, predictFrames:5,  rushIn:false, circleStrafe:true,  name:'Sword'    },
+                4:  { engageRange: 118, retreatRange: 65,  strafeRadius: 95,  checkDist: 38, smoothStep:2, predictFrames:5,  rushIn:false, circleStrafe:true,  name:'Katana'   },
+                5:  { engageRange: 142, retreatRange: 80,  strafeRadius: 120, checkDist: 28, smoothStep:3, predictFrames:7,  rushIn:false, circleStrafe:true,  name:'Polearm'  },
+                6:  { engageRange: 110, retreatRange: 55,  strafeRadius: 90,  checkDist: 35, smoothStep:2, predictFrames:5,  rushIn:false, circleStrafe:true,  name:'Bat'      },
+                7:  { engageRange: 65,  retreatRange: 20,  strafeRadius: 50,  checkDist: 25, smoothStep:1, predictFrames:2,  rushIn:true,  circleStrafe:false, name:'Dagger'   },
+                8:  { engageRange: 70,  retreatRange: 35,  strafeRadius: 60,  checkDist: 30, smoothStep:2, predictFrames:4,  rushIn:true,  circleStrafe:false, name:'Stick'    },
+                9:  { engageRange: 600, retreatRange: 300, strafeRadius: 400, checkDist: 20, smoothStep:4, predictFrames:10, rushIn:false, circleStrafe:true,  name:'Bow'      },
+                10: { engageRange: 75,  retreatRange: 40,  strafeRadius: 65,  checkDist: 30, smoothStep:2, predictFrames:3,  rushIn:true,  circleStrafe:false, name:'GHammer'  },
+                12: { engageRange: 700, retreatRange: 350, strafeRadius: 500, checkDist: 18, smoothStep:4, predictFrames:12, rushIn:false, circleStrafe:true,  name:'Crossbow' },
+                13: { engageRange: 650, retreatRange: 320, strafeRadius: 450, checkDist: 18, smoothStep:4, predictFrames:11, rushIn:false, circleStrafe:true,  name:'Repeater' },
+                14: { engageRange: 650, retreatRange: 320, strafeRadius: 450, checkDist: 18, smoothStep:4, predictFrames:11, rushIn:false, circleStrafe:true,  name:'MC'       },
+                15: { engageRange: 700, retreatRange: 360, strafeRadius: 500, checkDist: 18, smoothStep:4, predictFrames:12, rushIn:false, circleStrafe:true,  name:'MC2'      },
+            };
+
+            function getWeaponProfile() {
+                const wid = player && player.weapons ? player.weapons[0] : 0;
+                return WEAPON_PROFILES[wid] || WEAPON_PROFILES[0];
+            }
+
+            /* weapon-aware optimal engagement distance for pathfinder */
+            function pfOptimalDist() {
+                const wp = getWeaponProfile();
+                /* ranged: stay at 70% of range, melee rush-in: 80% of range, circleStrafe: 90% */
+                if(wp.engageRange > 200) return wp.engageRange * 0.70;
+                if(wp.rushIn)           return wp.engageRange * 0.80;
+                return wp.engageRange * 0.90;
+            }
+
+            /* weapon-aware strafe direction (changes every few ticks to keep enemy guessing) */
+            let _strafeFlipTick = 0;
+            function pfStrafeDir(aimToEnemy) {
+                _strafeFlipTick++;
+                const wp = getWeaponProfile();
+                /* flip strafe every N ticks based on weapon speed */
+                const flipEvery = wp.engageRange > 200 ? 8 : wp.rushIn ? 4 : 6;
+                const side = Math.floor(_strafeFlipTick / flipEvery) % 2 === 0 ? 1 : -1;
+                return aimToEnemy + (Math.PI / 2) * side;
+            }
+
             let breakTrackers = [];
             let grid = [];
             let pathFind = {
                 active: true,
-                grid: 40,
+                grid: 52,
                 scale: 1440,
                 x: 14400,
                 y: 14400,
                 go_to_nearest_enemy: true,
                 array: [],
+                /* --- new fields --- */
+                stuckTick: 0,
+                lastPlayerX: 0,
+                lastPlayerY: 0,
+                lastDir: null,
+                smoothStep: 2,      /* how many steps ahead to look for smoother direction */
+                predictFrames: 6,   /* frames ahead to predict enemy position */
+                failCount: 0,       /* consecutive null-path count */
+                recoveryDir: null,  /* flee direction when stuck */
             };
+
+            /* ── pathfinder helpers ── */
+            function pfPredictedTarget() {
+                /* return a position slightly ahead of the enemy's current trajectory */
+                if (!near || !enemy.length) return near;
+                const wp = getWeaponProfile();
+                const vx = (near.x2 - (near.prevX2 || near.x2));
+                const vy = (near.y2 - (near.prevY2 || near.y2));
+                /* ranged weapons predict more frames ahead */
+                const frames = wp.predictFrames;
+                return {
+                    x2: near.x2 + vx * frames,
+                    y2: near.y2 + vy * frames,
+                };
+            }
+            function pfCheckStuck() {
+                const dx = player.x2 - pathFind.lastPlayerX;
+                const dy = player.y2 - pathFind.lastPlayerY;
+                const moved = Math.sqrt(dx * dx + dy * dy);
+                pathFind.lastPlayerX = player.x2;
+                pathFind.lastPlayerY = player.y2;
+                if (moved < 4 && pathFind.active) {
+                    pathFind.stuckTick++;
+                } else {
+                    pathFind.stuckTick = 0;
+                    pathFind.recoveryDir = null;
+                }
+                if (pathFind.stuckTick >= 6 && !pathFind.recoveryDir) {
+                    /* pick a random perpendicular escape direction */
+                    pathFind.recoveryDir = (Math.random() * Math.PI * 2);
+                }
+                if (pathFind.stuckTick >= 14) {
+                    pathFind.stuckTick = 0;
+                    pathFind.recoveryDir = null;
+                }
+            }
+            /* store previous enemy position each tick for velocity prediction */
+            function pfRecordEnemyPos() {
+                if (near) {
+                    near.prevX2 = near.x2;
+                    near.prevY2 = near.y2;
+                }
+            }
             function sendChat(message) {
                 packet("6", message.slice(0, 30));
             }
@@ -6775,45 +7234,132 @@ body {
             let checkDist = 70;
             let CheckTick = 1;
             let canSecondary = 1;
+
+            /* ── improved safe-walk helpers (weapon-aware) ── */
+            /* find the best safe strafe angle around an object */
+            function safeWalkSlide(obj) {
+                const toObj   = UTILS.getDirect(obj, player, 0, 2);
+                const toEnemy = enemy.length ? UTILS.getDirect(near, player, 2, 2) : toObj + Math.PI;
+                /* try left/right strafe 90° around the obstacle, pick whichever keeps us closer to enemy */
+                const left  = toObj + Math.PI / 2;
+                const right = toObj - Math.PI / 2;
+                const lx = player.x2 + Math.cos(left)  * 80;
+                const ly = player.y2 + Math.sin(left)  * 80;
+                const rx = player.x2 + Math.cos(right) * 80;
+                const ry = player.y2 + Math.sin(right) * 80;
+                const target = enemy.length ? { x2: near.x2, y2: near.y2 } : { x2: player.x2, y2: player.y2 };
+                const ldist  = UTILS.getDistance(lx, ly, target.x2, target.y2);
+                const rdist  = UTILS.getDistance(rx, ry, target.x2, target.y2);
+                return ldist < rdist ? left : right;
+            }
+            /* returns true if a straight line from player to pos is blocked by any solid obj */
+            function safeWalkBlocked(pos) {
+                return gameObjects.some(tmp =>
+                    tmp.active && tmp.dmg && !tmp.isTeamObject(player) &&
+                    UTILS.lineInRect(
+                        tmp.x - tmp.getScale(), tmp.y - tmp.getScale(),
+                        tmp.x + tmp.getScale(), tmp.y + tmp.getScale(),
+                        player.x2, player.y2, pos.x, pos.y
+                    )
+                );
+            }
+
+            /* ── auto-break enemy spikes / traps that are blocking us ── */
+            let _breakCooldown = 0;
+            function autoBreakNearbyThreats() {
+                if (!getEl("testavoidspikes") || !getEl("testavoidspikes").checked) return;
+                if (_breakCooldown > 0) { _breakCooldown--; return; }
+                if (instaC.isTrue || clicks.left || clicks.right) return;
+
+                /* use weapon profile for break range */
+                const wp = getWeaponProfile();
+                /* hammer (id=10) is the best structure breaker — use its range if we have it as secondary */
+                const useHammer = player.weapons[1] === 10;
+                const breakRange = useHammer
+                    ? items.weapons[10].range + player.scale * 1.5
+                    : items.weapons[player.weapons[0]].range + player.scale * 1.2;
+                const weapRange = breakRange;
+                /* find the closest enemy spike or trap within weapon range */
+                const threat = gameObjects.filter(tmp =>
+                    tmp.active && (tmp.dmg || tmp.trap) &&
+                    !tmp.isTeamObject(player) &&
+                    UTILS.getDist(tmp, player, 0, 2) <= weapRange
+                ).sort((a, b) =>
+                    UTILS.getDist(a, player, 0, 2) - UTILS.getDist(b, player, 0, 2)
+                )[0];
+
+                if (!threat) return;
+
+                const aimAtThreat = UTILS.getDirect(threat, player, 0, 2);
+                /* use hammer (id=10) as secondary for breaking if available, otherwise primary */
+                const breakWeapon = player.weapons[1] === 10 ? player.weapons[1] : player.weapons[0];
+                if ((player.weaponIndex !== breakWeapon) || player.buildIndex > -1) {
+                    selectWeapon(breakWeapon);
+                }
+                if (player.reloads[breakWeapon] === 0 && !my.waitHit) {
+                    buyEquip(40, 0);  /* spike hat for structure dmg */
+                    my.waitHit = 1;
+                    game.tickBase(() => {
+                        detectHat(6);
+                        /* switch back to primary after break swing */
+                        if (player.weapons[1] === 10 && breakWeapon === 10) {
+                            selectWeapon(player.weapons[0]);
+                        }
+                        my.waitHit = 0;
+                    }, 1);
+                    _breakCooldown = Math.max(2, Math.floor(items.weapons[breakWeapon].speed / 100));
+                }
+            }
+
             function antiPush() {
                 if (secPacket >= ChPath) return;
 
-                if (near.dist2 <= 350 && !traps.inTrap) {
-                    checkDist = 35;
+                /* run auto-break pass first */
+                autoBreakNearbyThreats();
+
+                /* ── weapon-aware dynamic checkDist ── */
+                const _wpAP = getWeaponProfile();
+                /* ranged weapons need a wider avoidance bubble (can't fight in melee) */
+                const baseDist = _wpAP.checkDist;
+                if (near.dist2 <= 300 && !traps.inTrap) {
+                    checkDist = baseDist;
+                    CheckTick = 1;
+                } else if (near.dist2 <= 500) {
+                    checkDist = window.pingTime <= 90 ? baseDist * 2 : baseDist * 1.25;
                     CheckTick = 1;
                 } else {
-                    if (window.pingTime <= 90 && player.weapons[0] !== 5) {
-                        checkDist = 75;
-                    } else {
-                        checkDist = 35;
-                    }
+                    checkDist = window.pingTime <= 90 && !_wpAP.rushIn ? baseDist * 3 : baseDist * 1.5;
+                    CheckTick = 1;
                 }
+
                 let spike;
                 let trap;
-                if (near.dist2 > 230 && config.autobot && !my.autoPush && enemy.length) {
-                    if (traps.inTrap && checkDist != 35) {
-                        spike = gameObjects.filter(tmp => tmp.dmg && tmp.active && !tmp.isTeamObject(player) && UTILS.getDist(tmp, player, 0, 3) < (items.weapons[player.weapons[0]].range + player.scale * 1.5)).sort(function(a, b) {
-                            return UTILS.getDist(a, player, 0, 5) - UTILS.getDist(b, player, 0, 5);
-                        })[0];
-                    } else {
-                        spike = gameObjects.filter(tmp => tmp.dmg && tmp.active && UTILS.getDist(tmp, player, 0, 3) < (tmp.scale + checkDist + player.scale)).sort(function(a, b) {
-                            return UTILS.getDist(a, player, 0, 5) - UTILS.getDist(b, player, 0, 5);
-                        })[0];
-                    }
+                /* enemy spikes — always filter team objects out */
+                if (traps.inTrap) {
+                    /* inside a trap: look for enemy spikes within weapon range */
+                    spike = gameObjects.filter(tmp =>
+                        tmp.dmg && tmp.active && !tmp.isTeamObject(player) &&
+                        UTILS.getDist(tmp, player, 0, 3) < (items.weapons[player.weapons[0]].range + player.scale * 1.5)
+                    ).sort((a, b) => UTILS.getDist(a, player, 0, 5) - UTILS.getDist(b, player, 0, 5))[0];
                 } else {
-                    if (traps.inTrap && checkDist != 35) {
-                        spike = gameObjects.filter(tmp => tmp.dmg && tmp.active && !tmp.isTeamObject(player) && UTILS.getDist(tmp, player, 0, 3) < (items.weapons[player.weapons[0]].range + player.scale * 1.5)).sort(function(a, b) {
-                            return UTILS.getDist(a, player, 0, 5) - UTILS.getDist(b, player, 0, 5);
-                        })[0];
-                    } else {
-                        spike = gameObjects.filter(tmp => tmp.dmg && tmp.active && !tmp.isTeamObject(player) && UTILS.getDist(tmp, player, 0, 3) < (tmp.scale + checkDist + player.scale)).sort(function(a, b) {
-                            return UTILS.getDist(a, player, 0, 5) - UTILS.getDist(b, player, 0, 5);
-                        })[0];
+                    /* not in trap: look for enemy spikes within checkDist bubble */
+                    spike = gameObjects.filter(tmp =>
+                        tmp.dmg && tmp.active && !tmp.isTeamObject(player) &&
+                        UTILS.getDist(tmp, player, 0, 3) < (tmp.scale + checkDist + player.scale)
+                    ).sort((a, b) => UTILS.getDist(a, player, 0, 5) - UTILS.getDist(b, player, 0, 5))[0];
+                    /* also pick up friendly spikes in the path if moving at speed */
+                    if (!spike && (my.autoPush || config.autobot)) {
+                        spike = gameObjects.filter(tmp =>
+                            tmp.dmg && tmp.active &&
+                            UTILS.getDist(tmp, player, 0, 3) < (tmp.scale + checkDist * 0.6 + player.scale)
+                        ).sort((a, b) => UTILS.getDist(a, player, 0, 5) - UTILS.getDist(b, player, 0, 5))[0];
                     }
                 }
-                trap = gameObjects.filter(tmp => tmp.trap && tmp.active && !tmp.isTeamObject(player) && UTILS.getDist(tmp, player, 0, 3) < (tmp.scale + checkDist + player.scale)).sort(function(a, b) {
-                    return UTILS.getDist(a, player, 0, 5) - UTILS.getDist(b, player, 0, 5);
-                })[0];
+
+                trap = gameObjects.filter(tmp =>
+                    tmp.trap && tmp.active && !tmp.isTeamObject(player) &&
+                    UTILS.getDist(tmp, player, 0, 3) < (tmp.scale + checkDist + player.scale)
+                ).sort((a, b) => UTILS.getDist(a, player, 0, 5) - UTILS.getDist(b, player, 0, 5))[0];
                 if (spike) {
                     if (spike) {
                         if (!clicks.right && !clicks.left && !instaC.canSpikeTick) {
@@ -6824,9 +7370,16 @@ body {
                                 if (((near.dist2 <= 350 || window.pingTime > 90) && enemy.length) || my.canMove) {
                                     packet("a", undefined, 1);
                                 } else {
-                                    if (SpikeDistReal < items.weapons[player.weapons[1]].range + player.scale * 1.1) {
+                                    /* wall-slide: if direct retreat is blocked, strafe around the spike */
+                                    const retreatPos = {
+                                        x: player.x2 + Math.cos(SpikeMove + Math.PI) * 120,
+                                        y: player.y2 + Math.sin(SpikeMove + Math.PI) * 120,
+                                    };
+                                    if (safeWalkBlocked(retreatPos)) {
+                                        packet("a", safeWalkSlide(spike), 1);
+                                    } else if (SpikeDistReal < items.weapons[player.weapons[1]].range + player.scale * 1.1) {
                                         packet("a", SpikeMove + Math.PI, 1);
-                                    } else if (SpikeDistReal >= items.weapons[player.weapons[1]].range + player.scale * 1.1) {
+                                    } else {
                                         packet("a", SpikeMove, 1);
                                     }
                                 }
@@ -6920,9 +7473,16 @@ body {
                                     if (near.dist2 <= 350 && enemy.length) {
                                         packet("a", undefined, 1);
                                     } else {
-                                        if (TrapDistReal < items.weapons[player.weapons[1]].range + player.scale * 1.1) {
+                                        /* wall-slide around traps too */
+                                        const retreatPosTrap = {
+                                            x: player.x2 + Math.cos(TrapMove + Math.PI) * 100,
+                                            y: player.y2 + Math.sin(TrapMove + Math.PI) * 100,
+                                        };
+                                        if (safeWalkBlocked(retreatPosTrap)) {
+                                            packet("a", safeWalkSlide(trap), 1);
+                                        } else if (TrapDistReal < items.weapons[player.weapons[1]].range + player.scale * 1.1) {
                                             packet("a", TrapMove + Math.PI, 1);
-                                        } else if (TrapDistReal >= items.weapons[player.weapons[1]].range + player.scale * 1.1) {
+                                        } else {
                                             packet("a", TrapMove, 1);
                                         }
                                     }
@@ -7528,30 +8088,42 @@ body {
                 tmp.isTeamObject(player) && tmp.trap ? 0 : tmp.scale;
             }
             function checkObject() {
-                let checkColl = gameObjects.filter(tmp => player.canSee(tmp) && tmp.active);
+                /* use predicted enemy pos so pathfinder leads the target */
+                const target = pathFind.go_to_nearest_enemy ? pfPredictedTarget() : pathFind;
+                const targetType = pathFind.go_to_nearest_enemy ? 2 : 0;
+                const goalRadius = pathFind.go_to_nearest_enemy ? 30 : 60;
+                /* only include non-trap solid objects as walls */
+                let checkColl = gameObjects.filter(tmp => player.canSee(tmp) && tmp.active && !tmp.trap);
+                /* enemy spikes/traps are passable (we break them separately) */
+                const cellSize = pathFind.scale / pathFind.grid;
+                const originX  = player.x2 - pathFind.scale / 2;
+                const originY  = player.y2 - pathFind.scale / 2;
+                let bestDist = Infinity;
                 for (let y = 0; y < pathFind.grid; y++) {
                     grid[y] = [];
                     for (let x = 0; x < pathFind.grid; x++) {
                         let tmpXY = {
-                            x: (player.x2 - (pathFind.scale / 2)) + ((pathFind.scale / pathFind.grid) * x),
-                            y: (player.y2 - (pathFind.scale / 2)) + ((pathFind.scale / pathFind.grid) * y)
-                        }
-                        if (UTILS.getDist(pathFind.go_to_nearest_enemy ? near : pathFind, tmpXY, pathFind.go_to_nearest_enemy ? 2 : 0, 0) <= (pathFind.go_to_nearest_enemy ? 35 : 60)) {
-                            pathFind.lastX = x;
-                            pathFind.lastY = y;
+                            x: originX + cellSize * x,
+                            y: originY + cellSize * y
+                        };
+                        const d = UTILS.getDist(target, tmpXY, targetType, 0);
+                        if (d <= goalRadius) {
+                            /* keep the closest goal cell */
+                            if (d < bestDist) {
+                                bestDist = d;
+                                pathFind.lastX = x;
+                                pathFind.lastY = y;
+                            }
                             grid[y][x] = 0;
                             continue;
                         }
-                        let find = checkColl.find(tmp => UTILS.getDist(tmp, tmpXY, 0, 0) <= chechPathColl(tmp));
-                        if (find) {
-                            if (find.trap) {
-                                grid[y][x] = 0;
-                                continue;
-                            }
-                            grid[y][x] = 1;
-                        } else {
-                            grid[y][x] = 0;
-                        }
+                        /* mark cell blocked if any solid object overlaps it */
+                        const blocked = checkColl.some(tmp => {
+                            const cd = UTILS.getDist(tmp, tmpXY, 0, 0);
+                            /* add a small padding (half cell) so path avoids object edges */
+                            return cd <= chechPathColl(tmp) + cellSize * 0.5;
+                        });
+                        grid[y][x] = blocked ? 1 : 0;
                     }
                 }
             }
@@ -8664,22 +9236,27 @@ body {
                     $("#killCounter").hide();
                 }
 
-                const menuClassEl = document.querySelector(".menuClass");
-                if (menuClassEl) {
-                    if (MenuRangeIsTrue) menuClassEl.classList.add("moveRight");
-                    else menuClassEl.classList.remove("moveRight");
-                }
-                if (allianceMenu.style.display === "block" || storeMenu.style.display === "block") { if (player.alive && player) MenuRangeIsTrue = false; $(".menuClass").css({ 'opacity': '0', 'pointer-events': 'none' }); } else {
-                    const peek = window.nexusPeekThrough && MenuRangeIsTrue;
-                    $(".menuClass").css({ 'opacity': MenuRangeIsTrue ? (peek ? '0.32' : '1') : '0', 'pointer-events': (MenuRangeIsTrue && !peek) ? 'auto' : 'none' }); }
-                if (allianceMenu.style.display === "block" || storeMenu.style.display === "block") { MenuRangeIsTrue = false; $(".menuClassBest").css({ 'opacity': '0', 'pointer-events': 'none' }); } else {
-                    const peek2 = window.nexusPeekThrough && MenuRangeIsTrue;
-                    $(".menuClassBest").css({ 'opacity': MenuRangeIsTrue ? (peek2 ? '0.32' : '1') : '0', 'pointer-events': (MenuRangeIsTrue && !peek2) ? 'auto' : 'none' });}
-                const dockPulse = document.querySelector(".menuClassBest");
-                if (dockPulse) {
-                    const dockOpen = MenuRangeIsTrue && allianceMenu.style.display !== "block" && storeMenu.style.display !== "block";
-                    dockPulse.classList.toggle("menu-open-pulse", dockOpen && !window.nexusPeekThrough);
-                }
+                /* ── modal open/close driven by MenuRangeIsTrue ── */
+                (function() {
+                    const storeOpen = allianceMenu.style.display === "block" || storeMenu.style.display === "block";
+                    if (storeOpen && player && player.alive) MenuRangeIsTrue = false;
+                    const modal   = document.getElementById('m-modal');
+                    const overlay = document.getElementById('m-overlay');
+                    if (!modal) return;
+                    const isOpen  = modal.classList.contains('m-vis');
+                    if (MenuRangeIsTrue && !storeOpen && !isOpen) {
+                        try { window._mOpen && window._mOpen(); } catch(e) {}
+                    } else if ((!MenuRangeIsTrue || storeOpen) && isOpen) {
+                        try { window._mCloseQuiet && window._mCloseQuiet(); } catch(e) {}
+                    }
+                    if (window.nexusPeekThrough && modal) {
+                        modal.style.opacity = '0.25';
+                        modal.style.pointerEvents = 'none';
+                    } else if (!window.nexusPeekThrough && modal && modal.style.opacity === '0.25') {
+                        modal.style.opacity = '';
+                        modal.style.pointerEvents = '';
+                    }
+                })();
 
                 if (allianceMenu.style.display === "block" || storeMenu.style.display === "block") { canMenuchat = false; $("#menuChatDiv").css({ 'opacity': '0', 'pointer-events': 'none' }); } else {
                     $("#menuChatDiv").css({ 'opacity': canMenuchat ? '1' : '0', 'pointer-events': canMenuchat ? 'auto' : 'none' }); }
@@ -8734,29 +9311,80 @@ body {
                 let niglet = pathFind;
                 let tracker = traps;
                 niglet.scale = (config.maxScreenWidth / 2) * 1.3;
+
+                /* record enemy position for velocity prediction next frame */
+                pfRecordEnemyPos();
+                /* stuck detection — run every call */
+                pfCheckStuck();
+
+                /* sync pathFind params from weapon profile each call */
+                const _wp = getWeaponProfile();
+                niglet.smoothStep    = _wp.smoothStep;
+                niglet.predictFrames = _wp.predictFrames;
+
+                /* if stuck, send a recovery direction for a couple ticks */
+                if (niglet.recoveryDir !== null) {
+                    io.send("a", niglet.recoveryDir, 1);
+                    return;
+                }
+
                 if (!tracker.inTrap && enemy.length) {
-                    if (near.dist2 <= items.weapons[player.weapons[0]].range) {
-                        Move();
+                    const optDist  = pfOptimalDist();
+                    const weapRange = items.weapons[player.weapons[0]].range;
+
+                    if (near.dist2 <= optDist) {
+                        /* in optimal range — weapon-specific micro-positioning */
+                        if (_wp.circleStrafe && !clicks.left && !clicks.right) {
+                            /* strafe around enemy at optimal radius */
+                            const aimToEnemy = UTILS.getDirect(near, player, 2, 2);
+                            io.send("a", pfStrafeDir(aimToEnemy), 1);
+                        } else {
+                            /* rush-in weapons: just attack */
+                            Move();
+                        }
                     } else {
                         createPath();
                         easystar.setGrid(grid);
                         easystar.setAcceptableTiles([0]);
                         easystar.enableDiagonals();
-                        easystar.findPath((grid[0].length / 2), (grid.length / 2), niglet.lastX, niglet.lastY, function(path) {
-                            if (path === null) {
-                                niglet.array = [];
-                                Move();
-                            } else {
-                                niglet.array = path;
-                                if (niglet.array.length > 1) {
-                                    let tmpXY = {
-                                        x: (player.x2 - (niglet.scale / 2)) + ((niglet.scale / niglet.grid) * path[1].x),
-                                        y: (player.y2 - (niglet.scale / 2)) + ((niglet.scale / niglet.grid) * path[1].y)
+                        easystar.disableCornerCutting();
+                        easystar.findPath(
+                            Math.floor(niglet.grid / 2),
+                            Math.floor(niglet.grid / 2),
+                            niglet.lastX,
+                            niglet.lastY,
+                            function(path) {
+                                if (path === null || path.length === 0) {
+                                    niglet.array = [];
+                                    niglet.failCount++;
+                                    if (niglet.failCount >= 3) {
+                                        /* no path found 3 times in a row — try random strafe */
+                                        niglet.recoveryDir = UTILS.getDirect(near, player, 2, 2) + (Math.PI / 2) * (Math.random() > 0.5 ? 1 : -1);
+                                        niglet.failCount = 0;
                                     }
-                                    io.send("a", UTILS.getDirect(tmpXY, player, 0, 2), 1);
+                                    Move();
+                                } else {
+                                    niglet.array = path;
+                                    niglet.failCount = 0;
+                                    /* look `smoothStep` steps ahead for a smoother direction */
+                                    const lookahead = Math.min(niglet.smoothStep, path.length - 1);
+                                    if (lookahead >= 1) {
+                                        const step = path[lookahead];
+                                        const cellSize = niglet.scale / niglet.grid;
+                                        const tmpXY = {
+                                            x: (player.x2 - niglet.scale / 2) + cellSize * step.x,
+                                            y: (player.y2 - niglet.scale / 2) + cellSize * step.y,
+                                        };
+                                        const dir = UTILS.getDirect(tmpXY, player, 0, 2);
+                                        /* small angle diff — skip sending duplicate */
+                                        if (niglet.lastDir === null || UTILS.getAngleDist(dir, niglet.lastDir) > 0.08) {
+                                            niglet.lastDir = dir;
+                                            io.send("a", dir, 1);
+                                        }
+                                    }
                                 }
                             }
-                        });
+                        );
                         easystar.calculate();
                     }
                 }
@@ -9669,6 +10297,10 @@ body {
 
                                     if (!traps.inTrap && getEl("antitrap").checked) {
                                         traps.protect(traps.aim);
+                                        /* auto-break the trap if we're close enough to hit it */
+                                        if (!instaC.isTrue && !clicks.left && !clicks.right) {
+                                            autoBreakNearbyThreats();
+                                        }
                                     }
                                     traps.inTrap = true;
                                     traps.info = nearTrap;
@@ -10272,6 +10904,12 @@ body {
                             config.autobot = false;
                         }
                         pathFind.active = false;
+                        /* reset stuck state when pathfinder is turned off */
+                        pathFind.stuckTick = 0;
+                        pathFind.recoveryDir = null;
+                        pathFind.failCount = 0;
+                        pathFind.lastDir = null;
+                        pathFind.array = [];
                     }
                     if (configs3.AutoPush && enemy.length && near.dist2 < 600 && !traps.inTrap && !instaC.isTrue && !my.SpikeAim && !my.TrapAim && !my.TeleAim) {
                         autoPush();
@@ -11605,29 +12243,62 @@ body {
                     }
                     //PathFinderLine
                     if (pathFind.active) {
-                        if (pathFind.array) {
+                        if (pathFind.array && pathFind.array.length > 1) {
                             let xOffset = camX - (maxScreenWidth / 2);
                             let yOffset = camY - (maxScreenHeight / 2);
-                            mainContext.lineWidth = player.scale / 8;
-                            mainContext.globalAlpha = 1;
-                            mainContext.strokeStyle = "rgba(255, 255, 255, 0.8)";
+                            const cellSize = pathFind.scale / pathFind.grid;
+                            const originX  = player.x2 - pathFind.scale / 2;
+                            const originY  = player.y2 - pathFind.scale / 2;
+                            /* colour: green when close to target, yellow mid, red when stuck */
+                            let lineColor;
+                            if (pathFind.stuckTick >= 6) {
+                                lineColor = "rgba(255, 80, 80, 0.9)";
+                            } else if (near.dist2 < 350) {
+                                lineColor = "rgba(80, 255, 140, 0.9)";
+                            } else {
+                                lineColor = "rgba(140, 200, 255, 0.88)";
+                            }
+                            /* dashed path line */
+                            mainContext.save();
+                            mainContext.setLineDash([8, 5]);
+                            mainContext.lineWidth = 2.5;
+                            mainContext.globalAlpha = 0.85;
+                            mainContext.strokeStyle = lineColor;
+                            mainContext.shadowColor  = lineColor;
+                            mainContext.shadowBlur   = 6;
                             mainContext.beginPath();
                             pathFind.array.forEach((path, i) => {
-                                let pathXY = {
-                                    x: (pathFind.scale / pathFind.grid) * path.x,
-                                    y: (pathFind.scale / pathFind.grid) * path.y
-                                }
-                                let render = {
-                                    x: ((player.x2 - (pathFind.scale / 2)) + pathXY.x) - xOffset,
-                                    y: ((player.y2 - (pathFind.scale / 2)) + pathXY.y) - yOffset
-                                }
-                                if (i == 0) {
-                                    mainContext.moveTo(render.x, render.y);
+                                const rx = (originX + cellSize * path.x) - xOffset;
+                                const ry = (originY + cellSize * path.y) - yOffset;
+                                if (i === 0) {
+                                    mainContext.moveTo(rx, ry);
                                 } else {
-                                    mainContext.lineTo(render.x, render.y);
+                                    mainContext.lineTo(rx, ry);
                                 }
                             });
                             mainContext.stroke();
+                            /* draw a small dot at each waypoint */
+                            mainContext.setLineDash([]);
+                            mainContext.fillStyle = lineColor;
+                            pathFind.array.forEach((path, i) => {
+                                if (i === 0 || i === pathFind.array.length - 1) return;
+                                const rx = (originX + cellSize * path.x) - xOffset;
+                                const ry = (originY + cellSize * path.y) - yOffset;
+                                mainContext.beginPath();
+                                mainContext.arc(rx, ry, 2, 0, Math.PI * 2);
+                                mainContext.fill();
+                            });
+                            /* draw target dot */
+                            if (pathFind.array.length > 0) {
+                                const last = pathFind.array[pathFind.array.length - 1];
+                                const tx = (originX + cellSize * last.x) - xOffset;
+                                const ty = (originY + cellSize * last.y) - yOffset;
+                                mainContext.beginPath();
+                                mainContext.arc(tx, ty, 5, 0, Math.PI * 2);
+                                mainContext.fillStyle = lineColor;
+                                mainContext.fill();
+                            }
+                            mainContext.restore();
                         }
                     }
                 }
@@ -12426,6 +13097,7 @@ body {
             let toggleBlur = true;
             window.closeMenu = function() {
                 MenuRangeIsTrue = false;
+                try { window._mCloseQuiet && window._mCloseQuiet(); } catch(e) {}
             }
             window.toggleBlur2 = function() {
                 toggleBlur = !toggleBlur;
@@ -12622,4 +13294,3 @@ body {
         };
     }
 }(1);
-

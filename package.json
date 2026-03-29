@@ -10,7 +10,6 @@
     "deploy": "node deploy-commands.js"
   },
   "dependencies": {
-    "canvas": "^3.2.1",
     "cors": "^2.8.6",
     "discord.js": "^14.25.1",
     "dotenv": "^16.3.1",
@@ -19,6 +18,7 @@
     "mongoose": "^9.3.0"
   },
   "devDependencies": {
+    "canvas": "^3.2.2",
     "nodemon": "^3.0.1"
   }
 }
