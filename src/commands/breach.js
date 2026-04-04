@@ -7,7 +7,7 @@ const FAKE_IP = () => `${Math.floor(Math.random()*255)}.${Math.floor(Math.random
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('hack')
+        .setName('breach')
         .setDescription('Initiates a simulated "Mainframe Penetration Protocol" on a subject.')
         .addUserOption(option => 
             option.setName('target')

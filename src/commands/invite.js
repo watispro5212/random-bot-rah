@@ -32,7 +32,7 @@ module.exports = {
             new ButtonBuilder()
                 .setLabel('Documentation')
                 .setStyle(ButtonStyle.Link)
-                .setURL('https://github.com/watispro5212/NexusBot') 
+                .setURL('https://github.com/watispro5212/NexusBot/blob/main/README.md') 
         );
 
         await interaction.reply({ embeds: [embed], components: [row] });
