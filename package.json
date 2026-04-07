@@ -1,7 +1,7 @@
 {
   "name": "nexus-protocol",
-  "version": "6.0.0",
-  "description": "Production-grade Discord bot: sharded Discord.js v14, MongoDB economy & config, persistent global blacklist, companion Express API, 68+ slash commands.",
+  "version": "7.0.0",
+  "description": "Production-grade Discord bot: sharded Discord.js v14, MongoDB economy & config, persistent global blacklist, companion Express API, 92+ slash commands.",
   "author": "watispro5212, watispro1",
   "main": "src/index.js",
   "scripts": {
@@ -10,7 +10,6 @@
     "deploy": "node deploy-commands.js"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
     "cors": "^2.8.6",
     "discord.js": "^14.25.1",
     "dotenv": "^16.3.1",

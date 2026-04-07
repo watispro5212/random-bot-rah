@@ -9,7 +9,5 @@ const blacklistSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-blacklistSchema.index({ targetId: 1 });
 blacklistSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0, partialFilterExpression: { expiresAt: { $ne: null } } });
-
 module.exports = mongoose.model('BlacklistEntry', blacklistSchema);

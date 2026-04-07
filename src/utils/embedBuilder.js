@@ -20,12 +20,19 @@ module.exports = (options) => {
         .setColor(options.color || '#5865F2')
         .setTimestamp();
 
-    if (options.title) embed.setTitle(options.title);
-    if (options.description) embed.setDescription(options.description);
+    const trim = (str, max) => str && str.length > max ? str.slice(0, max - 3) + '...' : str;
+
+    if (options.title) embed.setTitle(trim(options.title, 256));
+    if (options.description) embed.setDescription(trim(options.description, 4096));
     if (options.url) embed.setURL(options.url);
 
     if (options.fields && options.fields.length > 0) {
-        embed.addFields(options.fields);
+        const safeFields = options.fields.slice(0, 25).map(f => ({
+            name: trim(f.name, 256),
+            value: trim(f.value, 1024),
+            inline: !!f.inline
+        }));
+        embed.addFields(safeFields);
     }
 
     if (options.thumbnail) embed.setThumbnail(options.thumbnail);
@@ -33,13 +40,13 @@ module.exports = (options) => {
 
     if (options.author) {
         embed.setAuthor({
-            name: options.author,
+            name: trim(options.author, 256),
             iconURL: options.authorIcon || undefined
         });
     }
 
     embed.setFooter({
-        text: options.footer || 'Nexus Protocol v7 • Advanced Intelligence'
+        text: trim(options.footer || 'Nexus Protocol v7 • Advanced Intelligence', 2048)
     });
 
     return embed;

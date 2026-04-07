@@ -33,6 +33,10 @@ manager.on('shardCreate', shard => {
     });
 });
 
+// Launch Companion Web Server
+const webServer = require('./web/server');
+webServer(manager);
+
 manager.spawn().catch(error => {
     logger.error('Failed to spawn shards:', error);
 });

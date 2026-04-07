@@ -4,8 +4,9 @@
 
 | Version | Status | Support |
 |---------|--------|---------|
-| **6.x** | Current | Full security patches |
-| 5.x | Previous | Best-effort critical fixes |
+| **7.x** | Current | Full security patches |
+| 6.x | Legacy | Critical fixes only |
+| 5.x | Previous | End of life |
 | &lt; 5.0 | End of life | No support |
 
 ## Scope
@@ -23,12 +24,14 @@ It does **not** cover Discord’s platform security or your cloud provider’s S
 
 ### Bot
 
-- **Owner-only** gate for destructive commands (`eval`, `shutdown`, credit/level overrides, `broadcast`, `reload`, etc.)  
-- **Global blacklist** enforced before slash execution; **persisted in MongoDB** in v6+ so restarts and all shards stay in sync (in-memory Set hydrated on **ready**)  
-- **Guild-only** commands (no DMs)  
-- **Per-category cooldowns** (utility includes `uptime`, `invite`, etc.)  
-- **Guild module toggles** (economy, casino, fun, leveling) with correct command mapping  
-- Automod, audit logging, starboard, tickets — permission-aware where applicable  
+- **Owner-only** gate for destructive commands (`eval`, `shutdown`, credit/level overrides, `broadcast`, `reload`, etc.)
+- **Safe Math Engine:** Native recursive-descent parser for `/math` — **no `eval()` usage**.
+- **Global blacklist** enforced before slash execution; **persisted in MongoDB**; in-memory Set hydrated on **ready**.
+- **Guild-only** commands (no DMs)
+- **Per-category cooldowns** (utility, economy, fun, moderation)
+- **Guild module toggles** (economy, casino, fun, leveling) with correct command mapping
+- **Compound Indexing:** User data isolated by `{ userId, guildId }` to prevent cross-guild data leakage.
+- Automod, audit logging, starboard, tickets — permission-aware where applicable
 
 ### Data
 

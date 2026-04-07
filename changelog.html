@@ -49,6 +49,22 @@
 
             <div class="changelog-timeline">
                 <div class="changelog-entry reveal">
+                    <div class="changelog-version" style="color: var(--secondary); text-shadow: 0 0 10px var(--secondary-glow);">v7.0.0 — THE ARCHITECTURAL OVERHAUL</div>
+                    <div class="changelog-date">April 7, 2026</div>
+                    <div class="changelog-body" style="border-color: var(--secondary);">
+                        <ul>
+                            <li class="added"><strong>24 New Commands:</strong> Massively expanded the bot's featureset with 24 new modules across Utility (<code>avatar</code>, <code>poll</code>, <code>remind</code>...), Economy (<code>rob</code>, <code>buy</code>, <code>crime</code>...), Moderation (<code>kick</code>, <code>nuke</code>, <code>role</code>...), and a brand new Fun category (<code>8ball</code>, <code>hack</code>, <code>rps</code>...).</li>
+                            <li class="fixed"><strong>Safe Math Engine:</strong> Replaced vulnerable <code>eval()</code> implementation in <code>/math</code> with a custom, sandboxed recursive-descent expression parser.</li>
+                            <li class="fixed"><strong>MongoDB Modernization:</strong> Upgraded to Mongoose v9 and MongoDB v7; fixed <code>MongoParseError</code> by removing deprecated <code>useNewUrlParser</code> and <code>useUnifiedTopology</code> options.</li>
+                            <li class="fixed"><strong>Zero-Dependency Logger:</strong> Removed <code>chalk</code> dependency in favor of a native Node.js ANSI logger to ensure perfect ESM/CommonJS compatibility.</li>
+                            <li class="added"><strong>Advanced Data Isolation:</strong> Standardized on compound indexes (<code>{ userId, guildId }</code>) for all user models to support robust multi-guild economy and moderation persistence.</li>
+                            <li class="fixed"><strong>Shard Operations:</strong> Optimized <code>ready.js</code> with a rotating presence system and added graceful shutdown handlers (<code>SIGINT</code>/<code>SIGTERM</code>) to prevent data corruption.</li>
+                            <li class="fixed"><strong>Docs & Visuals:</strong> Updated README, SECURITY, and LICENSE for v7; increased global command count to <code>92+</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="changelog-entry reveal">
                     <div class="changelog-version" style="color: var(--primary); text-shadow: 0 0 10px var(--primary-glow);">v6.0.0 — OPERATIONS CORE</div>
                     <div class="changelog-date">March 28, 2026</div>
                     <div class="changelog-body" style="border-color: var(--primary);">
