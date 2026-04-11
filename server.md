@@ -1,125 +1,117 @@
 # Nexus Protocol // The Community Blueprint
-> Tier-1 Orchestration Directive (v8.8.0)
+> Tier-1 Orchestration Directive (v8.9.0)
 
 This directive outlines the definitive architecture for the official Nexus Support Hub. It utilizes a "Basic-yet-Prestige" nomenclature designed for rapid recognition and hand-crafted aesthetics.
 
 ---
 
-## 🎭 Sector Hierarchy (Roles)
-*Ranked from Sovereign to Support.*
+## 🎭 Sector Hierarchy (Roles & Colors)
+*Ranked by precedence (Highest to Lowest).*
 
-| Identity | Emoji | Mission Objective |
-| :--- | :--- | :--- |
-| **Founder** | `👑` | Total dominion over the framework. |
-| **Admin** | `🛡️` | Executive management and logistical oversight. |
-| **Developer** | `💻` | Technical architects behind the core subsystems. |
-| **Moderator** | `⚔️` | Security monitoring and directive enforcement. |
-| **Support** | `🔧` | Primary operatives for directive resolution. |
-| **Partner** | `🌐` | Strategic allies and verified collaborators. |
-| **Booster** | `💎` | Elite entities providing node enhancements via boosts. |
-| **Early Operative** | `🥇` | Founding members of the initial Singularity. |
-| **Operative** | `🧬` | Standard verified entities with full hub access. |
-| **Entity** | `🌑` | Unverified newcomers awaiting initialization. |
-| **Neural Engine** | `🤖` | Integration role for all external intelligence agents (Bots). |
+| Identity | Emoji | Color (Hex) | Mission Objective |
+| :--- | :--- | :--- | :--- |
+| **Founder** | `👑` | `#00F5FF` | Total dominion over the framework. |
+| **Admin** | `🛡️` | `#FF4444` | Executive management and logistical oversight. |
+| **Developer** | `💻` | `#BB86FC` | Technical architects behind the core subsystems. |
+| **Moderator** | `⚔️` | `#FFBD2E` | Security monitoring and directive enforcement. |
+| **Support** | `🔧` | `#03DAC6` | Primary operatives for directive resolution. |
+| **Partner** | `🌐` | `#BD93F9` | Strategic allies and verified collaborators. |
+| **Booster** | `💎` | `#F47FFF` | Elite entities providing node enhancements via boosts. |
+| **Early Operative** | `🥇` | `#FFB86C` | Founding members of the initial Singularity. |
+| **Operative** | `🧬` | `#F0F0F0` | Standard verified entities with full hub access. |
+| **Entity** | `🌑` | `#606060` | Unverified newcomers awaiting initialization. |
+| **Neural Engine** | `🤖` | `#50FA7B` | Integration role for all external intelligence agents. |
 
 ---
 
 ## 🏛️ Sector Architecture (Channel Mapping)
 
 ### ─── ⋆⋅☆⋅⋆ ─── 📜 INFORMATIONAL ─── ⋆⋅☆⋅⋆ ───
-*The immutable directory of the Singularity engine.*
-
-- `📜-rules` — The primary behavior directives for all entities.
-- `🎐-overview` — A high-level summary of the Nexus brand and mission.
-- `📢-announcements` — Global shifts and official framework updates.
-- `🆙-changelog` — Real-time development milestones and version logs.
-- `⛓️-links` — Direct neural uplinks to the [Official Portal](https://shiny-giigles.pages.dev/).
+- `📜-rules` — Behavior directives.
+- `🎐-overview` — Brand mission.
+- `📢-announcements` — Global shifts.
+- `🆙-changelog` — Version logs.
+- `⛓️-links` — Direct neural uplinks.
 
 ### ─── ⋆⋅☆⋅⋆ ─── 💬 COMMUNITY ─── ⋆⋅☆⋅⋆ ───
-*The central communication hub for standard interaction.*
-
-- `⚡-general` — The primary node for human-centric discourse.
-- `📸-media` — Visual data exchange and project screenshots.
-- `🤖-commands` — The sector for interactive bot directives (Nexus Protocol).
-- `🧪-experimental` — Previewing prototypes and beta-logic snapshots.
+- `⚡-general` — Primary discourse.
+- `📸-media` — Data exchange.
+- `🤖-commands` — Bot directives.
+- `🧪-experimental` — Beta-logic snapshots.
 
 ### ─── ⋆⋅☆⋅⋆ ─── 🛠️ SUPPORT ─── ⋆⋅☆⋅⋆ ───
-*Surgical resolution for technical inquiries.*
-
-- `📥-ticket` — The secure interface for private troubleshooting (Ticket Tool).
-- `📂-faq-database` — A pre-mined repository of common resolutions.
-- `🐛-bug-report` — Submitting logic failures for core analysis.
-- `💡-suggestions` — Submitting directive proposals for framework growth.
+- `📥-ticket` — Private troubleshooting.
+- `📂-faq-database` — Resolution repository.
+- `🐛-bug-report` — Fault submission.
+- `💡-suggestions` — Product feedback.
 
 ### ─── ⋆⋅☆⋅⋆ ─── 🛡️ ADMINISTRATION ─── ⋆⋅☆⋅⋆ ───
-*Restricted data-streams for sector leadership.*
-
-- `🚨-security-logs` — Immutable audit logs of all global infractions (Carl-bot).
-- `📊-telemetry` — Real-time server growth and engagement metrics (StatBot).
-- `👑-founders` — Secured voice and text sector for project leadership.
-- `⚔️-mod-ops` — Internal coordination sector for high-priority events.
+- `🚨-security-logs` — Infraction logs (Carl-bot).
+- `📊-telemetry` — Engagement metrics (StatBot).
+- `👑-founders` — Leadership text/voice.
+- `⚔️-mod-ops` — Staff coordination.
 
 ---
 
-## 🔐 Permission Orchestration (The Matrix)
+## 🔐 Master Permission Matrix
 
-Establishing **Category-Level Permissions** is mandatory to ensure sector integrity. Sub-channels must be **Synced** to their parent.
+### 1. Global Role Permissions
+| Role | Permissions |
+| :--- | :--- |
+| **Founder** | Administrator, Manage Server, Manage Roles. |
+| **Admin** | Manage Server, Manage Channels, Manage Messages, Kick/Ban. |
+| **Moderator** | Manage Messages, Kick/Ban, Timeout, View Audit Log. |
+| **Developer** | Manage Channels (in TECHNICAL HUB), Mention @everyone (restricted). |
+| **Support** | Manage Messages (in SUPPORT sector), View Tickets. |
+| **Operative** | Send Messages, Embed Links, Attach Files, Use Slash Commands. |
+| **Entity** | View Channels (#rules and #overview ONLY). |
 
-### 📋 [📜] INFORMATIONAL permissions:
-- `@everyone`: `View Channel` (✔), `Send Messages` (✖), `Add Reactions` (✔).
-- `Moderator+`: `Manage Messages` (✔).
-- *Goal*: High visibility, zero chatter.
+### 2. Category Permissions (Sector Focus)
+All sub-channels must be **Synced** to these category-level overrides.
 
-### 📋 [🛡️] ADMINISTRATION permissions:
+#### [📜] INFORMATIONAL
+- `@everyone`: `View Channel` (✔), `Send Messages` (✖).
+- `Admin+`: `Manage Messages` (✔).
+
+#### [💬] COMMUNITY
+- `@everyone`: `View Channel` (✔), `Send Messages` (✔).
+- `Operative+`: `Use External Emojis` (✔), `Attach Files` (✔).
+- `Entity`: `Send Messages` (✖).
+
+#### [🛠️] SUPPORT
+- `@everyone`: `View Channel` (✔).
+- `Entity`: `Send Messages` (✖).
+- `Operative`: `Send Messages` (✔ in #ticket and #bug-report only).
+
+#### [🛡️] ADMINISTRATION
 - `@everyone`: `View Channel` (✖).
 - `Moderator+`: `View Channel` (✔), `Send Messages` (✔).
-- *Goal*: Total invisibility from standard operatives.
 
 ---
 
-## 🤖 Neural Agents (Bot Implementation Matrix)
+## ⚔️ Verification Protocol (Wick Bot)
+*High-security sentinel for preventing automated intrusions.*
 
-| Bot Agent | Primary Channel | Role Priority | Setup Directive |
-| :--- | :--- | :--- | :--- |
-| **Nexus Protocol** | `#🤖-commands` | `Singularity Founder` | Invite with Admin perms for full framework execution. |
-| **Carl-bot** | `#🚨-security-logs` | `Neural Engine` | Set log channel to #🚨-security-logs. Enable Auto-mod. |
-| **Ticket Tool** | `#📥-ticket` | `Neural Engine` | Create a panel in #📥-ticket. Assign @Moderator for support. |
-| **StatBot** | `#📊-telemetry` | `Neural Engine` | Enable channel stats for visual growth tracking in the sidebar. |
+### 1. Agent Selection: Wick Bot
+- **Purpose**: High-intensity verification and anti-raid protection.
+- **Link**: [Invite Wick](https://wickbot.com/)
 
-### 🛠️ Step-by-Step Agent Configuration
-
-#### 1. Nexus Protocol (Inner Logic)
-- **Sector**: Admin Everywhere.
-- **Action**: Place the `Nexus Protocol` role at the **Top** of the list (below Founder) to ensure it can manage sub-roles in the economy.
-
-#### 2. Carl-bot (Global Security)
-- **Sector**: `#🚨-security-logs`.
-- **Command**: `!log channel #🚨-security-logs`. 
-- **Mission**: Enable "Message Edits" and "Message Deletions" to maintain a permanent security archive.
-
-#### 3. Ticket Tool (Private Directives)
-- **Sector**: `#📥-ticket`.
-- **Panel Config**: 
-  - *Title*: `NEXUS // SUPPORT UPLINK`
-  - *Description*: `Click the button below to establish a private channel with the moderation team.`
-  - *Support Role*: `@Moderator`.
-
-#### 4. StatBot (Visual Metrics)
-- **Sector**: Sidebar (Auto-generated).
-- **Task**: Configure 'Auto-updating channel names' to show current operative count and active nodes.
+### 2. Setup Directive
+1. **Join Notification**: Direct all new entities to a private #verification channel (automatic in Wick).
+2. **Verification Logic**: Enable **Captcha Verification**.
+3. **Role Handover**: Set Wick to assign the `🧬 Operative` role only after the captcha is solved.
+4. **Anti-Alt Protocol**: Enable Wick's "Account Age" check (Minimum 3 days) to prevent burner account raids.
 
 ---
 
-## 📊 Engagement Milestones (Deep Expansion)
+## 📊 Neural Agents (Summary)
 
-### 💠 Operative Achievements
-- **Level 5**: `Operative Alpha` (Add custom emoji use).
-- **Level 10**: `Operative Prime` (Access to `#🧪-experimental`).
-- **Level 25**: `Core Architect` (Special vanity role + Name color).
-
-### 💠 Neural Events
-- **Uplink Sunday**: Bi-weekly Q&A sessions in the `👑-founders` voice sector for Operative+ ranks.
-- **Code Freeze**: Flash-contests for finding edge-case bugs in `#🐛-bug-report`.
+| Bot Agent | Mission | Setup Command |
+| :--- | :--- | :--- |
+| **Wick** | Anti-Raid / Verification | `w!setup` |
+| **Nexus Protocol** | Core Economy / Admin | `/help` |
+| **Carl-bot** | Advanced Logs / Roles | `!log channel #security-logs` |
+| **Ticket Tool** | Private Resolution | Create panel in #ticket. |
 
 ---
 *NEXUS PROTOCOL © 2026 // ALL SYSTEMS OPTIMAL*
