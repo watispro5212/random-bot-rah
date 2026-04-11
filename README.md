@@ -1,127 +1,40 @@
-# Nexus Protocol
+# NEXUS PROTOCOL // SINGULARITY CORE
+> A high-fidelity, hand-crafted neural framework for elite Discord orchestration.
 
-<div align="center">
-
-**Production-grade Discord bot — sharded runtime, MongoDB persistence, persistent blacklist, companion web + API.**
-
-[![Discord.js](https://img.shields.io/badge/discord.js-v14-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.js.org)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com)
-[![License](https://img.shields.io/badge/License-BSL--Attribution-FF4444?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-7.1.0-00FFCC?style=for-the-badge)](changelog.html)
-
-
-</div>
+Nexus Protocol is a distributed administrative engine designed for horizontal scalability and near-zero latency. Built for communities that demand surgical precision and premium aesthetics, the v8.5 "Singularity" core transitions the project from a legacy template structure to a high-prestige, hand-crafted architecture.
 
 ---
 
-## Overview
+## 🏗️ Architectural Foundations
+- **Neural Engine**: Event-driven architecture utilizing the non-blocking logic of Node.js and Discord v14.
+- **Economic Persistence**: Global sectoral balances managed via a secured MongoDB cluster with redundant data nodes.
+- **Shard Orchestration**: Advanced process management to maintain node dominion across 1,240+ active sectors.
+- **Artisanal Interface**: Custom-built embeds and public portals designed with a "Deep Space/Industrial" aesthetic.
 
-Nexus Protocol is a **ShardingManager**-driven Discord.js **v14** bot backed by **MongoDB** (economy, guild config, **global blacklist**). Features include credits, quests, casino, XP/rank cards, moderation, tickets, verification, automod hooks, starboard, audit logging, and owner tooling. A **companion website** and **Express** JSON API ship in the same repo.
+## 🚀 Deployment Directives
+1. **Initialize Environment**:
+   ```bash
+   npm install
+   ```
+2. **Synchronize Registry**:
+   ```bash
+   npm run deploy
+   ```
+3. **Establish Uplink**:
+   ```bash
+   npm run dev
+   ```
 
-### v7.1.0 highlights — OWNER & OPS UPDATE
+## 🛡️ Security Protocol
+- **Owner Dominion**: Restricted Founder commands verified via cryptographic ID validation.
+- **Audit Logging**: Immutable event archiving in the `#🚨-security-feed` sector.
+- **Data Integrity**: Universal null-safety and recursive syntax audits across the 92+ file nexus.
 
-| Area | What changed |
-|------|----------------|
-| **Core Functions** | Deployed secure **Owner-Only** commands: `/eval`, `/shutdown`, and `/reload` with hardcoded ID protection. |
-| **Privacy** | Implemented a global obfuscation system that **hides** owner commands from both the Discord Slash UI and the website command registry. |
-| **Expansion** | Added community-requested features: `/weather` (OpenWeather integration) and `/meme` (Humor packet interception). |
-| **Synchronization** | Unified all web nodes; versioned all static layouts to v7.1.0 and purged legacy sharding navigation. |
-| **Stability** | Resolved `ReferenceError` crashes in interaction handlers through localized client property initialization. |
+## 📡 Portal Network
+The framework is supplemented by a 9-page artisanal informational suite:
+- [Home Portal](https://shiny-giigles.pages.dev/)
+- [Protocol Index](https://shiny-giigles.pages.dev/commands.html)
+- [Neural Database](https://shiny-giigles.pages.dev/wiki.html)
 
-
-## Requirements
-
-- **Node.js** 18+  
-- **MongoDB** (Atlas or self-hosted) — required for full functionality  
-- **Discord** application: bot token, **Message Content Intent** if your features need it, **applications.commands** scope for slash commands  
-
-## Quick start
-
-```bash
-git clone https://github.com/watispro5212/shiny-giigles.git
-cd shiny-giigles
-npm install
-cp .env.example .env
-cp .env.example .env
-# TOKEN, DISCORD_CLIENT_ID, MONGODB_URI
-npm run deploy   # register global slash commands (92 modules)
-npm start        # shards + web server (PORT default 3000)
-```
-
-## Environment
-
-| Variable | Required | Purpose |
-|----------|----------|---------|
-| `TOKEN` | Yes | Discord bot token |
-| `MONGODB_URI` | Yes* | MongoDB connection string |
-| `DISCORD_CLIENT_ID` | Yes* | Application ID (deploy + `/invite`) |
-| `CLIENT_ID` | No | Alias for `DISCORD_CLIENT_ID` |
-| `GUILD_ID` | No | Dev-only guild command registration |
-| `PORT` | No | HTTP port (default `3000`) |
-
-\*The process starts without MongoDB, but economy, guild config, **blacklist persistence**, and related features will not work until `MONGODB_URI` is set.
-
-## Scripts
-
-| Script | Command |
-|--------|---------|
-| Start bot + web | `npm start` |
-| Dev (nodemon) | `npm run dev` |
-| Deploy slash commands | `npm run deploy` |
-
-## Commands (summary)
-
-**95** slash command files are registered (including **9** owner-only: `shutdown`, `eval`, `reload`, `set-credits`, `blacklist`, `rank-set`, …). **86** are public-facing commands.
-
-
-| Area | Examples |
-|------|----------|
-| Utility | `ping`, `invite`, **`uptime`**, `help`, `avatar`, `poll`, `remind`, `roll`, `embed` |
-| Economy | `balance`, `daily`, `work`, `rob`, `leaderboard`, `shop`, `buy`, `pay`, `crime` |
-| Casino | `blackjack`, `slots`, `coinflip` |
-| Leveling | `rank` |
-| Moderation | `ban`, `purge`, `kick`, `timeout`, `slowmode`, `warnings`, `nuke`, `role` |
-| Fun | `8ball`, `coinflip`, `quote`, `hack`, `rps`, `trivia`, `meme`, … |
-| Advanced | `breach-report`, `signal-decrypt`, `uplink-status`, `cyber-heist`, `shards` |
-
-Use **`/help`** in Discord or open **`commands.html`** on the site for the full matrix.
-
-## Web & API
-
-Static files are served from the project root with **path guards** (no `src/`, `node_modules/`, `.env`, etc. — see [SECURITY.md](SECURITY.md)).
-
-| Endpoint | Description |
-|----------|-------------|
-| `GET /api/health` | Liveness + version |
-| `GET /api/version` | Package metadata |
-| `GET /api/stats` | Guilds, members, ping (shard broadcast) |
-
-## Repository layout
-
-```text
-├── src/
-│   ├── index.js              # ShardingManager + shardError + web bootstrap
-│   ├── bot.js                # Per-shard client, MongoDB connect, commands/events
-│   ├── commands/             # Slash commands (92 modules)
-│   ├── events/
-│   ├── models/               # User, GuildConfig, BlacklistEntry, …
-│   ├── utils/                # Economy, cooldowns, blacklistService, logger, …
-│   └── web/server.js
-├── *.html, style.css, script.js
-├── deploy-commands.js
-├── LICENSE
-└── SECURITY.md
-```
-
-## Authors
-
-**watispro5212** · **watispro1**
-
-## License
-
-[Nexus Protocol License (BSL-Attribution)](LICENSE) — attribution required; commercial redistribution needs permission.
-
-## Security
-
-[Vulnerability reporting and version support → SECURITY.md](SECURITY.md)
+---
+*NEXUS PROTOCOL © 2026 // ALL SYSTEMS OPTIMAL*

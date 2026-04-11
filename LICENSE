@@ -1,44 +1,36 @@
-# Nexus Protocol License (BSL-Attribution)
+# NEXUS PROTOCOL // NEURAL INTEGRITY LICENSE
+> BSL-Attribution (v8.6.0)
 
 Copyright (c) 2026 watispro5212, watispro1. All rights reserved.
 
-This license applies to the Nexus Protocol Discord bot, companion website, and related tooling in this repository (including v6+ persistent blacklist and MongoDB-backed features).
+This license governs the Nexus Protocol Discord framework, the Singularity neural engine, and the associated artisanal portal network.
 
-## 1. Grant of license
+---
 
-Permission is hereby granted, free of charge, to any person or organization obtaining a copy of this software and associated documentation files (the "Software"), to use, copy, modify, merge, publish, distribute, and sublicense copies of the Software, subject to the conditions below.
+## 01 // GRANT OF AUTHORIZATION
+Permission is hereby granted, free of charge, to any person or organization obtaining a copy of this framework and associated technical directives, to use, copy, modify, and distribute the Software, subject to the conditions defined below.
 
-## 2. Attribution
+## 02 // MANDATORY ATTRIBUTION
+All copies, substantial portions, or derivative architectural works must retain **prominent** credit to the original founders:
 
-All copies, substantial portions, or derivative works must retain **prominent** credit to the original authors:
+> **Nexus Protocol** — Created by watispro5212 and watispro1
 
-> **Nexus Protocol** — created by watispro5212 and watispro1
+Attribution must remain persistent in:
+- The `README.md` (or equivalent) of any distributed copy.
+- The footer of all public-facing informational portals.
+- The `About` section of any hosted instance of the Singularity engine.
 
-Attribution must appear in:
+Removing or obscuring the "Nexus Protocol" brand identity is a terminal violation of this license.
 
-- The README (or equivalent) of any distributed copy  
-- Any public-facing “About,” “Credits,” or footer that ships with a hosted instance  
-- Source files for **substantially** modified subsystems you redistribute (e.g. custom automod, economy, or logging stacks derived from this codebase)
+## 03 // COMMERCIAL OPERATION
+- **Non-Commercial**: Freedom to host for personal or community sectors is granted.
+- **Commercial**: Any monetize-able deployment (SaaS, white-label sales, or paid-feature toggles) requires explicit written authorization from the Founders.
 
-Removing or obscuring this attribution is not permitted.
+## 04 // NEURAL INTEGRITY
+You may not market a fork or hosted instance as the "Official Nexus Protocol" without explicit written consent. All forks must clearly state their derivation from the Singularity v8.5+ core.
 
-## 3. Commercial use
+## 05 // DISCLAIMER OF FAULT
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. IN NO EVENT SHALL THE FOUNDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR LOGIC FAILURES ARISING FROM THE DEPLOYMENT OR INTEGRATION OF THE SINGULARITY CORE.
 
-- **Non-commercial** self-hosting for personal or community Discord servers is allowed without additional permission.  
-- **Commercial** use means, without limitation: selling access to the bot, selling hosted instances where this Software is the primary product, or requiring payment for features that are substantially this Software’s stock behavior. Commercial use **requires prior written permission** from the copyright holders.
-
-## 4. No impersonation
-
-You may not market a fork or hosted instance as the official Nexus Protocol, or imply endorsement by the authors, without explicit written consent.
-
-## 5. Security
-
-If you discover a vulnerability, follow **SECURITY.md** (private report, coordinated disclosure). Public exploitation or dumping of live credentials is never authorized.
-
-## 6. Third parties and APIs
-
-The Software integrates with Discord, MongoDB, and optional third-party APIs. Your use of those services is governed by **their** terms. This license does not grant any rights to Discord, MongoDB, or other vendors’ trademarks or services.
-
-## 7. Warranty disclaimer
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+---
+*NEXUS PROTOCOL © 2026 // ALL SYSTEMS OPTIMAL*
