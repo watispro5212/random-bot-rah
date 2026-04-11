@@ -1,6 +1,6 @@
 {
   "name": "nexus-protocol",
-  "version": "7.1.0",
+  "version": "8.0.0",
 
   "description": "Production-grade Discord bot: sharded Discord.js v14, MongoDB economy & config, persistent global blacklist, companion Express API, 92+ slash commands.",
   "author": "watispro5212, watispro1",

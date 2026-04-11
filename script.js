@@ -85,21 +85,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Pointer position
+    // Pointer position & Bento Tracking
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        const x = (e.clientX / window.innerWidth - 0.5) * 20;
-        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        
+        const xPercent = (e.clientX / window.innerWidth - 0.5) * 20;
+        const yPercent = (e.clientY / window.innerHeight - 0.5) * 20;
+        
         const grid = document.querySelector('.grid-overlay');
         if (grid) {
-            grid.style.transform = `perspective(1000px) rotateX(60deg) translate(${x}px, ${y}px)`;
+            grid.style.transform = `perspective(1000px) rotateX(60deg) translate(${xPercent}px, ${yPercent}px)`;
         }
+        
         const hero = document.querySelector('.hero-title');
         if (hero) {
-            hero.style.transform = `translate(${x * -0.2}px, ${y * -0.2}px)`;
+            hero.style.transform = `translate(${xPercent * -0.2}px, ${yPercent * -0.2}px)`;
         }
+
+        // Bento magnetic tracking
+        document.querySelectorAll('.bento-item').forEach(item => {
+            const rect = item.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            item.style.setProperty('--mouse-x', `${x}%`);
+            item.style.setProperty('--mouse-y', `${y}%`);
+        });
     });
+
 
     // Navbar scroll effect
     window.addEventListener('scroll', () => {
@@ -243,50 +256,69 @@ document.addEventListener('DOMContentLoaded', () => {
     const opsFeed = document.getElementById('ops-feed');
     if (opsFeed) {
         const opsMessages = [
-            { time: '21:52:10', module: 'SHARD_0', msg: 'Initializing neural level sync for guild_8829...', status: 'SUCCESS', statusClass: 'ops-success' },
-            { time: '21:52:12', module: 'FIREWALL', msg: 'Unauthorized breach attempt blocked. Identity sequestered.', status: 'BLOCKED', statusClass: 'ops-error' },
-            { time: '21:52:15', module: 'CORE', msg: 'Global heartbeat pulse emitted. Latency: 12ms.', status: '', statusClass: '' },
-            { time: '21:52:20', module: 'UPLINK', msg: 'Gateway bridge established with Discord mainframes.', status: '', statusClass: '' },
-            { time: '21:52:25', module: 'ECONOMY', msg: 'Ledger sync complete. 12.4k credits distributed.', status: '', statusClass: '' },
-            { time: '21:52:30', module: 'SECURITY', msg: 'Active scan: No anomalies detected in Sector 7.', status: 'PASS', statusClass: 'ops-success' },
+            { module: 'SHARD_0', msg: 'Neural handshake established with node_8829...', status: 'STABLE', statusClass: 'ops-success' },
+            { module: 'FIREWALL', msg: 'Recursive packet inspection: No anomalies found.', status: 'CLEAR', statusClass: 'ops-success' },
+            { module: 'CORE', msg: 'Global heartbeat pulse emitted. Latency: 12ms.', status: 'SYNC', statusClass: 'ops-success' },
+            { module: 'UPLINK', msg: 'Gateway bridge established with Discord mainframes.', status: 'ACTIVE', statusClass: 'ops-success' },
+            { module: 'ECONOMY', msg: 'Ledger sync complete. 12.4k credits distributed.', status: 'DONE', statusClass: '' },
+            { module: 'SECURITY', msg: 'Unauthorized breach attempt blocked in Sector 7.', status: 'BLOCKED', statusClass: 'ops-error' },
+            { module: 'DB', msg: 'MongoDB transaction committed (1.2ms).', status: 'OK', statusClass: 'ops-success' },
         ];
+
+        function getTimestamp() {
+            const now = new Date();
+            return now.toTimeString().split(' ')[0];
+        }
 
         let lineIndex = 0;
         function addOpsLine() {
-            if (lineIndex >= opsMessages.length) {
-                lineIndex = 0;
-                opsFeed.innerHTML = '';
+            const container = opsFeed;
+            if (lineIndex >= 10) { // Keep only last 10 lines
+                const first = container.querySelector('.ops-line');
+                if (first) first.remove();
             }
-            const entry = opsMessages[lineIndex];
+            
+            const entry = opsMessages[Math.floor(Math.random() * opsMessages.length)];
             const line = document.createElement('div');
-            line.className = 'ops-line';
-            line.innerHTML = `<span class="ops-timestamp">[${entry.time}]</span> <span class="ops-module">${entry.module}</span>: ${entry.msg}${entry.status ? ` <span class="${entry.statusClass}">${entry.status}</span>` : ''}`;
-            const cursor = opsFeed.querySelector('.ops-cursor');
+            line.className = 'ops-line reveal active';
+            line.innerHTML = `<span class="ops-timestamp">[${getTimestamp()}]</span> <span class="ops-module">${entry.module}</span>: ${entry.msg}${entry.status ? ` <span class="${entry.statusClass}">${entry.status}</span>` : ''}`;
+            
+            const cursor = container.querySelector('.ops-cursor');
             if (cursor) cursor.remove();
-            opsFeed.appendChild(line);
+            
+            container.appendChild(line);
+            
             const cursorEl = document.createElement('div');
             cursorEl.className = 'ops-cursor';
             cursorEl.textContent = '_ WAITING_FOR_INPUT...';
-            opsFeed.appendChild(cursorEl);
-            opsFeed.scrollTop = opsFeed.scrollHeight;
+            container.appendChild(cursorEl);
+            
+            container.scrollTop = container.scrollHeight;
             lineIndex++;
         }
+
         addOpsLine();
         setInterval(addOpsLine, 4000);
     }
 
-    // Reveal on Scroll
-    const reveal = () => {
-        document.querySelectorAll('.reveal').forEach(el => {
-            const windowHeight = window.innerHeight;
-            const elementTop = el.getBoundingClientRect().top;
-            if (elementTop < windowHeight - 150) {
-                el.classList.add('active');
+    // --- Advanced Reveal Engine ---
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Add a small delay for staggered appearance if multiple enter at once
+                setTimeout(() => {
+                    entry.target.classList.add('active');
+                }, index * 100);
+                revealObserver.unobserve(entry.target);
             }
         });
-    };
-    window.addEventListener('scroll', reveal);
-    reveal();
+    }, { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px' 
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
 
     if (commandList) renderCommands();
 
