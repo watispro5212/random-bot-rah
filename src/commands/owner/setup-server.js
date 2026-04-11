@@ -4,167 +4,182 @@ const embedBuilder = require('../../utils/embedBuilder');
 const SUPPORT_GUILD_ID = '1492345037848186930';
 
 // ═══════════════════════════════════════════════════════════
-// FULL ROLE REGISTRY (from server.md) — ordered lowest→highest
+// ROLE REGISTRY — HIGHEST → LOWEST (Founder at top, Muted at bottom)
 // ═══════════════════════════════════════════════════════════
 const ROLES = [
     {
-        name: '🔇 Muted', color: '#333333', hoist: false,
-        permissions: [],
-        deny: ['SendMessages', 'SendMessagesInThreads', 'AddReactions', 'CreatePublicThreads', 'CreatePrivateThreads', 'Speak']
-    },
-    {
-        name: '🤖 Neural Engine', color: '#50FA7B', hoist: false,
-        permissions: ['ViewChannel', 'SendMessages', 'EmbedLinks', 'AttachFiles', 'ReadMessageHistory', 'AddReactions', 'UseExternalEmojis']
-    },
-    {
-        name: '🌑 New Entity', color: '#606060', hoist: false,
-        permissions: ['ViewChannel', 'SendMessages']  // restricted by category overrides
-    },
-    {
-        name: '🧬 Operative', color: '#F0F0F0', hoist: true,
-        permissions: ['SendMessages', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseApplicationCommands', 'Connect', 'Speak', 'Stream', 'UseVAD', 'ChangeNickname', 'ViewChannel']
-    },
-    { name: '🎖️ Veteran', color: '#A0A0A0', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
-    { name: '🌱 Level 10+', color: '#69FF47', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
-    { name: '⭐ Level 25+', color: '#FFC107', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
-    { name: '🔥 Level 50+', color: '#FF4D4D', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker'] },
-    { name: '🥇 Early Operative', color: '#FFB86C', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker'] },
-    { name: '🛠️ Contributor', color: '#50FA7B', hoist: false, permissions: ['EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis', 'CreatePublicThreads'] },
-    { name: '🏆 Event Winner', color: '#FFD700', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
-    {
-        name: '💎 Server Booster', color: '#F47FFF', hoist: true,
-        permissions: ['ChangeNickname', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'Stream']
-    },
-    {
-        name: '🌐 Partner', color: '#BD93F9', hoist: true,
-        permissions: ['EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'CreatePublicThreads']
-    },
-    {
-        name: '📣 Community Manager', color: '#F9A825', hoist: true,
-        permissions: ['ManageEvents', 'CreatePublicThreads', 'MentionEveryone', 'ManageMessages', 'ManageWebhooks', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis']
-    },
-    {
-        name: '🔧 Support', color: '#03DAC6', hoist: true,
-        permissions: ['ManageMessages', 'CreatePrivateThreads', 'UseApplicationCommands', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis']
-    },
-    {
-        name: '🎯 Support Lead', color: '#00CFFF', hoist: true,
-        permissions: ['ManageMessages', 'CreatePrivateThreads', 'ManageThreads', 'UseApplicationCommands', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis']
-    },
-    {
-        name: '⚔️ Moderator', color: '#FFBD2E', hoist: true,
-        permissions: ['ManageMessages', 'ManageNicknames', 'ModerateMembers', 'KickMembers', 'MoveMembers', 'MuteMembers', 'DeafenMembers', 'ViewAuditLog', 'CreatePublicThreads', 'ManageThreads', 'UseExternalEmojis', 'AddReactions']
-    },
-    {
-        name: '💻 Developer', color: '#BB86FC', hoist: true,
-        permissions: ['ManageWebhooks', 'UseApplicationCommands', 'EmbedLinks', 'AttachFiles', 'CreatePublicThreads', 'UseExternalEmojis', 'AddReactions']
-    },
-    {
-        name: '⚡ Head Moderator', color: '#FF6B35', hoist: true,
-        permissions: ['KickMembers', 'BanMembers', 'ModerateMembers', 'ManageMessages', 'ManageNicknames', 'ViewAuditLog', 'MoveMembers', 'DeafenMembers', 'MuteMembers', 'CreatePublicThreads', 'CreatePrivateThreads', 'ManageThreads', 'MentionEveryone', 'UseExternalEmojis']
-    },
-    {
-        name: '🛡️ Admin', color: '#FF4444', hoist: true,
-        permissions: ['ManageGuild', 'ManageRoles', 'ManageChannels', 'ManageWebhooks', 'KickMembers', 'BanMembers', 'ModerateMembers', 'ManageNicknames', 'MentionEveryone', 'ViewAuditLog', 'ManageEvents', 'ManageMessages', 'CreatePublicThreads', 'CreatePrivateThreads', 'ManageThreads', 'UseExternalEmojis']
+        name: '👑 Founder', color: '#00F5FF', hoist: true,
+        permissions: ['Administrator']
     },
     {
         name: '🌟 Co-Founder', color: '#7B2FFF', hoist: true,
         permissions: ['Administrator']
     },
     {
-        name: '👑 Founder', color: '#00F5FF', hoist: true,
-        permissions: ['Administrator']
+        name: '🛡️ Admin', color: '#FF4444', hoist: true,
+        permissions: ['ManageGuild', 'ManageRoles', 'ManageChannels', 'ManageWebhooks', 'KickMembers', 'BanMembers', 'ModerateMembers', 'ManageNicknames', 'MentionEveryone', 'ViewAuditLog', 'ManageEvents', 'ManageMessages', 'CreatePublicThreads', 'CreatePrivateThreads', 'ManageThreads', 'UseExternalEmojis']
     },
+    {
+        name: '⚡ Head Moderator', color: '#FF6B35', hoist: true,
+        permissions: ['KickMembers', 'BanMembers', 'ModerateMembers', 'ManageMessages', 'ManageNicknames', 'ViewAuditLog', 'MoveMembers', 'DeafenMembers', 'MuteMembers', 'CreatePublicThreads', 'CreatePrivateThreads', 'ManageThreads', 'MentionEveryone', 'UseExternalEmojis']
+    },
+    {
+        name: '💻 Developer', color: '#BB86FC', hoist: true,
+        permissions: ['ManageWebhooks', 'UseApplicationCommands', 'EmbedLinks', 'AttachFiles', 'CreatePublicThreads', 'UseExternalEmojis', 'AddReactions']
+    },
+    {
+        name: '⚔️ Moderator', color: '#FFBD2E', hoist: true,
+        permissions: ['ManageMessages', 'ManageNicknames', 'ModerateMembers', 'KickMembers', 'MoveMembers', 'MuteMembers', 'DeafenMembers', 'ViewAuditLog', 'CreatePublicThreads', 'ManageThreads', 'UseExternalEmojis', 'AddReactions']
+    },
+    {
+        name: '🎯 Support Lead', color: '#00CFFF', hoist: true,
+        permissions: ['ManageMessages', 'CreatePrivateThreads', 'ManageThreads', 'UseApplicationCommands', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis']
+    },
+    {
+        name: '🔧 Support', color: '#03DAC6', hoist: true,
+        permissions: ['ManageMessages', 'CreatePrivateThreads', 'UseApplicationCommands', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis']
+    },
+    {
+        name: '📣 Community Manager', color: '#F9A825', hoist: true,
+        permissions: ['ManageEvents', 'CreatePublicThreads', 'MentionEveryone', 'ManageMessages', 'ManageWebhooks', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis']
+    },
+    {
+        name: '🌐 Partner', color: '#BD93F9', hoist: true,
+        permissions: ['EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'CreatePublicThreads']
+    },
+    {
+        name: '💎 Server Booster', color: '#F47FFF', hoist: true,
+        permissions: ['ChangeNickname', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'Stream']
+    },
+    { name: '🏆 Event Winner', color: '#FFD700', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
+    { name: '🛠️ Contributor', color: '#50FA7B', hoist: false, permissions: ['EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis', 'CreatePublicThreads'] },
+    { name: '🥇 Early Operative', color: '#FFB86C', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker'] },
+    { name: '🔥 Level 50+', color: '#FF4D4D', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker'] },
+    { name: '⭐ Level 25+', color: '#FFC107', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
+    { name: '🌱 Level 10+', color: '#69FF47', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
+    { name: '🎖️ Veteran', color: '#A0A0A0', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
+    {
+        name: '🧬 Operative', color: '#F0F0F0', hoist: true,
+        permissions: ['SendMessages', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseApplicationCommands', 'Connect', 'Speak', 'Stream', 'UseVAD', 'ChangeNickname', 'ViewChannel']
+    },
+    {
+        name: '🌑 New Entity', color: '#606060', hoist: false,
+        permissions: ['ViewChannel', 'SendMessages', 'ReadMessageHistory']
+    },
+    {
+        name: '🤖 Neural Engine', color: '#50FA7B', hoist: false,
+        permissions: ['ViewChannel', 'SendMessages', 'EmbedLinks', 'AttachFiles', 'ReadMessageHistory', 'AddReactions', 'UseExternalEmojis']
+    },
+    {
+        name: '🔇 Muted', color: '#333333', hoist: false,
+        permissions: []
+    },
+];
+
+// Self-role / ping roles (no perms, created below main roles)
+const PING_ROLES = [
+    { name: 'Announcements', color: '#5865F2' },
+    { name: 'Events', color: '#5865F2' },
+    { name: 'Changelog', color: '#5865F2' },
+    { name: 'Bug Pings', color: '#5865F2' },
+    { name: 'Feature Pings', color: '#5865F2' },
+    { name: 'Giveaway Pings', color: '#5865F2' },
+    { name: 'Dev Interest', color: '#5865F2' },
+    { name: 'Design Interest', color: '#5865F2' },
+    { name: 'Beta Tester', color: '#5865F2' },
+    { name: 'Open to Partner', color: '#5865F2' },
+    { name: 'Gamer', color: '#5865F2' },
 ];
 
 // ═══════════════════════════════════════════════════════════
 // CATEGORY PERMISSION OVERRIDES (from server.md)
-// Each entry defines which roles get allow/deny overrides
 // ═══════════════════════════════════════════════════════════
-
 function buildCategoryOverrides(roleMap, everyoneId) {
     const P = PermissionsBitField.Flags;
+    const r = roleMap; // shorthand
 
     return {
         '📌 WELCOME & VERIFICATION': [
             { id: everyoneId, deny: [P.SendMessages], allow: [P.ViewChannel, P.ReadMessageHistory] },
-            { id: roleMap['🌑 New Entity'], allow: [P.ViewChannel, P.SendMessages] },
-            { id: roleMap['🧬 Operative'], deny: [P.SendMessages], allow: [P.ViewChannel] },
-            { id: roleMap['⚔️ Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages] },
-            { id: roleMap['⚡ Head Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages] },
-            { id: roleMap['🛡️ Admin'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ManageWebhooks] },
-            { id: roleMap['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages, P.EmbedLinks] },
+            { id: r['🌑 New Entity'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
+            { id: r['🧬 Operative'], deny: [P.SendMessages], allow: [P.ViewChannel, P.ReadMessageHistory] },
+            { id: r['⚔️ Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages] },
+            { id: r['⚡ Head Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages] },
+            { id: r['🛡️ Admin'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ManageWebhooks] },
+            { id: r['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages, P.EmbedLinks] },
         ],
         '📋 INFORMATIONAL': [
             { id: everyoneId, deny: [P.SendMessages], allow: [P.ViewChannel, P.ReadMessageHistory] },
-            { id: roleMap['🌑 New Entity'], deny: [P.ViewChannel] },
-            { id: roleMap['🧬 Operative'], deny: [P.SendMessages], allow: [P.ViewChannel] },
-            { id: roleMap['📣 Community Manager'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages] },
-            { id: roleMap['🛡️ Admin'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ManageWebhooks] },
+            { id: r['🌑 New Entity'], deny: [P.ViewChannel] },
+            { id: r['🧬 Operative'], deny: [P.SendMessages], allow: [P.ViewChannel, P.ReadMessageHistory] },
+            { id: r['📣 Community Manager'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages] },
+            { id: r['🛡️ Admin'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ManageWebhooks] },
         ],
         '📡 NEWS & BROADCASTS': [
             { id: everyoneId, deny: [P.SendMessages], allow: [P.ViewChannel, P.ReadMessageHistory] },
-            { id: roleMap['🌑 New Entity'], deny: [P.ViewChannel] },
-            { id: roleMap['🧬 Operative'], deny: [P.SendMessages], allow: [P.ViewChannel, P.AddReactions] },
-            { id: roleMap['📣 Community Manager'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.MentionEveryone] },
-            { id: roleMap['🛡️ Admin'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.MentionEveryone] },
-            { id: roleMap['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages] },
+            { id: r['🌑 New Entity'], deny: [P.ViewChannel] },
+            { id: r['🧬 Operative'], deny: [P.SendMessages], allow: [P.ViewChannel, P.AddReactions, P.ReadMessageHistory] },
+            { id: r['📣 Community Manager'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.MentionEveryone] },
+            { id: r['🛡️ Admin'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.MentionEveryone] },
+            { id: r['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages, P.EmbedLinks] },
         ],
         '💬 CENTRAL HUB': [
-            { id: everyoneId, allow: [P.ViewChannel, P.ReadMessageHistory, P.SendMessages] },
-            { id: roleMap['🌑 New Entity'], deny: [P.ViewChannel] },
-            { id: roleMap['🧬 Operative'], allow: [P.ViewChannel, P.SendMessages, P.CreatePublicThreads] },
-            { id: roleMap['⚔️ Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.CreatePublicThreads] },
+            { id: everyoneId, deny: [P.ViewChannel] },
+            { id: r['🌑 New Entity'], deny: [P.ViewChannel] },
+            { id: r['🧬 Operative'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory, P.CreatePublicThreads] },
+            { id: r['⚔️ Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.CreatePublicThreads] },
+            { id: r['⚡ Head Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.CreatePublicThreads] },
+            { id: r['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages, P.EmbedLinks, P.AddReactions] },
         ],
         '🤖 BOT ZONE': [
-            { id: everyoneId, allow: [P.ViewChannel, P.ReadMessageHistory, P.SendMessages] },
-            { id: roleMap['🌑 New Entity'], deny: [P.ViewChannel] },
-            { id: roleMap['🧬 Operative'], allow: [P.ViewChannel, P.SendMessages] },
-            { id: roleMap['⚔️ Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages] },
-            { id: roleMap['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages] },
+            { id: everyoneId, deny: [P.ViewChannel] },
+            { id: r['🌑 New Entity'], deny: [P.ViewChannel] },
+            { id: r['🧬 Operative'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
+            { id: r['⚔️ Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages] },
+            { id: r['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages, P.EmbedLinks, P.AddReactions] },
         ],
         '🛠️ SUPPORT CENTER': [
-            { id: everyoneId, deny: [P.SendMessages], allow: [P.ViewChannel, P.ReadMessageHistory] },
-            { id: roleMap['🌑 New Entity'], deny: [P.ViewChannel] },
-            { id: roleMap['🧬 Operative'], allow: [P.ViewChannel, P.SendMessages] },
-            { id: roleMap['🔧 Support'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.CreatePrivateThreads] },
-            { id: roleMap['🎯 Support Lead'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.CreatePrivateThreads, P.ManageThreads] },
-            { id: roleMap['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages] },
+            { id: everyoneId, deny: [P.ViewChannel] },
+            { id: r['🌑 New Entity'], deny: [P.ViewChannel] },
+            { id: r['🧬 Operative'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
+            { id: r['🔧 Support'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.CreatePrivateThreads] },
+            { id: r['🎯 Support Lead'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.CreatePrivateThreads, P.ManageThreads] },
+            { id: r['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages, P.EmbedLinks] },
         ],
         '💻 DEVELOPMENT HUB': [
             { id: everyoneId, deny: [P.ViewChannel] },
-            { id: roleMap['🛠️ Contributor'], allow: [P.ViewChannel, P.ReadMessageHistory] },
-            { id: roleMap['🎯 Support Lead'], allow: [P.ViewChannel, P.ReadMessageHistory] },
-            { id: roleMap['💻 Developer'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ManageWebhooks] },
-            { id: roleMap['⚡ Head Moderator'], allow: [P.ViewChannel, P.ReadMessageHistory] },
-            { id: roleMap['🛡️ Admin'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ManageWebhooks] },
-            { id: roleMap['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages] },
+            { id: r['🛠️ Contributor'], allow: [P.ViewChannel, P.ReadMessageHistory] },
+            { id: r['🎯 Support Lead'], allow: [P.ViewChannel, P.ReadMessageHistory] },
+            { id: r['💻 Developer'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ManageWebhooks, P.ReadMessageHistory] },
+            { id: r['⚡ Head Moderator'], allow: [P.ViewChannel, P.ReadMessageHistory] },
+            { id: r['🛡️ Admin'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ManageWebhooks, P.ReadMessageHistory] },
+            { id: r['🤖 Neural Engine'], allow: [P.ViewChannel, P.SendMessages, P.EmbedLinks] },
         ],
         '🌀 THE SINGULARITY': [
             { id: everyoneId, deny: [P.ViewChannel] },
-            { id: roleMap['🌑 New Entity'], deny: [P.ViewChannel] },
-            { id: roleMap['🧬 Operative'], allow: [P.ViewChannel, P.SendMessages, P.CreatePublicThreads] },
-            { id: roleMap['🌐 Partner'], allow: [P.ViewChannel, P.SendMessages, P.CreatePublicThreads] },
-            { id: roleMap['💎 Server Booster'], allow: [P.ViewChannel, P.SendMessages, P.CreatePublicThreads] },
+            { id: r['🌑 New Entity'], deny: [P.ViewChannel] },
+            { id: r['🧬 Operative'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory, P.CreatePublicThreads] },
+            { id: r['🌐 Partner'], allow: [P.ViewChannel, P.SendMessages, P.CreatePublicThreads, P.ReadMessageHistory] },
+            { id: r['💎 Server Booster'], allow: [P.ViewChannel, P.SendMessages, P.CreatePublicThreads, P.ReadMessageHistory] },
         ],
         '🔊 VOICE SECTOR': [
-            { id: everyoneId, deny: [P.Connect] },
-            { id: roleMap['🌑 New Entity'], deny: [P.ViewChannel, P.Connect] },
-            { id: roleMap['🧬 Operative'], allow: [P.ViewChannel, P.Connect, P.Speak, P.Stream, P.UseVAD] },
-            { id: roleMap['💎 Server Booster'], allow: [P.ViewChannel, P.Connect, P.Speak, P.Stream, P.PrioritySpeaker] },
-            { id: roleMap['🔥 Level 50+'], allow: [P.PrioritySpeaker] },
-            { id: roleMap['🥇 Early Operative'], allow: [P.PrioritySpeaker] },
-            { id: roleMap['⚔️ Moderator'], allow: [P.ViewChannel, P.Connect, P.Speak, P.Stream, P.MuteMembers, P.MoveMembers, P.PrioritySpeaker] },
+            { id: everyoneId, deny: [P.Connect, P.ViewChannel] },
+            { id: r['🌑 New Entity'], deny: [P.ViewChannel, P.Connect] },
+            { id: r['🧬 Operative'], allow: [P.ViewChannel, P.Connect, P.Speak, P.Stream, P.UseVAD] },
+            { id: r['💎 Server Booster'], allow: [P.ViewChannel, P.Connect, P.Speak, P.Stream, P.PrioritySpeaker] },
+            { id: r['🔥 Level 50+'], allow: [P.ViewChannel, P.Connect, P.Speak, P.PrioritySpeaker] },
+            { id: r['🥇 Early Operative'], allow: [P.ViewChannel, P.Connect, P.Speak, P.PrioritySpeaker] },
+            { id: r['⚔️ Moderator'], allow: [P.ViewChannel, P.Connect, P.Speak, P.Stream, P.MuteMembers, P.MoveMembers, P.PrioritySpeaker] },
         ],
         '🛡️ COMMAND CENTER': [
             { id: everyoneId, deny: [P.ViewChannel] },
-            { id: roleMap['🔧 Support'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
-            { id: roleMap['🎯 Support Lead'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
-            { id: roleMap['📣 Community Manager'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
-            { id: roleMap['💻 Developer'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
-            { id: roleMap['⚔️ Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
-            { id: roleMap['⚡ Head Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ReadMessageHistory] },
-            { id: roleMap['🛡️ Admin'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ManageWebhooks, P.ReadMessageHistory] },
+            { id: r['🔧 Support'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
+            { id: r['🎯 Support Lead'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
+            { id: r['📣 Community Manager'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
+            { id: r['💻 Developer'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
+            { id: r['⚔️ Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] },
+            { id: r['⚡ Head Moderator'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ReadMessageHistory] },
+            { id: r['🛡️ Admin'], allow: [P.ViewChannel, P.SendMessages, P.ManageMessages, P.ManageWebhooks, P.ReadMessageHistory] },
         ],
     };
 }
@@ -289,27 +304,159 @@ const CATEGORIES = [
             { name: '💻-dev-ops', type: ChannelType.GuildText, topic: 'Developer sprint coordination.' },
             { name: '🎯-support-ops', type: ChannelType.GuildText, topic: 'Support team ticket coordination.' },
             { name: '⚙️-bot-config', type: ChannelType.GuildText, topic: 'Bot configuration commands only.' },
-            { name: '👑-founders-vault', type: ChannelType.GuildText, topic: 'Sovereign leadership channel.' },
+            { name: '👑-founders-vault', type: ChannelType.GuildText, topic: 'Sovereign leadership channel. Founders only.' },
         ]
     },
 ];
 
 // ═══════════════════════════════════════════════════════════
-// SELF-ROLE NOTIFICATION ROLES (cosmetic, no server perms)
+// RULES CONTENT (posted into #📜-rules)
 // ═══════════════════════════════════════════════════════════
-const PING_ROLES = [
-    { name: 'Announcements',  color: '#5865F2' },
-    { name: 'Events',         color: '#5865F2' },
-    { name: 'Changelog',      color: '#5865F2' },
-    { name: 'Bug Pings',      color: '#5865F2' },
-    { name: 'Feature Pings',  color: '#5865F2' },
-    { name: 'Giveaway Pings', color: '#5865F2' },
-    { name: 'Dev Interest',   color: '#5865F2' },
-    { name: 'Design Interest', color: '#5865F2' },
-    { name: 'Beta Tester',    color: '#5865F2' },
-    { name: 'Open to Partner', color: '#5865F2' },
-    { name: 'Gamer',          color: '#5865F2' },
+const RULES_EMBEDS = [
+    {
+        title: '📜  NEXUS PROTOCOL — SERVER DIRECTIVES',
+        description: 'Welcome to the Nexus Protocol Support Hub. The following rules are absolute. Violation results in escalating sanctions up to and including permanent removal.\n\n*Last updated: v11.0.0 — Apex*',
+        color: 0xD4A040,
+    },
+    {
+        title: '1️⃣  Maintain Professionalism',
+        description: '• Respect all operatives at all times.\n• Harassment, slurs, hate speech, discrimination, doxxing, and excessive toxicity result in **immediate sanction**.\n• This applies to text, voice, DMs to members, and profile content.',
+        color: 0x00F5FF,
+    },
+    {
+        title: '2️⃣  No Unsolicited Advertising',
+        description: '• Do not post invite links, self-promote, or advertise outside of `#🚀-showcase`.\n• Do not DM members with advertisements or promotions.\n• Server partnerships go through official channels only.',
+        color: 0x00F5FF,
+    },
+    {
+        title: '3️⃣  Follow the Framework (Stay On-Topic)',
+        description: '• Keep discussions relevant to the channel topic.\n• Bot commands belong in `#⌨️-bot-commands`.\n• Support requests belong in `#📥-open-ticket`.\n• Memes belong in `#😂-memes`.',
+        color: 0x00F5FF,
+    },
+    {
+        title: '4️⃣  No NSFW or Illegal Content',
+        description: '• **Immediate permanent ban** for any NSFW media, gore, shock content, or discussion of illegal activities.\n• No exceptions. No warnings. No appeals.',
+        color: 0xFF4444,
+    },
+    {
+        title: '5️⃣  Respect Staff Directives',
+        description: '• If a Moderator instructs you to drop a topic or move channels, comply immediately.\n• Disputes must be handled in **private tickets**, not public channels.\n• Staff-baiting, loopholing, or arguing in public results in a timeout.',
+        color: 0x00F5FF,
+    },
+    {
+        title: '6️⃣  No Spam or Malicious Links',
+        description: '• Spamming text, emoji, reactions, pings, or images triggers an auto-ban.\n• Malicious, phishing, or IP-grabbing links result in an **immediate permanent ban**.\n• The Sentinel layer (Wick + Beemo) monitors this 24/7.',
+        color: 0xFF4444,
+    },
+    {
+        title: '⚖️  Infraction Escalation',
+        description: '```\n Strike 1 → Formal /warn (logged to profile)\n Strike 2 → 24-hour timeout\n Strike 3 → 7-day temp ban (Head Mod approval)\n Strike 4 → Permanent ban (Admin approval)\n```\n\n*Critical violations (CSAM, threats, raids) bypass the strike system and result in an immediate permanent ban.*',
+        color: 0xFFBD2E,
+    },
 ];
+
+// ═══════════════════════════════════════════════════════════
+// GET-ROLES SETUP CONTENT (posted into #🎭-get-roles)
+// ═══════════════════════════════════════════════════════════
+const GET_ROLES_EMBEDS = [
+    {
+        title: '🔔  NOTIFICATION PREFERENCES',
+        description: 'Select the notifications you want to receive. Use **Carl-bot reaction roles** (dropdown) to assign these:\n\n' +
+            '📢 `@Announcements` — Major update pings\n' +
+            '🎉 `@Events` — Server event pings\n' +
+            '🆙 `@Changelog` — Version log pings\n' +
+            '🐛 `@Bug Pings` — New bug report pings\n' +
+            '💡 `@Feature Pings` — Feature discussion pings\n' +
+            '🎁 `@Giveaway Pings` — Giveaway entry pings\n\n' +
+            '> **Setup:** Use Carl-bot dashboard → Reaction Roles → Create a **Dropdown** panel in this channel with the roles above.',
+        color: 0xD4A040,
+    },
+    {
+        title: '🏷️  IDENTITY & INTERESTS',
+        description: 'Let us know what you\'re into. Use **Carl-bot reaction roles** (buttons) to assign these:\n\n' +
+            '💻 `@Dev Interest` — Interested in code contributions\n' +
+            '🎨 `@Design Interest` — Interested in UI/art contributions\n' +
+            '🧪 `@Beta Tester` — Willing to test pre-release builds\n' +
+            '🤝 `@Open to Partner` — Open to cross-server collaboration\n' +
+            '🎮 `@Gamer` — Into gaming sessions and events\n\n' +
+            '> **Setup:** Use Carl-bot dashboard → Reaction Roles → Create a **Button** panel in this channel with the roles above.',
+        color: 0x7B2FFF,
+    },
+];
+
+// ═══════════════════════════════════════════════════════════
+// OVERVIEW CONTENT (posted into #🧭-overview)
+// ═══════════════════════════════════════════════════════════
+const OVERVIEW_EMBED = {
+    title: '⚡ NEXUS PROTOCOL — THE SUPPORT HUB',
+    description: [
+        '> *Tier-1 Community Infrastructure — v11.0.0 "Apex"*\n',
+        'Welcome to the official **Nexus Protocol** support server. This is the primary hub for:',
+        '',
+        '🛡️ **Bot Support** — Get help with Nexus commands, configuration, and troubleshooting',
+        '🐛 **Bug Reports** — Report issues and track their resolution',
+        '💡 **Suggestions** — Propose new features and vote on community ideas',
+        '📢 **Announcements** — Stay updated with the latest releases and changes',
+        '🎮 **Community** — Chat, play games, share media, and hang out',
+        '💻 **Development** — Follow the development process and contribute',
+        '',
+        '**Quick Links:**',
+        '🔗 [Web Portal](https://shiny-giigles.pages.dev/)',
+        '📦 [GitHub](https://github.com/watispro5212/shiny-giigles)',
+        '🤖 [Invite Nexus](https://discord.com/api/oauth2/authorize?client_id=1480725340753101031&permissions=8&scope=bot+applications.commands)',
+        '📖 [Commands](https://shiny-giigles.pages.dev/commands.html)',
+        '',
+        '*Start by reading the rules in <#📜-rules> and picking your roles in <#🎭-get-roles>.*',
+    ].join('\n'),
+    color: 0xD4A040,
+};
+
+// ═══════════════════════════════════════════════════════════
+// LINKS CONTENT (posted into #🔗-links)
+// ═══════════════════════════════════════════════════════════
+const LINKS_EMBED = {
+    title: '🔗  OFFICIAL NETWORK LINKS',
+    description: [
+        '| Resource | Link |',
+        '|---|---|',
+        '| 🤖 **Bot Invite** | [Add Nexus to your server](https://discord.com/api/oauth2/authorize?client_id=1480725340753101031&permissions=8&scope=bot+applications.commands) |',
+        '| 🌐 **Web Portal** | [shiny-giigles.pages.dev](https://shiny-giigles.pages.dev/) |',
+        '| 📖 **Commands** | [Command Index](https://shiny-giigles.pages.dev/commands.html) |',
+        '| 📦 **GitHub** | [watispro5212/shiny-giigles](https://github.com/watispro5212/shiny-giigles) |',
+        '| 💬 **Support** | [discord.com/invite/DYXBEd2G8M](https://discord.com/invite/DYXBEd2G8M) |',
+        '| 📜 **Changelog** | [Changelog](https://shiny-giigles.pages.dev/changelog.html) |',
+        '| 📚 **Wiki** | [Wiki](https://shiny-giigles.pages.dev/wiki.html) |',
+    ].join('\n'),
+    color: 0x00F5FF,
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// UTILITY: Delete all non-system channels and non-managed roles
+// ═══════════════════════════════════════════════════════════════════
+async function nukeServer(guild, log) {
+    // Delete all channels except the interaction channel
+    log.push('🗑️ Deleting all existing channels...');
+    const channels = guild.channels.cache.filter(c => c.type !== ChannelType.GuildCategory);
+    for (const [, ch] of channels) {
+        try { await ch.delete('Nexus Blueprint: Full reset'); } catch {}
+    }
+    const categories = guild.channels.cache.filter(c => c.type === ChannelType.GuildCategory);
+    for (const [, cat] of categories) {
+        try { await cat.delete('Nexus Blueprint: Full reset'); } catch {}
+    }
+    log.push(`  ✅ Deleted ${channels.size} channels + ${categories.size} categories`);
+
+    // Delete all non-managed, non-@everyone roles
+    log.push('🗑️ Deleting all existing custom roles...');
+    let deletedRoles = 0;
+    const roles = guild.roles.cache
+        .filter(r => r.id !== guild.id && !r.managed && r.name !== '@everyone')
+        .sort((a, b) => a.position - b.position);
+    for (const [, role] of roles) {
+        try { await role.delete('Nexus Blueprint: Full reset'); deletedRoles++; } catch {}
+    }
+    log.push(`  ✅ Deleted ${deletedRoles} roles`);
+}
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -319,7 +466,6 @@ module.exports = {
     ownerOnly: true,
     cooldown: 0,
     async execute(interaction, client) {
-        // Gate: only runs in the support server
         if (interaction.guild.id !== SUPPORT_GUILD_ID) {
             return interaction.reply({
                 embeds: [embedBuilder({
@@ -331,277 +477,322 @@ module.exports = {
             });
         }
 
-        await interaction.deferReply({ ephemeral: true });
+        // Respond immediately — the original channel may be deleted
+        await interaction.reply({
+            embeds: [embedBuilder({
+                title: '⚡ NEXUS BLUEPRINT — DEPLOYING',
+                description: '**Full server wipe + rebuild in progress...**\nThis will take 1-3 minutes. A report will be posted when complete.',
+                color: '#D4A040'
+            })],
+            ephemeral: true
+        });
+
         const guild = interaction.guild;
         const log = [];
-        const manualSteps = [];
 
         try {
             // ═══════════════════════════════════════════
-            // PHASE 1: CREATE ROLES WITH PERMISSIONS
+            // PHASE 0: FULL WIPE
             // ═══════════════════════════════════════════
-            log.push('**═══ PHASE 1: ROLE DEPLOYMENT ═══**');
+            log.push('**═══ PHASE 0: FULL SERVER WIPE ═══**');
+            await nukeServer(guild, log);
+
+            // Small delay for API rate limits
+            await new Promise(r => setTimeout(r, 2000));
+
+            // ═══════════════════════════════════════════
+            // PHASE 1: CREATE ROLES (highest → lowest)
+            // ═══════════════════════════════════════════
+            log.push('\n**═══ PHASE 1: ROLE DEPLOYMENT (Highest → Lowest) ═══**');
             const roleMap = {};
+            const createdRoles = [];
 
             for (const roleDef of ROLES) {
-                let role = guild.roles.cache.find(r => r.name === roleDef.name);
-                if (role) {
-                    log.push(`⏭️ Role exists: \`${roleDef.name}\``);
-                    // Update permissions to match blueprint
-                    try {
-                        const permBits = new PermissionsBitField(
-                            (roleDef.permissions || []).map(p => PermissionsBitField.Flags[p]).filter(Boolean)
-                        );
-                        await role.setPermissions(permBits);
-                        await role.setColor(roleDef.color);
-                        await role.setHoist(roleDef.hoist);
-                        log.push(`  ↻ Updated permissions for \`${roleDef.name}\``);
-                    } catch (err) {
-                        log.push(`  ⚠️ Could not update \`${roleDef.name}\`: ${err.message}`);
-                    }
-                } else {
-                    try {
-                        const permBits = new PermissionsBitField(
-                            (roleDef.permissions || []).map(p => PermissionsBitField.Flags[p]).filter(Boolean)
-                        );
-                        role = await guild.roles.create({
-                            name: roleDef.name,
-                            color: roleDef.color,
-                            hoist: roleDef.hoist,
-                            permissions: permBits,
-                            reason: 'Nexus Blueprint: Auto-generated role',
-                        });
-                        log.push(`✅ Created role: \`${roleDef.name}\``);
-                    } catch (err) {
-                        log.push(`❌ Failed role \`${roleDef.name}\`: ${err.message}`);
-                    }
-                }
-                if (role) roleMap[roleDef.name] = role.id;
-            }
-
-            // Handle Muted role deny overrides
-            const mutedRole = guild.roles.cache.find(r => r.name === '🔇 Muted');
-            if (mutedRole) {
                 try {
-                    const denyBits = new PermissionsBitField(
-                        ['SendMessages', 'SendMessagesInThreads', 'AddReactions', 'CreatePublicThreads', 'CreatePrivateThreads', 'Speak']
-                            .map(p => PermissionsBitField.Flags[p])
+                    const permBits = new PermissionsBitField(
+                        (roleDef.permissions || []).map(p => PermissionsBitField.Flags[p]).filter(Boolean)
                     );
-                    await mutedRole.setPermissions([]);
-                    log.push(`✅ Muted role permissions cleared (denies applied per-category).`);
+                    const role = await guild.roles.create({
+                        name: roleDef.name,
+                        color: roleDef.color,
+                        hoist: roleDef.hoist,
+                        permissions: permBits,
+                        reason: 'Nexus Blueprint: Auto-generated role',
+                    });
+                    roleMap[roleDef.name] = role.id;
+                    createdRoles.push(role);
+                    log.push(`✅ Created: \`${roleDef.name}\``);
                 } catch (err) {
-                    log.push(`⚠️ Muted role perm update failed: ${err.message}`);
+                    log.push(`❌ Failed: \`${roleDef.name}\` — ${err.message}`);
                 }
             }
 
-            // Create self-role / ping roles
-            log.push('\n**═══ PHASE 1B: PING ROLE DEPLOYMENT ═══**');
+            // Reorder roles: first in ROLES array = highest position
+            log.push('\n↻ Reordering roles to match hierarchy...');
+            try {
+                const botRole = guild.members.me.roles.highest;
+                const maxPos = botRole.position - 1;
+                const positionUpdates = [];
+
+                for (let i = 0; i < createdRoles.length; i++) {
+                    const targetPos = Math.max(1, maxPos - i);
+                    positionUpdates.push({ role: createdRoles[i].id, position: targetPos });
+                }
+
+                await guild.roles.setPositions(positionUpdates);
+                log.push('✅ Roles reordered (Founder → Muted)');
+            } catch (err) {
+                log.push(`⚠️ Role reorder: ${err.message}`);
+            }
+
+            // Ping roles (below main roles)
+            log.push('\n**═══ PHASE 1B: PING ROLES ═══**');
             for (const pr of PING_ROLES) {
-                const existing = guild.roles.cache.find(r => r.name === pr.name);
-                if (existing) {
-                    log.push(`⏭️ Ping role exists: \`${pr.name}\``);
-                } else {
-                    try {
-                        await guild.roles.create({
-                            name: pr.name,
-                            color: pr.color,
-                            hoist: false,
-                            mentionable: true,
-                            permissions: [],
-                            reason: 'Nexus Blueprint: Self-role / Ping role',
-                        });
-                        log.push(`✅ Created ping role: \`${pr.name}\``);
-                    } catch (err) {
-                        log.push(`❌ Failed ping role \`${pr.name}\`: ${err.message}`);
-                    }
+                try {
+                    await guild.roles.create({
+                        name: pr.name,
+                        color: pr.color,
+                        hoist: false,
+                        mentionable: true,
+                        permissions: [],
+                        reason: 'Nexus Blueprint: Ping role',
+                    });
+                    log.push(`✅ Ping role: \`${pr.name}\``);
+                } catch (err) {
+                    log.push(`❌ Failed ping: \`${pr.name}\` — ${err.message}`);
                 }
             }
+
+            await new Promise(r => setTimeout(r, 1000));
 
             // ═══════════════════════════════════════════
-            // PHASE 2: CATEGORIES, CHANNELS & OVERRIDES
+            // PHASE 2: CATEGORIES, CHANNELS, PERMISSIONS
             // ═══════════════════════════════════════════
             log.push('\n**═══ PHASE 2: SECTOR DEPLOYMENT ═══**');
-
-            // Build permission overrides for categories
             const overridesMap = buildCategoryOverrides(roleMap, guild.id);
+            const channelTracker = {};
+            const P = PermissionsBitField.Flags;
 
             for (const catDef of CATEGORIES) {
-                let category = guild.channels.cache.find(
-                    c => c.name === catDef.name && c.type === ChannelType.GuildCategory
-                );
+                const catOverrides = (overridesMap[catDef.name] || []).filter(o => o.id);
 
-                // Build overrides for this category
-                const catOverrides = overridesMap[catDef.name] || [];
-                const validOverrides = catOverrides.filter(o => o.id); // filter out nullish role IDs
-
-                // Add Muted role deny to every category
+                // Add Muted deny to every category
                 if (roleMap['🔇 Muted']) {
-                    const P = PermissionsBitField.Flags;
-                    validOverrides.push({
+                    catOverrides.push({
                         id: roleMap['🔇 Muted'],
                         deny: [P.SendMessages, P.SendMessagesInThreads, P.AddReactions, P.CreatePublicThreads, P.CreatePrivateThreads, P.Speak]
                     });
                 }
 
-                if (!category) {
-                    try {
-                        category = await guild.channels.create({
-                            name: catDef.name,
-                            type: ChannelType.GuildCategory,
-                            permissionOverwrites: validOverrides,
-                            reason: 'Nexus Blueprint: Auto-generated category',
-                        });
-                        log.push(`📁 Created category: \`${catDef.name}\` (with ${validOverrides.length} permission overrides)`);
-                    } catch (err) {
-                        log.push(`❌ Failed category \`${catDef.name}\`: ${err.message}`);
-                        continue;
-                    }
-                } else {
-                    log.push(`⏭️ Category exists: \`${catDef.name}\``);
-                    // Update permission overrides
-                    try {
-                        await category.permissionOverwrites.set(validOverrides);
-                        log.push(`  ↻ Updated ${validOverrides.length} permission overrides`);
-                    } catch (err) {
-                        log.push(`  ⚠️ Could not update perms: ${err.message}`);
-                    }
+                let category;
+                try {
+                    category = await guild.channels.create({
+                        name: catDef.name,
+                        type: ChannelType.GuildCategory,
+                        permissionOverwrites: catOverrides,
+                        reason: 'Nexus Blueprint: Category',
+                    });
+                    log.push(`📁 \`${catDef.name}\` — ${catOverrides.length} overrides`);
+                } catch (err) {
+                    log.push(`❌ Category failed: \`${catDef.name}\` — ${err.message}`);
+                    continue;
                 }
 
                 for (const chDef of catDef.channels) {
-                    const existing = guild.channels.cache.find(
-                        c => c.name === chDef.name && c.parentId === category.id
-                    );
-                    if (existing) {
-                        log.push(`  ⏭️ Channel exists: \`${chDef.name}\``);
-                        // Sync permissions with category
-                        try {
-                            await existing.lockPermissions();
-                        } catch {}
-                    } else {
-                        try {
-                            await guild.channels.create({
-                                name: chDef.name,
-                                type: chDef.type,
-                                parent: category.id,
-                                topic: chDef.topic || null,
-                                reason: 'Nexus Blueprint: Auto-generated channel',
-                            });
-                            log.push(`  ✅ Created: \`${chDef.name}\``);
-                        } catch (err) {
-                            log.push(`  ❌ Failed \`${chDef.name}\`: ${err.message}`);
-                        }
+                    try {
+                        const ch = await guild.channels.create({
+                            name: chDef.name,
+                            type: chDef.type,
+                            parent: category.id,
+                            topic: chDef.topic || null,
+                            reason: 'Nexus Blueprint: Channel',
+                        });
+                        channelTracker[chDef.name] = ch;
+                    } catch (err) {
+                        log.push(`  ❌ \`${chDef.name}\` — ${err.message}`);
                     }
+                }
+                const chCount = catDef.channels.length;
+                log.push(`  └─ ${chCount} channels created`);
+            }
+
+            // ═══════════════════════════════════════════
+            // PHASE 2B: SPECIAL CHANNEL OVERRIDES
+            // ═══════════════════════════════════════════
+            log.push('\n**═══ PHASE 2B: SPECIAL OVERRIDES ═══**');
+
+            // Founders Vault: only Founder + Co-Founder
+            if (channelTracker['👑-founders-vault']) {
+                try {
+                    await channelTracker['👑-founders-vault'].permissionOverwrites.set([
+                        { id: guild.id, deny: [P.ViewChannel] },
+                        ...(roleMap['👑 Founder'] ? [{ id: roleMap['👑 Founder'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory, P.ManageMessages] }] : []),
+                        ...(roleMap['🌟 Co-Founder'] ? [{ id: roleMap['🌟 Co-Founder'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory, P.ManageMessages] }] : []),
+                    ]);
+                    log.push('🔒 Founders Vault: Locked to Founder + Co-Founder only');
+                } catch (err) {
+                    log.push(`⚠️ Founders Vault override: ${err.message}`);
+                }
+            }
+
+            // Staff Voice: Moderator+ only
+            if (channelTracker['🔒-staff-voice']) {
+                try {
+                    await channelTracker['🔒-staff-voice'].permissionOverwrites.set([
+                        { id: guild.id, deny: [P.ViewChannel, P.Connect] },
+                        ...(roleMap['⚔️ Moderator'] ? [{ id: roleMap['⚔️ Moderator'], allow: [P.ViewChannel, P.Connect, P.Speak] }] : []),
+                        ...(roleMap['⚡ Head Moderator'] ? [{ id: roleMap['⚡ Head Moderator'], allow: [P.ViewChannel, P.Connect, P.Speak, P.MuteMembers, P.MoveMembers] }] : []),
+                        ...(roleMap['🛡️ Admin'] ? [{ id: roleMap['🛡️ Admin'], allow: [P.ViewChannel, P.Connect, P.Speak, P.MuteMembers, P.MoveMembers] }] : []),
+                        ...(roleMap['💻 Developer'] ? [{ id: roleMap['💻 Developer'], allow: [P.ViewChannel, P.Connect, P.Speak] }] : []),
+                    ]);
+                    log.push('🔒 Staff Voice: Locked to Moderator+ only');
+                } catch (err) {
+                    log.push(`⚠️ Staff Voice override: ${err.message}`);
+                }
+            }
+
+            // Partner Lounge: Partners only (+ staff inherit from category)
+            if (channelTracker['🤝-partner-lounge']) {
+                try {
+                    const parentOverrides = channelTracker['🤝-partner-lounge'].parent?.permissionOverwrites.cache.map(o => ({
+                        id: o.id, allow: o.allow.bitfield, deny: o.deny.bitfield
+                    })) || [];
+                    await channelTracker['🤝-partner-lounge'].permissionOverwrites.set([
+                        ...parentOverrides,
+                        ...(roleMap['🌐 Partner'] ? [{ id: roleMap['🌐 Partner'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] }] : []),
+                    ]);
+                    log.push('🔒 Partner Lounge: Partner access granted');
+                } catch (err) {
+                    log.push(`⚠️ Partner Lounge override: ${err.message}`);
+                }
+            }
+
+            // Booster Lounge: Boosters + Level 50+ + Early Op
+            if (channelTracker['💎-booster-lounge']) {
+                try {
+                    const parentOverrides = channelTracker['💎-booster-lounge'].parent?.permissionOverwrites.cache.map(o => ({
+                        id: o.id, allow: o.allow.bitfield, deny: o.deny.bitfield
+                    })) || [];
+                    await channelTracker['💎-booster-lounge'].permissionOverwrites.set([
+                        ...parentOverrides,
+                        ...(roleMap['💎 Server Booster'] ? [{ id: roleMap['💎 Server Booster'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] }] : []),
+                        ...(roleMap['🔥 Level 50+'] ? [{ id: roleMap['🔥 Level 50+'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] }] : []),
+                        ...(roleMap['🥇 Early Operative'] ? [{ id: roleMap['🥇 Early Operative'], allow: [P.ViewChannel, P.SendMessages, P.ReadMessageHistory] }] : []),
+                    ]);
+                    log.push('🔒 Booster Lounge: Booster + Level 50+ + Early Op access');
+                } catch (err) {
+                    log.push(`⚠️ Booster Lounge override: ${err.message}`);
                 }
             }
 
             // ═══════════════════════════════════════════
-            // PHASE 3: AFK CHANNEL CONFIGURATION
+            // PHASE 3: SERVER SETTINGS
             // ═══════════════════════════════════════════
             log.push('\n**═══ PHASE 3: SERVER SETTINGS ═══**');
             try {
-                const afkChannel = guild.channels.cache.find(c => c.name === '💤-afk-lounge' && c.type === ChannelType.GuildVoice);
-                if (afkChannel) {
-                    await guild.setAFKChannel(afkChannel);
+                const afk = channelTracker['💤-afk-lounge'];
+                if (afk) {
+                    await guild.setAFKChannel(afk);
                     await guild.setAFKTimeout(300);
-                    log.push(`✅ AFK channel set to \`💤-afk-lounge\` (5 min timeout)`);
+                    log.push('✅ AFK → 💤-afk-lounge (5 min)');
                 }
             } catch (err) {
-                log.push(`⚠️ AFK channel setup: ${err.message}`);
+                log.push(`⚠️ AFK: ${err.message}`);
             }
 
             // ═══════════════════════════════════════════
-            // PHASE 4: HIDE THIS COMMAND
+            // PHASE 4: POST CONTENT INTO CHANNELS
             // ═══════════════════════════════════════════
-            log.push('\n**═══ PHASE 4: COMMAND CONCEALMENT ═══**');
-            try {
-                const globalCommands = await client.application.commands.fetch();
-                const setupCmd = globalCommands.find(c => c.name === 'setup-server');
-                if (setupCmd) {
-                    log.push('🔒 Command already hidden via `setDefaultMemberPermissions(0)` — only admins see it.');
+            log.push('\n**═══ PHASE 4: CONTENT DEPLOYMENT ═══**');
+
+            // Rules
+            if (channelTracker['📜-rules']) {
+                try {
+                    for (const rule of RULES_EMBEDS) {
+                        await channelTracker['📜-rules'].send({
+                            embeds: [new EmbedBuilder()
+                                .setTitle(rule.title)
+                                .setDescription(rule.description)
+                                .setColor(rule.color)
+                            ]
+                        });
+                    }
+                    log.push('✅ Rules posted to #📜-rules');
+                } catch (err) {
+                    log.push(`❌ Rules: ${err.message}`);
                 }
-            } catch (err) {
-                log.push(`⚠️ Concealment check: ${err.message}`);
+            }
+
+            // Get Roles instructions
+            if (channelTracker['🎭-get-roles']) {
+                try {
+                    for (const embed of GET_ROLES_EMBEDS) {
+                        await channelTracker['🎭-get-roles'].send({
+                            embeds: [new EmbedBuilder()
+                                .setTitle(embed.title)
+                                .setDescription(embed.description)
+                                .setColor(embed.color)
+                            ]
+                        });
+                    }
+                    log.push('✅ Role setup guide posted to #🎭-get-roles');
+                } catch (err) {
+                    log.push(`❌ Get-roles: ${err.message}`);
+                }
+            }
+
+            // Overview
+            if (channelTracker['🧭-overview']) {
+                try {
+                    await channelTracker['🧭-overview'].send({
+                        embeds: [new EmbedBuilder()
+                            .setTitle(OVERVIEW_EMBED.title)
+                            .setDescription(OVERVIEW_EMBED.description)
+                            .setColor(OVERVIEW_EMBED.color)
+                            .setFooter({ text: 'Nexus Protocol v11.0.0 // Apex' })
+                        ]
+                    });
+                    log.push('✅ Overview posted to #🧭-overview');
+                } catch (err) {
+                    log.push(`❌ Overview: ${err.message}`);
+                }
+            }
+
+            // Links
+            if (channelTracker['🔗-links']) {
+                try {
+                    await channelTracker['🔗-links'].send({
+                        embeds: [new EmbedBuilder()
+                            .setTitle(LINKS_EMBED.title)
+                            .setDescription(LINKS_EMBED.description)
+                            .setColor(LINKS_EMBED.color)
+                            .setFooter({ text: 'Nexus Protocol v11.0.0 // Apex' })
+                        ]
+                    });
+                    log.push('✅ Links posted to #🔗-links');
+                } catch (err) {
+                    log.push(`❌ Links: ${err.message}`);
+                }
             }
 
             // ═══════════════════════════════════════════
-            // PHASE 5: MANUAL SETUP INSTRUCTIONS
-            // ═══════════════════════════════════════════
-            manualSteps.push(
-                '**1. Verification Bot (Wick/Captcha)**',
-                '   → Add [Wick Bot](https://wickbot.com) to the server.',
-                '   → Enable CAPTCHA mode in `#🔐-verification`.',
-                '   → Set account age minimum: **7 days**.',
-                '   → Set mass-join raid threshold: **20+ joins in 60s → auto-lockdown**.',
-                '   → Configure: On CAPTCHA pass → remove `🌑 New Entity`, assign `🧬 Operative`.',
-                '',
-                '**2. Anti-Bot Layer (Beemo)**',
-                '   → Add [Beemo](https://beemo.gg) to the server.',
-                '   → Start in **Monitor Mode** for 7 days, then switch to **Auto-Ban Mode**.',
-                '   → Route auto-ban logs to `#🚨-security-feed`.',
-                '',
-                '**3. Self-Role Panels (Carl-bot)**',
-                '   → Add [Carl-bot](https://carl.gg) and go to **Reaction Roles**.',
-                '   → In `#🎭-get-roles`, create **Panel 1 — 🔔 Notifications** (dropdown):',
-                '     `@Announcements (📢)`, `@Events (🎉)`, `@Changelog (🆙)`, `@Bug Pings (🐛)`, `@Feature Pings (💡)`, `@Giveaway Pings (🎁)`',
-                '   → Create **Panel 2 — 🏷️ Interests** (button):',
-                '     `@Dev Interest (💻)`, `@Design Interest (🎨)`, `@Beta Tester (🧪)`, `@Open to Partner (🤝)`, `@Gamer (🎮)`',
-                '',
-                '**4. Welcome Messages (Carl-bot)**',
-                '   → In Carl-bot dashboard, set welcome channel to `#👋-welcome`.',
-                '   → Design an embed with server overview, rules link, and role instructions.',
-                '',
-                '**5. Starboard (Carl-bot or Nexus)**',
-                '   → Run `/starboard setup` in the server to set `#⭐-starboard` as the starboard channel.',
-                '   → Or configure Carl-bot starboard to auto-pin at **5 ⭐ reactions**.',
-                '',
-                '**6. Webhooks**',
-                '   → `#🆙-changelog` + `#🐙-github-feed`: Create webhooks → paste URL into GitHub Repo → Settings → Webhooks.',
-                '   → `#🟢-status`: Create webhook → link to UptimeRobot/BetterUptime.',
-                '   → `#📢-announcements`: Create webhook named `Nexus Socials` → link to Zapier for Twitter/YouTube syndication.',
-                '   → `#🎯-support-ops`: Optional CRM webhook (Tally/Typeform).',
-                '',
-                '**7. Moderation Logging**',
-                '   → Run `/config log-channel #🪵-mod-log` to route Nexus mod logs.',
-                '   → If using MEE6, set its log channel to `#🚨-security-feed`.',
-                '',
-                '**8. Leveling**',
-                '   → Run `/config leveling on` and `/config level-channel #📈-level-ups` for rank-up announcements.',
-                '',
-                '**9. Suggestions**',
-                '   → Run `/config suggestions-channel #💡-suggestions` to route `/suggest` output.',
-                '',
-                '**10. Founders Vault Access**',
-                '   → In `#👑-founders-vault`, manually add a permission override:',
-                '     Deny `@everyone` View Channel, Allow only `👑 Founder` and `🌟 Co-Founder` View + Send.',
-                '   → This override is NOT synced with the category.',
-                '',
-                '**11. Staff Voice**',
-                '   → In `#🔒-staff-voice`, add a permission override:',
-                '     Deny `@everyone` Connect, Allow `⚔️ Moderator+` Connect + Speak.',
-                '',
-                '**12. Partner & Booster Lounge Access**',
-                '   → In `#🤝-partner-lounge`, add override: Allow `🌐 Partner` View + Send.',
-                '   → In `#💎-booster-lounge`, add overrides: Allow `💎 Server Booster`, `🔥 Level 50+`, `🥇 Early Operative` View + Send.',
-            );
-
-            // ═══════════════════════════════════════════
-            // BUILD REPORT
+            // PHASE 5: REPORT
             // ═══════════════════════════════════════════
             const totalRoles = ROLES.length + PING_ROLES.length;
             const totalChannels = CATEGORIES.reduce((acc, c) => acc + c.channels.length, 0);
             const totalCategories = CATEGORIES.length;
 
-            // Truncate log to fit in embed
             const logText = log.join('\n');
-            const truncatedLog = logText.length > 3500 ? logText.substring(0, 3500) + '\n...(truncated)' : logText;
+            const truncated = logText.length > 3500 ? logText.substring(0, 3500) + '\n...(truncated)' : logText;
 
             const summaryEmbed = new EmbedBuilder()
                 .setTitle('⚡ NEXUS BLUEPRINT — DEPLOYMENT COMPLETE')
                 .setDescription(
-                    `Architecture deployed to **${guild.name}**\n\n` +
+                    `**${guild.name}** has been fully rebuilt.\n\n` +
                     `📊 **${totalRoles}** roles · **${totalCategories}** categories · **${totalChannels}** channels\n` +
-                    `🔐 Permission overrides applied to all ${totalCategories} categories\n\n` +
-                    '```\n' + truncatedLog + '\n```'
+                    `🔐 Permission overrides applied to all categories\n` +
+                    `📜 Rules, overview, links, and role guides posted\n\n` +
+                    '```\n' + truncated + '\n```'
                 )
                 .setColor(0xD4A040)
                 .setFooter({ text: 'Nexus Protocol v11.0.0 // Apex Blueprint' })
@@ -609,24 +800,61 @@ module.exports = {
 
             const manualEmbed = new EmbedBuilder()
                 .setTitle('📋 MANUAL SETUP REQUIRED')
-                .setDescription(
-                    'The following items **cannot be automated** and require manual configuration by the Founder:\n\n' +
-                    manualSteps.join('\n')
-                )
+                .setDescription([
+                    'The bot **cannot** automate these. Complete them manually:\n',
+                    '**1. Verification (Wick Bot)**',
+                    '→ Add [Wick](https://wickbot.com) → Enable CAPTCHA in `#🔐-verification`',
+                    '→ On pass: remove `🌑 New Entity`, assign `🧬 Operative`',
+                    '→ Account age minimum: **7 days**',
+                    '→ Raid threshold: **20+ joins in 60s → auto-lockdown**\n',
+                    '**2. Anti-Bot (Beemo)**',
+                    '→ Add [Beemo](https://beemo.gg) → Monitor Mode 7 days → Auto-Ban Mode',
+                    '→ Log channel: `#🚨-security-feed`\n',
+                    '**3. Self-Role Panels (Carl-bot)**',
+                    '→ Add [Carl-bot](https://carl.gg) → Dashboard → Reaction Roles',
+                    '→ In `#🎭-get-roles`, create the two panels shown in the channel',
+                    '→ **Panel 1** (Dropdown): Announcements, Events, Changelog, Bug Pings, Feature Pings, Giveaway Pings',
+                    '→ **Panel 2** (Buttons): Dev Interest, Design Interest, Beta Tester, Open to Partner, Gamer\n',
+                    '**4. Welcome Messages (Carl-bot)**',
+                    '→ Carl-bot → Welcome → Set channel to `#👋-welcome`',
+                    '→ Design embed with rules link + role instructions\n',
+                    '**5. Webhooks**',
+                    '→ `#🆙-changelog` + `#🐙-github-feed`: GitHub repo → Settings → Webhooks',
+                    '→ `#🟢-status`: UptimeRobot/BetterUptime webhook',
+                    '→ `#📢-announcements`: Zapier for social media syndication\n',
+                    '**6. Bot Configuration**',
+                    '→ `/starboard setup` in server to set `#⭐-starboard`',
+                    '→ `/config log-channel #🪵-mod-log`',
+                    '→ `/config leveling on` + `/config level-channel #📈-level-ups`',
+                    '→ `/config suggestions-channel #💡-suggestions`\n',
+                    '**7. Assign Your Own Role**',
+                    '→ In Server Settings → Roles, assign yourself `👑 Founder`',
+                    '→ Assign your co-leads `🌟 Co-Founder`',
+                ].join('\n'))
                 .setColor(0xFFBD2E)
                 .setFooter({ text: 'Complete these steps to finalize the blueprint.' });
 
-            await interaction.editReply({ embeds: [summaryEmbed, manualEmbed] });
+            // Post to the first available text channel (bot-config or staff-general)
+            const reportChannel = channelTracker['⚙️-bot-config'] || channelTracker['💬-staff-general'] || channelTracker['💬-general'];
+            if (reportChannel) {
+                try {
+                    await reportChannel.send({ embeds: [summaryEmbed, manualEmbed] });
+                    log.push('✅ Report posted to ' + reportChannel.name);
+                } catch {}
+            }
 
         } catch (error) {
-            const logText = log.join('\n');
-            await interaction.editReply({
-                embeds: [embedBuilder({
-                    title: '💥 Blueprint Deployment Failed',
-                    description: `A critical error occurred during deployment.\n\`\`\`\n${error.message}\n\`\`\`\n\n**Log:**\n\`\`\`\n${logText.substring(0, 2500)}\n\`\`\``,
-                    color: '#ED4245'
-                })]
-            });
+            // Try to find any channel to report error
+            const fallback = guild.channels.cache.find(c => c.type === ChannelType.GuildText);
+            if (fallback) {
+                await fallback.send({
+                    embeds: [embedBuilder({
+                        title: '💥 Blueprint Deployment Failed',
+                        description: `\`\`\`\n${error.message}\n\`\`\`\n\n${log.join('\n').substring(0, 3000)}`,
+                        color: '#ED4245'
+                    })]
+                }).catch(() => {});
+            }
         }
     },
 };
