@@ -37,21 +37,19 @@ module.exports = {
         };
 
         const infoEmbed = embedBuilder({
-            title: `👤 Entity Dossier 
+            title: `User Profile — ${user.username}`,
             description: [
-                `**ID:** \`${user.id}\``,
-                `**Tag:** \`${user.tag}\``,
+                `**User ID:** ${user.id}`,
                 `**Status:** ${statusMap[target.presence?.status] || '⚫ Offline'}`,
-                `**Type:** \`${user.bot ? 'Bot' : 'Human'}\``,
-                `**Account Age:** \`${accountAge} days\``,
+                `**Client:** ${user.bot ? 'Bot' : 'User'}`,
+                `**History:** ${accountAge} days since creation`,
             ].join('\n'),
             fields: [
-                { name: '📅 Account Created', value: `<t:${Math.floor(user.createdTimestamp / 1000)}:R>`, inline: true },
-                { name: '📥 Joined Server', value: `<t:${Math.floor(target.joinedTimestamp / 1000)}:R>`, inline: true },
-                { name: '👑 Top Role', value: topRole ? `${topRole}` : 'None', inline: true },
-                { name: `🏷️ Roles (${target.roles.cache.size - 1})`, value: roles.length > 0 ? roles.join(' ') : 'No roles.', inline: false },
+                { name: 'Created', value: `<t:${Math.floor(user.createdTimestamp / 1000)}:R>`, inline: true },
+                { name: 'Joined', value: `<t:${Math.floor(target.joinedTimestamp / 1000)}:R>`, inline: true },
+                { name: 'Primary Role', value: topRole ? `${topRole}` : 'None', inline: true },
+                { name: `Roles (${target.roles.cache.size - 1})`, value: roles.length > 0 ? roles.join(' ') : 'None', inline: false },
             ],
-            color: user.accentColor ?? '#BC82FF',
             thumbnail: user.displayAvatarURL({ dynamic: true, size: 512 })
         });
 

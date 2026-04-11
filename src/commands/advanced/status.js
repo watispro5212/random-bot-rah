@@ -4,8 +4,8 @@ const os = require('os');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('uplink-status')
-        .setDescription('Real-time shard and gateway diagnostics.'),
+        .setName('status')
+        .setDescription('Detailed system health and shard diagnostics.'),
     cooldown: 10,
     async execute(interaction, client) {
         const shardId = client.shard?.ids[0] ?? 0;

@@ -32,16 +32,15 @@ module.exports = {
             const data = await response.json();
 
             const weatherEmbed = embedBuilder({
-                title: `🌍 Atmospheric Scan 
-                description: `**Coordinates:** \`${data.coord.lat}, ${data.coord.lon}\``,
+                title: `Weather Report — ${data.name}`,
+                description: `Conditions in your sector: **${data.weather[0].main}**`,
                 fields: [
-                    { name: '🌡️ Temperature', value: `\`${data.main.temp}°C\` (Feels: \`${data.main.feels_like}°C\`)`, inline: true },
-                    { name: '💧 Humidity', value: `\`${data.main.humidity}%\``, inline: true },
-                    { name: '💨 Wind Velocity', value: `\`${data.wind.speed} m/s\``, inline: true },
-                    { name: '☁️ Conditions', value: `\`${data.weather[0].main}\` (${data.weather[0].description})`, inline: false }
+                    { name: 'Temperature', value: `${data.main.temp}°C (Feels like: ${data.main.feels_like}°C)`, inline: true },
+                    { name: 'Humidity', value: `${data.main.humidity}%`, inline: true },
+                    { name: 'Wind Speed', value: `${data.wind.speed} m/s`, inline: true }
                 ],
                 thumbnail: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
-                color: '#3498DB'
+                color: '#00F5FF'
             });
 
             await interaction.editReply({ embeds: [weatherEmbed] });

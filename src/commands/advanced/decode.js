@@ -3,11 +3,11 @@ const embedBuilder = require('../../utils/embedBuilder');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('signal-decrypt')
-        .setDescription('Decrypt a signal using various cipher protocols.')
+        .setName('decode')
+        .setDescription('Decode a data string using various protocols.')
         .addStringOption(option =>
-            option.setName('signal')
-                .setDescription('The data string to decrypt.')
+            option.setName('data')
+                .setDescription('The string to decode.')
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('cipher')

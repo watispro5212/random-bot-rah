@@ -33,9 +33,9 @@ module.exports = {
             );
 
             const blacklistEmbed = embedBuilder({
-                title: '🚫 Protocol Exclusion 
-                description: `**Target:** ${target.tag} (\`${target.id}\`)\n**Status:** DE-AUTHORIZED\n**Reason:** ${reason}`,
-                color: '#ED4245'
+                title: 'User Blacklisted',
+                description: `**User:** ${target.tag} (${target.id})\n**Reason:** ${reason}`,
+                color: '#FF4444'
             });
 
             await interaction.reply({ embeds: [blacklistEmbed] });

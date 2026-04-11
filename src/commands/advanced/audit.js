@@ -4,11 +4,11 @@ const Warning = require('../../models/Warning');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('breach-report')
-        .setDescription('Audit recent security infractions for a user.')
+        .setName('audit')
+        .setDescription('Review recent warnings and security logs for a user.')
         .addUserOption(option =>
-            option.setName('target')
-                .setDescription('The entity to audit.')
+            option.setName('user')
+                .setDescription('The user to audit.')
                 .setRequired(true)),
     cooldown: 10,
     async execute(interaction, client) {

@@ -28,17 +28,16 @@ module.exports = {
         const stages = guild.channels.cache.filter(c => c.type === ChannelType.GuildStageVoice).size;
 
         const serverEmbed = embedBuilder({
-            title: `🖥️ Node Identity 
-            description: `**ID:** \`${guild.id}\`\n**Owner:** <@${guild.ownerId}>\n**Created:** <t:${Math.floor(guild.createdTimestamp / 1000)}:R>`,
+            title: `Server Information — ${guild.name}`,
+            description: `**Server ID:** ${guild.id}\n**Owner:** <@${guild.ownerId}>\n**Created:** <t:${Math.floor(guild.createdTimestamp / 1000)}:R>`,
             fields: [
-                { name: '👥 Entity Density', value: `Total: \`${totalMembers}\`\nHumans: \`${humanCount}\`\nBots: \`${botCount}\``, inline: true },
-                { name: '📡 Channel Matrix', value: `Text: \`${textChannels}\` | Voice: \`${voiceChannels}\`\nCategories: \`${categories}\` | Forums: \`${forums}\`\nStages: \`${stages}\``, inline: true },
-                { name: '🔐 Security', value: `Verification: \`${verificationLevels[guild.verificationLevel] || 'Unknown'}\`\nRoles: \`${guild.roles.cache.size}\``, inline: true },
-                { name: '🚀 Boost Status', value: `Level: \`${guild.premiumTier}\`\nBoosters: \`${guild.premiumSubscriptionCount || 0}\``, inline: true },
-                { name: '🌐 Locale', value: `\`${guild.preferredLocale}\`\nShard: \`#${guild.shardId}\``, inline: true },
-                { name: '🏷️ Vanity', value: guild.vanityURLCode ? `\`discord.gg/${guild.vanityURLCode}\`` : '`None`', inline: true }
+                { name: 'Community', value: `Total: ${totalMembers.toLocaleString()}\nUsers: ${humanCount.toLocaleString()}\nBots: ${botCount.toLocaleString()}`, inline: true },
+                { name: 'Channels', value: `Text: ${textChannels}\nVoice: ${voiceChannels}\nCategories: ${categories}`, inline: true },
+                { name: 'Security', value: `Verification: ${verificationLevels[guild.verificationLevel]}\nRoles: ${guild.roles.cache.size}`, inline: true },
+                { name: 'Boost Status', value: `Level: ${guild.premiumTier}\nBoosts: ${guild.premiumSubscriptionCount || 0}`, inline: true },
+                { name: 'Details', value: `Locale: ${guild.preferredLocale}\nShard: #${guild.shardId}`, inline: true },
+                { name: 'Vanity URL', value: guild.vanityURLCode ? `discord.gg/${guild.vanityURLCode}` : 'None', inline: true }
             ],
-            color: '#BC82FF',
             thumbnail: guild.iconURL({ dynamic: true, size: 512 }),
             image: guild.bannerURL({ size: 1024 }) || undefined
         });

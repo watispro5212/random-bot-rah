@@ -5,15 +5,15 @@ const User = require('../../models/User');
 module.exports = {
     ownerOnly: true,
     data: new SlashCommandBuilder()
-        .setName('set-credits')
-        .setDescription('Directly modify an operative\'s credit allocation.')
+        .setName('set-balance')
+        .setDescription('Directly modify a user\'s balance.')
         .addUserOption(option =>
             option.setName('target')
-                .setDescription('The operative to modify.')
+                .setDescription('The user to modify.')
                 .setRequired(true))
         .addIntegerOption(option =>
             option.setName('amount')
-                .setDescription('The new credit balance.')
+                .setDescription('The new balance.')
                 .setRequired(true))
         .setDefaultMemberPermissions(0),
     async execute(interaction) {
@@ -28,9 +28,9 @@ module.exports = {
             );
 
             const economyEmbed = embedBuilder({
-                title: '💳 Registry Mod 
-                description: `**Target:** ${target.tag}\n**New Balance:** \`${amount.toLocaleString()}\` credits`,
-                color: '#2ECC71'
+                title: 'Balance Updated',
+                description: `**User:** ${target.tag}\n**New Total:** $${amount.toLocaleString()}`,
+                color: '#00FF88'
             });
 
             await interaction.reply({ embeds: [economyEmbed] });
