@@ -2,14 +2,15 @@
 
 :root {
     --bg: #030303;
-    --surface: rgba(20, 20, 25, 0.7);
-    --surface-bright: rgba(30, 30, 38, 0.8);
+    --surface: rgba(10, 10, 20, 0.4);
+    --surface-dense: rgba(5, 5, 15, 0.8);
     --accent: #00F5FF;
-    --accent-glow: rgba(0, 245, 255, 0.3);
-    --text: #F0F0F0;
-    --text-dim: #A0A0A0;
-    --field-bg: rgba(255, 255, 255, 0.05);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --accent-dim: rgba(0, 245, 255, 0.15);
+    --accent-glow: rgba(0, 245, 255, 0.4);
+    --text: #ffffff;
+    --text-dim: #a0a0b0;
+    --border: rgba(255, 255, 255, 0.05);
+    --border-glow: rgba(0, 245, 255, 0.1);
 }
 
 @keyframes fadeIn {
@@ -30,6 +31,14 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     animation: fadeIn 0.8s ease-out;
+}
+
+.divider-glow {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+    margin: 4rem 0;
+    opacity: 0.5;
 }
 
 /* Deep Space Background */

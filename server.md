@@ -1,5 +1,5 @@
 # Nexus Protocol // The Community Blueprint
-> Tier-1 Orchestration Directive (v8.9.0)
+> Tier-1 Orchestration Directive (v9.0.0)
 
 This directive outlines the definitive architecture for the official Nexus Support Hub. It utilizes a "Basic-yet-Prestige" nomenclature designed for rapid recognition and hand-crafted aesthetics.
 
@@ -25,71 +25,144 @@ This directive outlines the definitive architecture for the official Nexus Suppo
 ---
 
 ## 🏛️ Sector Architecture (Channel Mapping)
+> [!IMPORTANT]
+> All channels listed within a category **MUST** be set to **Synced** permissions. Do not set individual channel overrides unless explicitly noted.
 
 ### ─── ⋆⋅☆⋅⋆ ─── 📜 INFORMATIONAL ─── ⋆⋅☆⋅⋆ ───
-- `📜-rules` — Behavior directives.
-- `🎐-overview` — Brand mission.
-- `📢-announcements` — Global shifts.
-- `🆙-changelog` — Version logs.
-- `⛓️-links` — Direct neural uplinks.
+- `📜-rules` — The definitive behavior directives.
+- `🎐-overview` — Brand mission and project summary.
+- `📋-directory` — A clickable list of all server sectors.
+- `❓-faq` — Common questions and pre-solved inquiries.
+- `⛓️-links` — Official neural uplinks and social nodes.
 
-### ─── ⋆⋅☆⋅⋆ ─── 💬 COMMUNITY ─── ⋆⋅☆⋅⋆ ───
-- `⚡-general` — Primary discourse.
-- `📸-media` — Data exchange.
-- `🤖-commands` — Bot directives.
-- `🧪-experimental` — Beta-logic snapshots.
+### ─── ⋆⋅☆⋅⋆ ─── 📢 NEWS SECTOR ─── ⋆⋅☆⋅⋆ ───
+- `📢-announcements` — Global shifts and official updates.
+- `🆙-changelog` — Real-time development and version logs.
+- `📊-polls` — Direct democratic influence on the core.
+- `🟢-status` — Real-time API and shard health telemetry.
 
-### ─── ⋆⋅☆⋅⋆ ─── 🛠️ SUPPORT ─── ⋆⋅☆⋅⋆ ───
-- `📥-ticket` — Private troubleshooting.
-- `📂-faq-database` — Resolution repository.
-- `🐛-bug-report` — Fault submission.
-- `💡-suggestions` — Product feedback.
+### ─── ⋆⋅☆⋅⋆ ─── ⚡ CENTRAL HUB ─── ⋆⋅☆⋅⋆ ───
+- `💬-general` — Primary high-fidelity discourse.
+- `📸-media` — Visual data exchange and screenshots.
+- `🤖-commands` — Bot interaction and directive testing.
+- `🎭-self-roles` — Identity selection and notification toggles.
+- `📈-levels` — Automated XP tracking and rank progression.
 
-### ─── ⋆⋅☆⋅⋆ ─── 🛡️ ADMINISTRATION ─── ⋆⋅☆⋅⋆ ───
-- `🚨-security-logs` — Infraction logs (Carl-bot).
-- `📊-telemetry` — Engagement metrics (StatBot).
-- `👑-founders` — Leadership text/voice.
-- `⚔️-mod-ops` — Staff coordination.
+### ─── ⋆⋅☆⋅⋆ ─── 🛠️ SUPPORT CENTER ─── ⋆⋅☆⋅⋆ ───
+- `📥-ticket` — Interaction-based troubleshooting port.
+- `📂-kb-database` — Repository of archived resolution guides.
+- `🐛-bug-report` — Submitting logic failures for analysis.
+- `💡-suggestions` — Proposing new subsystems or features.
+
+### ─── ⋆⋅☆⋅⋆ ─── 💻 DEVELOPMENT HUB ─── ⋆⋅☆⋅⋆ ───
+- `📂-github` — Automated feed of all repository commits.
+- `📡-api-logs` — Raw endpoint responses and shard metrics.
+- `🎨-ui-design` — Discussion on portal aesthetics and UX.
+- `🛠️-tech-talk` — Specialized chat for framework developers.
+
+### ─── ⋆⋅☆⋅⋆ ─── 🌀 THE SINGULARITY ─── ⋆⋅☆⋅⋆ ───
+- `🌌-lore-vault` — Deep-dives into the Nexus Protocol backstory.
+- `🖼️-gallery` — Fan-art and community creations archive.
+- `🎙️-voice-comms` — General audio uplink for all operatives.
+- `🎵-neutral-audio` — Low-fi / Ambient stream for long sessions.
+
+### ─── ⋆⋅☆⋅⋆ ─── 🛡️ COMMAND CENTER ─── ⋆⋅☆⋅⋆ ───
+- `🚨-security-feed` — Global audit logs of all global infractions.
+- `📊-telemetry` — Server growth and engagement analytics.
+- `💬-staff-ops` — Internal coordination for moderators.
+- `💻-dev-ops` — Internal coordination for core developers.
+- `👑-founders` — Secured sector for sovereign leadership.
 
 ---
 
-## 🔐 Master Permission Matrix
+---
 
-### 1. Global Role Permissions
-| Role | Permissions |
-| :--- | :--- |
-| **Founder** | Administrator, Manage Server, Manage Roles. |
-| **Admin** | Manage Server, Manage Channels, Manage Messages, Kick/Ban. |
-| **Moderator** | Manage Messages, Kick/Ban, Timeout, View Audit Log. |
-| **Developer** | Manage Channels (in TECHNICAL HUB), Mention @everyone (restricted). |
-| **Support** | Manage Messages (in SUPPORT sector), View Tickets. |
-| **Operative** | Send Messages, Embed Links, Attach Files, Use Slash Commands. |
-| **Entity** | View Channels (#rules and #overview ONLY). |
+## 🔐 Master Permission Matrix (Per-Role Directive)
 
-### 2. Category Permissions (Sector Focus)
-All sub-channels must be **Synced** to these category-level overrides.
+Implementing these permissions requires assigning the following specific capability nodes to each role. All channel-specific permissions should remain **Synced** to the category-level overrides defined in the next section.
 
-#### [📜] INFORMATIONAL
+### 👑 Singularity Founder
+> **Permissions**: `Administrator` (Total Sovereign Control).
+- Absolute authority over all channels, roles, and engine integrations.
+- Ability to override all security protocols.
+
+### 🛡️ Nexus Admin
+> **Permissions**: `Manage Server`, `Manage Roles`, `Manage Channels`, `Kick Members`, `Ban Members`, `Timeout Members`.
+- Executive oversight of all community sectors.
+- Authority to restructure channel mappings and update framework logic.
+
+### 💻 Core Developer
+> **Permissions**: `Manage Channels` (Synced to Technical Hub), `Manage Webhooks`, `Use Application Commands`, `Mention @everyone` (Restricted).
+- Authority to deploy repository updates and monitor API telemetry.
+- Direct access to the internal infrastructure sectors.
+
+### ⚔️ Protocol Moderator
+> **Permissions**: `Manage Messages`, `Mute Members`, `Deafen Members`, `Move Members`, `View Audit Log`.
+- Primary security enforcement operatives.
+- Authority to purge infractions and stabilize discourse.
+
+### 🔧 Support Operative
+> **Permissions**: `Manage Messages` (Synced to Support Center), `Read Message History`, `View Private Threads`.
+- Dedicated node for resolving technical inquiries.
+- Ability to claim and manage resolution tickets.
+
+### 🌐 Strategic Partner
+> **Permissions**: `Embed Links`, `Attach Files`, `Use External Emojis`, `Add Reactions`.
+- Collaborative access to standard community sectors.
+- Verified status bypass for standard raid filters.
+
+### 💎 Booster
+> **Permissions**: `Change Nickname`, `Use External Emojis`, `Priority Speaker`.
+- High-prestige entities providing infrastructural support.
+
+### 🥇 Early Operative
+> **Permissions**: `Add Reactions`, `Use External Stickers`, `Priority Speaker`.
+- Legacy status node for founding members.
+
+### 🧬 Verified Operative
+> **Permissions**: `Send Messages`, `Embed Links`, `Attach Files`, `Use Slash Commands`, `Connect`, `Speak`.
+- Standard operational access to the community matrix.
+
+### 🌑 New Entity (Unverified)
+> **Permissions**: `View Channel` (#rules and #overview only).
+- Restricted read-only access until verification is completed via the Sentinel.
+
+### 🤖 Neural Engine (Bot Agents)
+> **Permissions**: `View Channel`, `Send Messages`, `Embed Links`, `Read Message History`, `Manage Roles` (Nexus Bot Only).
+- Specialized role for external intelligence integrations.
+
+---
+
+## 🏢 Category Orchestration (Synced Overrides)
+
+implement these overrides at the **Category Level** and ensure all channels are set to **Sync Permissions**.
+
+### 📋 [📜] INFORMATIONAL & [📢] NEWS
 - `@everyone`: `View Channel` (✔), `Send Messages` (✖).
-- `Admin+`: `Manage Messages` (✔).
+- `Admin+`: `Manage Messages` (✔), `Manage Webhooks` (✔).
 
-#### [💬] COMMUNITY
+### 📋 [⚡] CENTRAL HUB
 - `@everyone`: `View Channel` (✔), `Send Messages` (✔).
-- `Operative+`: `Use External Emojis` (✔), `Attach Files` (✔).
 - `Entity`: `Send Messages` (✖).
 
-#### [🛠️] SUPPORT
-- `@everyone`: `View Channel` (✔).
-- `Entity`: `Send Messages` (✖).
-- `Operative`: `Send Messages` (✔ in #ticket and #bug-report only).
+### 📋 [🛠️] SUPPORT CENTER
+- `@everyone`: `View Channel` (✔), `Send Messages` (✖).
+- `Operative+`: `Send Messages` (✔ in #ticket-port only via Bot).
+- `Support+`: `Manage Messages` (✔).
 
-#### [🛡️] ADMINISTRATION
+### 📋 [💻] DEVELOPMENT HUB
+- `@everyone`: `View Channel` (✖).
+- `Developer+`: `View Channel` (✔), `Send Messages` (✔).
+- `Support`: `View Channel` (✔), `Send Messages` (✖).
+
+### 📋 [🛡️] COMMAND CENTER
 - `@everyone`: `View Channel` (✖).
 - `Moderator+`: `View Channel` (✔), `Send Messages` (✔).
+- `Founder`: `Administrator` (✔).
 
 ---
 
-## ⚔️ Verification Protocol (Wick Bot)
+## ⚔️ Verification Protocol (Sentinel Logic)
 *High-security sentinel for preventing automated intrusions.*
 
 ### 1. Agent Selection: Wick Bot
@@ -97,21 +170,10 @@ All sub-channels must be **Synced** to these category-level overrides.
 - **Link**: [Invite Wick](https://wickbot.com/)
 
 ### 2. Setup Directive
-1. **Join Notification**: Direct all new entities to a private #verification channel (automatic in Wick).
+1. **Join Notification**: Direct all new entities to a private #verification channel.
 2. **Verification Logic**: Enable **Captcha Verification**.
-3. **Role Handover**: Set Wick to assign the `🧬 Operative` role only after the captcha is solved.
-4. **Anti-Alt Protocol**: Enable Wick's "Account Age" check (Minimum 3 days) to prevent burner account raids.
-
----
-
-## 📊 Neural Agents (Summary)
-
-| Bot Agent | Mission | Setup Command |
-| :--- | :--- | :--- |
-| **Wick** | Anti-Raid / Verification | `w!setup` |
-| **Nexus Protocol** | Core Economy / Admin | `/help` |
-| **Carl-bot** | Advanced Logs / Roles | `!log channel #security-logs` |
-| **Ticket Tool** | Private Resolution | Create panel in #ticket. |
+3. **Role Handover**: Set Wick to assign the `🧬 Operative` role only after completion.
+4. **Anti-Alt Protocol**: Enable Wick's "Account Age" check (Minimum 3 days).
 
 ---
 *NEXUS PROTOCOL © 2026 // ALL SYSTEMS OPTIMAL*

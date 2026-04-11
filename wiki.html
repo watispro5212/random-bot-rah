@@ -24,19 +24,29 @@
             <p>A comprehensive glossary of the Singularity engine and its operational subsystems.</p>
         </section>
         <div class="legal-content">
-            <section style="margin-bottom: 4rem;">
-                <h2 style="color: var(--accent); margin-bottom: 1.5rem;">01 // Core Architecture</h2>
-                <p>The **Singularity Core** is a distributed neural framework designed for horizontal scalability across multiple shards. It utilizes a non-blocking event loop to manage high-frequency data streams with minimal CPU overhead.</p>
-                <ul style="margin-left: 2rem; margin-top: 1rem; color: var(--text-dim);">
-                    <li>Shard Manager: Orchestrates cross-process communication.</li>
-                    <li>Cache Layer: In-memory state persistence for rapid retrieval.</li>
-                    <li>Audit Module: Real-time security infraction monitoring.</li>
-                </ul>
-            </section>
+            <section class="content-grid" style="display: grid; grid-template-columns: 1fr; gap: 3rem;">
+            <!-- Core Architecture -->
+            <div class="artisanal-card">
+                <span class="protocol-tag" style="background: rgba(0, 245, 255, 0.1); color: var(--accent); padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; font-weight: bold; margin-bottom: 1rem; display: inline-block;">SYSTEMS</span>
+                <h3>01 // Core Architecture</h3>
+                <p>The Nexus Protocol is built on a distributed **MERN-adjacent** stack optimized for high-frequency Discord interactions. The "Singularity Core" utilizes Node.js worker threads to isolate shard processes, preventing a failure in one sector from cascading across the entire neural matrix.</p>
+                <div style="margin-top: 2rem; background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; font-family: 'JetBrains Mono'; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.05);">
+                    <p style="color: var(--accent)">➔ Load Balancer: Internal Shard Manager</p>
+                    <p style="color: var(--text-dim); margin-top: 0.5rem;">➔ Persistence: MongoDB Atlas cluster with global write concerns.</p>
+                    <p style="color: var(--text-dim); margin-top: 0.5rem;">➔ Runtime: Node.js 18+ (LTS) on specialized Linux kernels.</p>
+                </div>
+            </div>
 
-            <section style="margin-bottom: 4rem;">
-                <h2 style="color: var(--accent); margin-bottom: 1.5rem;">02 // Neural Economy</h2>
-                <p>A state-persistent currency system that tracks operatives' progress across disparate sectors. Balances are stored in a secured MongoDB cluster with redundant data nodes.</p>
+            <!-- Hosting Requirements -->
+            <div class="artisanal-card">
+                <span class="protocol-tag" style="background: rgba(80, 250, 123, 0.1); color: #50fa7b; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; font-weight: bold; margin-bottom: 1rem; display: inline-block;">HOSTING</span>
+                <h3>02 // Infrastructure Requirements</h3>
+                <p>Deploying a private Nexus node requires a high-availability environment to maintain the 99.9% uptime SLA. We recommend specialized VPS or Bare Metal solutions with low-latency uplinks to Discord core data centers.</p>
+                <ul style="margin-top: 1.5rem; color: var(--text-dim); list-style: none;">
+                    <li style="margin-bottom: 0.8rem;"><strong style="color: #fff;">Minimal:</strong> 2 vCPU, 4GB RAM, 20GB NVMe SSD.</li>
+                    <li style="margin-bottom: 0.8rem;"><strong style="color: #fff;">Optimal:</strong> 4 vCPU, 8GB RAM, 50GB NVMe SSD (Recommended for >500 guilds).</li>
+                    <li style="margin-bottom: 0.8rem;"><strong style="color: #fff;">OS:</strong> Ubuntu 22.04 LTS or Debian 11.</li>
+                </ul>
                 <div class="artisanal-card" style="margin-top: 1.5rem; padding: 1.5rem;">
                     <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">BALANCE_PROTOCOL_STABLE = TRUE<br>GLOBAL_COMMERCE_SYNC = 99.9%</p>
                 </div>

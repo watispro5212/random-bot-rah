@@ -49,32 +49,91 @@
         </section>
 
         <section class="metrics-grid" style="margin-top: 8rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
-            <div class="metric-card" style="text-align: center; background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.02);">
-                <span style="font-size: 2.5rem; color: var(--accent); font-weight: bold; display: block;">99.9%</span>
-                <span class="stat-label">Uptime</span>
+            <div class="metric-card" style="text-align: center; background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.02); display: flex; flex-direction: column; align-items: center;">
+                <span style="font-size: 2.5rem; color: var(--accent); font-weight: bold; display: block; filter: drop-shadow(0 0 10px var(--accent-glow));">99.9%</span>
+                <span class="stat-label" style="text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; color: var(--text-dim); margin-top: 0.5rem;">SLA Uptime</span>
             </div>
-            <div class="metric-card" style="text-align: center; background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.02);">
-                <span style="font-size: 2.5rem; color: var(--accent); font-weight: bold; display: block;">1,240+</span>
-                <span class="stat-label">Active Nodes</span>
+            <div class="metric-card" style="text-align: center; background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.02); display: flex; flex-direction: column; align-items: center;">
+                <span style="font-size: 2.5rem; color: var(--accent); font-weight: bold; display: block; filter: drop-shadow(0 0 10px var(--accent-glow));">1,240+</span>
+                <span class="stat-label" style="text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; color: var(--text-dim); margin-top: 0.5rem;">Active Nodes</span>
             </div>
-            <div class="metric-card" style="text-align: center; background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.02);">
-                <span style="font-size: 2.5rem; color: var(--accent); font-weight: bold; display: block;">&lt;15ms</span>
-                <span class="stat-label">Neural Latency</span>
+            <div class="metric-card" style="text-align: center; background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.02); display: flex; flex-direction: column; align-items: center;">
+                <span style="font-size: 2.5rem; color: var(--accent); font-weight: bold; display: block; filter: drop-shadow(0 0 10px var(--accent-glow));">&lt;15ms</span>
+                <span class="stat-label" style="text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; color: var(--text-dim); margin-top: 0.5rem;">Packet Latency</span>
             </div>
         </section>
 
-        <section class="content-grid" style="margin-top: 5rem;">
-            <div class="artisanal-card">
-                <h3>Sovereign Control</h3>
-                <p>Full-spectrum moderation tools designed for rapid response and preventative security.</p>
+        <div class="divider-glow"></div>
+
+        <section class="features-detailed">
+            <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">Architectural Excellence.</h2>
+                <p style="color: var(--text-dim); max-width: 600px; margin: 0 auto;">Engineered for scalability, the Nexus framework operates on a distributed neural matrix designed for zero-latency execution.</p>
             </div>
-            <div class="artisanal-card">
-                <h3>Neural Economy</h3>
-                <p>Sophisticated financial systems with persistence and global scaling capabilities.</p>
+            
+            <div class="content-grid">
+                <div class="artisanal-card">
+                    <div style="font-size: 1.5rem; color: var(--accent); margin-bottom: 1rem;">🛡️</div>
+                    <h3>Sovereign Security</h3>
+                    <p>Full-spectrum moderation protocols with AI-assisted raid prevention and real-time infraction auditing.</p>
+                    <ul style="margin-top: 1rem; color: var(--text-dim); font-size: 0.9rem; list-style: none;">
+                        <li>• Real-time Captcha Verification</li>
+                        <li>• Advanced Shard Logging</li>
+                        <li>• Anti-Alt Intrusion Logic</li>
+                    </ul>
+                </div>
+                <div class="artisanal-card">
+                    <div style="font-size: 1.5rem; color: var(--accent); margin-bottom: 1rem;">📈</div>
+                    <h3>Neural Economy</h3>
+                    <p>A sophisticated financial system backed by persistent MongoDB sharding for global cross-server data integrity.</p>
+                    <ul style="margin-top: 1rem; color: var(--text-dim); font-size: 0.9rem; list-style: none;">
+                        <li>• Cross-Node Syncing</li>
+                        <li>• Automated Asset Inflation</li>
+                        <li>• Secure Ledger Protection</li>
+                    </ul>
+                </div>
+                <div class="artisanal-card">
+                    <div style="font-size: 1.5rem; color: var(--accent); margin-bottom: 1rem;">🌐</div>
+                    <h3>High Fidelity Web</h3>
+                    <p>A hand-crafted informational suite providing operatives with real-time documentation and portal access.</p>
+                    <ul style="margin-top: 1rem; color: var(--text-dim); font-size: 0.9rem; list-style: none;">
+                        <li>• Interactive Wiki Interface</li>
+                        <li>• Real-time Protocol Search</li>
+                        <li>• Advanced Shard Telemetry</li>
+                    </ul>
+                </div>
             </div>
-            <div class="artisanal-card">
-                <h3>High Fidelity</h3>
-                <p>Custom-built embeds and interface elements that elevate your server aesthetic.</p>
+        </section>
+
+        <div class="divider-glow"></div>
+
+        <section class="roadmap-sector" style="margin: 8rem 0;">
+            <div class="section-header" style="margin-bottom: 4rem;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">Project Roadmap // Ascension.</h2>
+                <p style="color: var(--text-dim);">The developmental timeline for the Singularity Core framework.</p>
+            </div>
+            
+            <div class="roadmap-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div class="roadmap-item" style="border-left: 2px solid var(--accent); padding-left: 2rem;">
+                    <span style="color: var(--accent); font-weight: bold; font-family: 'JetBrains Mono';">PHASE 01</span>
+                    <h4 style="margin: 0.5rem 0;">CORE INITIALIZATION</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-dim);">Stabilizing the sharding manager and establishing the neural communication matrix. [COMPLETED]</p>
+                </div>
+                <div class="roadmap-item" style="border-left: 2px solid var(--accent); padding-left: 2rem;">
+                    <span style="color: var(--accent); font-weight: bold; font-family: 'JetBrains Mono';">PHASE 02</span>
+                    <h4 style="margin: 0.5rem 0;">PORTAL ASCENSION</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-dim);">Deploying the Infinitum Informational Suite and refining visual design systems. [IN PROGRESS]</p>
+                </div>
+                <div class="roadmap-item" style="border-left: 2px solid rgba(255,255,255,0.1); padding-left: 2rem;">
+                    <span style="color: var(--text-dim); font-weight: bold; font-family: 'JetBrains Mono';">PHASE 03</span>
+                    <h4 style="margin: 0.5rem 0;">NEURAL EXPANSION</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-dim);">Integrating AI-driven pattern recognition for advanced security and logic. [UPCOMING]</p>
+                </div>
+                <div class="roadmap-item" style="border-left: 2px solid rgba(255,255,255,0.1); padding-left: 2rem;">
+                    <span style="color: var(--text-dim); font-weight: bold; font-family: 'JetBrains Mono';">PHASE 04</span>
+                    <h4 style="margin: 0.5rem 0;">GLOBAL SINGULARITY</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-dim);">Open-source public framework deployment and enterprise scaling. [PLANNED]</p>
+                </div>
             </div>
         </section>
     </main>

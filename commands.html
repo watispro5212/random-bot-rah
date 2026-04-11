@@ -25,47 +25,80 @@
             <h1>Protocol Index.</h1>
             <p>A comprehensive directory of Nexus operational directives.</p>
         </section>
+        <section class="command-dashboard">
+            <div class="search-container">
+                <input type="text" id="command-search" placeholder="Search Neural Protocols..." style="width: 100%; max-width: 600px; padding: 1.2rem 2rem; background: var(--surface); border: 1px solid var(--border); border-radius: 50px; color: var(--text); font-family: inherit; font-size: 1rem; box-shadow: 0 0 20px rgba(0,0,0,0.2); transition: all 0.3s ease;">
+            </div>
 
-        <section class="search-bar">
-            <input type="text" id="commandSearch" class="search-input" placeholder="Search protocols (e.g. balance, audit, help)...">
-        </section>
+            <div class="protocol-grid" id="protocol-matrix" style="margin-top: 4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+                <!-- Moderation -->
+                <div class="artisanal-card protocol-node" data-name="ban" data-desc="Permanent node exclusion. Execution: /ban [user] [reason].">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <span class="protocol-tag" style="background: rgba(255, 68, 68, 0.1); color: #ff4444; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; font-weight: bold;">SECURITY</span>
+                        <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--text-dim);">CD: 3s</span>
+                    </div>
+                    <h3>/ban</h3>
+                    <p>Permanently severs an entity's connection to the current node matrix. Required check for administrative clearance.</p>
+                    <div class="protocol-meta" style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; font-size: 0.8rem;">
+                        <p style="color: var(--accent);"><span style="color: var(--text-dim)">Node:</span> BAN_MEMBERS</p>
+                        <p style="color: var(--accent); margin-top: 0.3rem;"><span style="color: var(--text-dim)">Args:</span> &lt;entity&gt; [reason]</p>
+                    </div>
+                </div>
 
-        <section class="content-grid" id="commandGrid">
-            <div class="artisanal-card" data-name="balance">
-                <h3>/balance</h3>
-                <p>View your wallet and bank assets in the neural economy.</p>
-            </div>
-            <div class="artisanal-card" data-name="help">
-                <h3>/help</h3>
-                <p>Access the central guidance hub for all protocol directives.</p>
-            </div>
-            <div class="artisanal-card" data-name="audit">
-                <h3>/audit</h3>
-                <p>Review recent security logs and warnings for a user.</p>
-            </div>
-            <div class="artisanal-card" data-name="decode">
-                <h3>/decode</h3>
-                <p>Decode technical data strings using various algorithms.</p>
-            </div>
-            <div class="artisanal-card" data-name="status">
-                <h3>/status</h3>
-                <p>Real-time system health and shard diagnostic diagnostics.</p>
-            </div>
-            <div class="artisanal-card" data-name="set-balance" data-owner="true">
-                <h3>/set-balance</h3>
-                <p>Direct economic manipulation (Founders Only).</p>
-            </div>
-            <div class="artisanal-card" data-name="eval" data-owner="true">
-                <h3>/eval</h3>
-                <p>Raw logic execution (Founders Only).</p>
-            </div>
-            <div class="artisanal-card" data-name="shutdown" data-owner="true">
-                <h3>/shutdown</h3>
-                <p>Total process termination (Founders Only).</p>
-            </div>
-            <div class="artisanal-card" data-name="changelog">
-                <h3>/changelog</h3>
-                <p>View the latest development milestones and protocol updates.</p>
+                <div class="artisanal-card protocol-node" data-name="mute" data-desc="Temporary silence protocol. Execution: /mute [user] [duration].">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <span class="protocol-tag" style="background: rgba(255, 184, 108, 0.1); color: #ffb86c; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; font-weight: bold;">SECURITY</span>
+                        <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--text-dim);">CD: 5s</span>
+                    </div>
+                    <h3>/mute</h3>
+                    <p>Suppresses the transmission capabilities of a specified entity. Prevents logic interference during active sessions.</p>
+                    <div class="protocol-meta" style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; font-size: 0.8rem;">
+                        <p style="color: var(--accent);"><span style="color: var(--text-dim)">Node:</span> MODERATE_MEMBERS</p>
+                        <p style="color: var(--accent); margin-top: 0.3rem;"><span style="color: var(--text-dim)">Args:</span> &lt;entity&gt; [duration]</p>
+                    </div>
+                </div>
+
+                <!-- Economy -->
+                <div class="artisanal-card protocol-node" data-name="balance" data-desc="Standard asset telemetry. Execution: /balance.">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <span class="protocol-tag" style="background: rgba(80, 250, 123, 0.1); color: #50fa7b; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; font-weight: bold;">ECONOMY</span>
+                        <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--text-dim);">CD: 1s</span>
+                    </div>
+                    <h3>/balance</h3>
+                    <p>Retrieves the current asset count and neural credit stash for the executing operative.</p>
+                    <div class="protocol-meta" style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; font-size: 0.8rem;">
+                        <p style="color: var(--accent);"><span style="color: var(--text-dim)">Node:</span> GLOBAL_ACC</p>
+                        <p style="color: var(--accent); margin-top: 0.3rem;"><span style="color: var(--text-dim)">Args:</span> [target_entity]</p>
+                    </div>
+                </div>
+
+                <!-- Utility -->
+                <div class="artisanal-card protocol-node" data-name="status" data-desc="System health diagnostics. Execution: /status.">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <span class="protocol-tag" style="background: rgba(0, 245, 255, 0.1); color: var(--accent); padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; font-weight: bold;">UTILITY</span>
+                        <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--text-dim);">CD: 10s</span>
+                    </div>
+                    <h3>/status</h3>
+                    <p>Provides a comprehensive diagnostic overview of all active shards and global core integrity.</p>
+                    <div class="protocol-meta" style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; font-size: 0.8rem;">
+                        <p style="color: var(--accent);"><span style="color: var(--text-dim)">Node:</span> EVERYONE</p>
+                        <p style="color: var(--accent); margin-top: 0.3rem;"><span style="color: var(--text-dim)">Args:</span> NONE</p>
+                    </div>
+                </div>
+
+                <!-- Owner -->
+                <div class="artisanal-card protocol-node owner-command" data-name="eval" data-desc="Logic execution. Restricted.">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <span class="protocol-tag" style="background: rgba(187, 134, 252, 0.2); color: #bb86fc; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; font-weight: bold;">FOUNDER</span>
+                        <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--text-dim);">CD: 0s</span>
+                    </div>
+                    <h3>/eval</h3>
+                    <p>Allows for direct injection of raw logic payloads into the Singularity engine. Strictly restricted to Founders.</p>
+                    <div class="protocol-meta" style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; font-size: 0.8rem;">
+                        <p style="color: #bb86fc;"><span style="color: var(--text-dim)">Node:</span> SOVEREIGN_ACCESS</p>
+                        <p style="color: #bb86fc; margin-top: 0.3rem;"><span style="color: var(--text-dim)">Args:</span> &lt;code_payload&gt;</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
