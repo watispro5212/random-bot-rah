@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField, ChannelType, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField, ChannelType, EmbedBuilder, MessageFlags } = require('discord.js');
 const embedBuilder = require('../../utils/embedBuilder');
 
 const SUPPORT_GUILD_ID = '1492345037848186930';
@@ -473,7 +473,7 @@ module.exports = {
                     description: `This command can only be run in the official Nexus Support Hub (\`${SUPPORT_GUILD_ID}\`).`,
                     color: '#ED4245'
                 })],
-                ephemeral: true
+                flags: [MessageFlags.Ephemeral]
             });
         }
 
@@ -484,7 +484,7 @@ module.exports = {
                 description: '**Full server wipe + rebuild in progress...**\nThis will take 1-3 minutes. A report will be posted when complete.',
                 color: '#D4A040'
             })],
-            ephemeral: true
+            flags: [MessageFlags.Ephemeral]
         });
 
         const guild = interaction.guild;
@@ -514,7 +514,7 @@ module.exports = {
                     );
                     const role = await guild.roles.create({
                         name: roleDef.name,
-                        color: roleDef.color,
+                        colors: roleDef.color,
                         hoist: roleDef.hoist,
                         permissions: permBits,
                         reason: 'Nexus Blueprint: Auto-generated role',
@@ -551,7 +551,7 @@ module.exports = {
                 try {
                     await guild.roles.create({
                         name: pr.name,
-                        color: pr.color,
+                        colors: pr.color,
                         hoist: false,
                         mentionable: true,
                         permissions: [],

@@ -18,7 +18,7 @@ const guildConfigSchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now }
 });
 
-guildConfigSchema.index({ guildId: 1 });
+
 
 guildConfigSchema.pre('save', function(next) {
     this.updatedAt = new Date();
