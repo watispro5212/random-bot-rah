@@ -61,7 +61,7 @@ module.exports = {
                 title: '🟩 Nexus Wordle',
                 description,
                 color: status === 'won' ? '#2ECC71' : status === 'lost' ? '#ED4245' : '#FFD700',
-                footer: `Nexus v11.1.0 • Attempt ${guesses.length}/${maxAttempts}`
+                footer: `Nexus v12.0.0 • Attempt ${guesses.length}/${maxAttempts}`
             });
         };
 

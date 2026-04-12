@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { MessageFlags } = require('discord.js');;
+const { MessageFlags } = require('discord.js');
 const embedBuilder = require('../../utils/embedBuilder');
 const User = require('../../models/User');
 
@@ -80,7 +80,7 @@ module.exports = {
                     `**New Balance:** \`$${userData.balance.toLocaleString()}\``
                 ].join('\n'),
                 color,
-                footer: `Nexus v11.1.0 • Bet: $${amount.toLocaleString()}`
+                footer: `Nexus v12.0.0 • Bet: $${amount.toLocaleString()}`
             })]
         });
     },

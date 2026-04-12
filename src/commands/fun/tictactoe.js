@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
-const { MessageFlags } = require('discord.js');;
+const { MessageFlags } = require('discord.js');
 const embedBuilder = require('../../utils/embedBuilder');
 
 module.exports = {

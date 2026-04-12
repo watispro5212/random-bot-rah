@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { MessageFlags } = require('discord.js');;
+const { MessageFlags } = require('discord.js');
 const embedBuilder = require('../../utils/embedBuilder');
 const util = require('util');
 

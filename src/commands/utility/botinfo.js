@@ -30,7 +30,7 @@ module.exports = {
             color: '#00F5FF',
             thumbnail: client.user.displayAvatarURL({ dynamic: true, size: 256 }),
             fields: [
-                { name: '📊 Version', value: '`v11.1.0`', inline: true },
+                { name: '📊 Version', value: '`v12.0.0`', inline: true },
                 { name: '📡 Shard', value: `\`#${client.shard?.ids[0] ?? 0}\``, inline: true },
                 { name: '⏱️ Uptime', value: `\`${uptime}\``, inline: true },
                 { name: '🏢 Guilds', value: `\`${totalGuilds.toLocaleString()}\``, inline: true },

@@ -2,7 +2,7 @@ const { Events, ActivityType } = require('discord.js');
 const logger = require('../../utils/logger');
 
 const statuses = [
-    { name: 'the Apex Core | v11.1.0', type: ActivityType.Watching },
+    { name: 'the Apex Core | v12.0.0', type: ActivityType.Watching },
     { name: '{guilds} operational nodes', type: ActivityType.Watching },
     { name: 'with {members} operatives', type: ActivityType.Playing },
     { name: 'Neural Uplink Status: Apex', type: ActivityType.Listening },
@@ -22,7 +22,7 @@ module.exports = {
             '  ██║╚██╗██║██╔══╝   ██╔██╗ ██║   ██║╚════██║',
             '  ██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝███████║',
             '  ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝',
-            '  ─────────── PROTOCOL v11.1.0 // APEX ───────────',
+            '  ─────────── PROTOCOL v12.0.0 // APEX ───────────',
             '',
         ];
         ascii.forEach(line => console.log(`\x1b[36m${line}\x1b[0m`));

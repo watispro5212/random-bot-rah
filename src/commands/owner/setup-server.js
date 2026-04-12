@@ -315,7 +315,7 @@ const CATEGORIES = [
 const RULES_EMBEDS = [
     {
         title: '📜  NEXUS PROTOCOL — SERVER DIRECTIVES',
-        description: 'Welcome to the Nexus Protocol Support Hub. The following rules are absolute. Violation results in escalating sanctions up to and including permanent removal.\n\n*Last updated: v11.1.0 — Apex*',
+        description: 'Welcome to the Nexus Protocol Support Hub. The following rules are absolute. Violation results in escalating sanctions up to and including permanent removal.\n\n*Last updated: v12.0.0 — Apex*',
         color: 0xD4A040,
     },
     {
@@ -390,7 +390,7 @@ const GET_ROLES_EMBEDS = [
 const OVERVIEW_EMBED = {
     title: '⚡ NEXUS PROTOCOL — THE SUPPORT HUB',
     description: [
-        '> *Tier-1 Community Infrastructure — v11.1.0 "Apex"*\n',
+        '> *Tier-1 Community Infrastructure — v12.0.0 "Apex"*\n',
         'Welcome to the official **Nexus Protocol** support server. This is the primary hub for:',
         '',
         '🛡️ **Bot Support** — Get help with Nexus commands, configuration, and troubleshooting',
@@ -749,7 +749,7 @@ module.exports = {
                             .setTitle(OVERVIEW_EMBED.title)
                             .setDescription(OVERVIEW_EMBED.description)
                             .setColor(OVERVIEW_EMBED.color)
-                            .setFooter({ text: 'Nexus Protocol v11.1.0 // Apex' })
+                            .setFooter({ text: 'Nexus Protocol v12.0.0 // Apex' })
                         ]
                     });
                     log.push('✅ Overview posted to #🧭-overview');
@@ -766,7 +766,7 @@ module.exports = {
                             .setTitle(LINKS_EMBED.title)
                             .setDescription(LINKS_EMBED.description)
                             .setColor(LINKS_EMBED.color)
-                            .setFooter({ text: 'Nexus Protocol v11.1.0 // Apex' })
+                            .setFooter({ text: 'Nexus Protocol v12.0.0 // Apex' })
                         ]
                     });
                     log.push('✅ Links posted to #🔗-links');
@@ -795,7 +795,7 @@ module.exports = {
                     '```\n' + truncated + '\n```'
                 )
                 .setColor(0xD4A040)
-                .setFooter({ text: 'Nexus Protocol v11.1.0 // Apex Blueprint' })
+                .setFooter({ text: 'Nexus Protocol v12.0.0 // Apex Blueprint' })
                 .setTimestamp();
 
             const manualEmbed = new EmbedBuilder()

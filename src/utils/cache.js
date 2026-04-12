@@ -1,5 +1,5 @@
 /**
- * Nexus Protocol v11.1.0 — In-Memory TTL Cache
+ * Nexus Protocol v12.0.0 — In-Memory TTL Cache
  * Reduces MongoDB load by caching frequently-accessed documents (e.g., GuildConfig).
  * 5-minute TTL with manual invalidation support.
  */

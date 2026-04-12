@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { MessageFlags } = require('discord.js');;
+const { MessageFlags } = require('discord.js');
 const embedBuilder = require('../../utils/embedBuilder');
 const User = require('../../models/User'); 
 

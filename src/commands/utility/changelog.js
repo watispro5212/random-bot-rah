@@ -9,7 +9,7 @@ module.exports = {
     async execute(interaction, client) {
         await interaction.reply({
             embeds: [embedBuilder({
-                title: 'Nexus v11.1.0 // Apex Overhaul',
+                title: 'Nexus v12.0.0 // Apex Overhaul',
                 description: 'The most advanced update yet — 8 new commands, infrastructure upgrades, and a complete visual redesign.',
                 fields: [
                     { 
@@ -37,7 +37,7 @@ module.exports = {
                         value: '[View the complete changelog →](https://shiny-giigles.pages.dev/changelog.html)'
                     }
                 ],
-                footer: 'Nexus Protocol v11.1.0 • Apex Archive'
+                footer: 'Nexus Protocol v12.0.0 • Apex Archive'
             })]
         });
     },

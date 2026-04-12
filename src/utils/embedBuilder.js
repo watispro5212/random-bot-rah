@@ -48,7 +48,7 @@ module.exports = (options) => {
     }
 
     
-    const versionTag = 'Nexus v11.1.0';
+    const versionTag = 'Nexus v12.0.0';
     const footerText = trim(options.footer || versionTag, 2048);
 
     embed.setFooter({

@@ -1,5 +1,5 @@
 # NEXUS PROTOCOL // THE COMMUNITY BLUEPRINT
-> Tier-1 Orchestration Directive — v11.1.0 "Apex"
+> Tier-1 Orchestration Directive — v12.0.0 "Apex"
 
 This directive is the definitive architecture specification for the official Nexus Support Hub. It outlines a complete, enterprise-grade Discord server structure utilizing a "Prestige Nomenclature" system for maximum identity clarity, operational precision, and artisanal community aesthetics. Every sector, role, agent, and permission is documented to production quality.
 
@@ -898,4 +898,4 @@ These are the core directives to be pasted into the `#📜-rules` channel:
 
 ---
 
-*NEXUS PROTOCOL © 2026 // ALL SYSTEMS APEX — v11.1.0*
+*NEXUS PROTOCOL © 2026 // ALL SYSTEMS APEX — v12.0.0*
